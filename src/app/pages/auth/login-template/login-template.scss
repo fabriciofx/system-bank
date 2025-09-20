@@ -1,0 +1,44 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+.form {
+    background-color: #F0F2F5;
+    width: 50%;
+    height: 100%;
+}
+
+.image {
+    background-color: #1A468E;
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    img {
+        width: 100%;
+        max-height: 80%;
+        margin-left: 72px;
+        margin-right: 72px;
+    }
+}
+
+.logo {
+    display: block;
+    margin-left: 160px;
+    margin-right: 160px;
+    margin-top: 80px;
+    img{
+        width: 150px;
+    }
+}
+
+.login-form {
+    margin-left: 160px;
+    margin-right: 160px;
+    margin-top: 120px;
+}
