@@ -1,0 +1,56 @@
+h1 {
+    font-family: "Poppins", sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: #0B0C0D;
+    margin-bottom: 12px;
+}
+
+.subtitle {
+    font-family: "Source Sans Pro", sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    color: #737E88;
+    margin-top: 0px;
+}
+
+label {
+    font-family: "Source Sans Pro", sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    color: #0B0C0D;
+}
+
+.reset_password {
+    font-family: "Source Sans Pro", sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    color: #1A77F2;
+    text-decoration: underline;
+    margin-top: 12px;
+    margin-bottom: 52px;
+}
+
+input:focus {
+    border: 1px solid #1A77F2; /* ou a cor que preferir */
+    outline: none; /* remove o contorno padrão do navegador */
+}
+
+input {
+    border: 1px solid #737E88;
+    padding: 16px;
+    border-radius: 4px;
+}
+
+.form-login {
+    display: flex;
+    flex-direction: column;
+}
+
+button {
+    padding: 16px 48px;
+    border-radius: 4px;
+    background-color: #03B304;
+    color: #FFFFFF;
+    border: none;
+}
