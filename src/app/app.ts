@@ -1,9 +1,9 @@
 import { Component, signal } from '@angular/core';
-import { LoginTemplate } from "./pages/auth/login-template/login-template";
+import { CadastroCliente } from './pages/cliente/cadastro-cliente/cadastro-cliente';
 
 @Component({
   selector: 'app-root',
-  imports: [LoginTemplate],
+  imports: [CadastroCliente],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
