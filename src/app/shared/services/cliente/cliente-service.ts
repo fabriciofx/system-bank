@@ -4,40 +4,42 @@ import { Cliente } from '../../models/cliente';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
-
 @Injectable({
   providedIn: 'root'
 })
 export class ClienteService {
-  api = `${environment.api}/clientes/`;
+  private readonly http: HttpClient;
+  private readonly api:string = `${environment.api}/clientes`;
 
-  constructor(private clienteHttp: HttpClient) {}
+  constructor(http: HttpClient) {
+    this.http = http;
+  }
 
-  inserir(novoCliente: Cliente): Observable<Cliente> {
-    return this.clienteHttp.post<Cliente>(
+  insere(cliente: Cliente): Observable<Cliente> {
+    return this.http.post<Cliente>(
       this.api,
-      novoCliente
+      cliente
     );
   }
 
-  listar(): Observable<Cliente[]> {
-    return this.clienteHttp.get<Cliente[]>(this.api);
+  liste(): Observable<Cliente[]> {
+    return this.http.get<Cliente[]>(this.api);
   }
 
-  listar_paginado(page: number, pageSize: number): Observable<Cliente[]> {
-    return this.clienteHttp
-    .get<Cliente[]>(`${this.api}?page=${page}&pageSize=${pageSize}`);
+  paginas(num: number, size: number): Observable<Cliente[]> {
+    const url:string = `${this.api}/?page=${num}&pageSize=${size}`;
+    return this.http.get<Cliente[]>(url);
   }
 
-  deletar(idCliente: number): Observable<object> {
-    return this.clienteHttp.delete(`${this.api}${idCliente}`)
+  delete(id: number): Observable<object> {
+    return this.http.delete(`${this.api}/${id}`)
   }
 
-  pesquisarPorId(id: number): Observable<Cliente> {
-    return this.clienteHttp.get<Cliente>(`${this.api}${id}`);
+  pesquisaPorId(id: number): Observable<Cliente> {
+    return this.http.get<Cliente>(`${this.api}/${id}`);
   }
 
-  atualizar(cliente: Cliente): Observable<Cliente> {
-    return this.clienteHttp.put<Cliente>(`${this.api}${cliente.id}`, cliente);
+  atualize(cliente: Cliente): Observable<Cliente> {
+    return this.http.put<Cliente>(`${this.api}/${cliente.id}`, cliente);
   }
 }
