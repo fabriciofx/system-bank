@@ -1,9 +1,9 @@
 import { Component, signal } from '@angular/core';
-import { CadastroCliente } from './pages/cliente/cadastro-cliente/cadastro-cliente';
+import { ListagemCliente } from './pages/cliente/listagem-cliente/listagem-cliente';
 
 @Component({
   selector: 'app-root',
-  imports: [CadastroCliente],
+  imports: [ListagemCliente],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
