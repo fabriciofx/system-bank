@@ -5,17 +5,17 @@
       Solicite um acesso à equipe técnica.</p>
   </div>
   <div>
-    <form>
+    <form (ngSubmit)="login()" [formGroup]="formGroup">
       <div class="form-login" style="margin-bottom: 40px;">
         <label for="email">E-mail ou Nome de Usuário</label>
-        <input type="email" id="email" name="email" required>
+        <input type="email" id="email" name="email" required formControlName="username">
       </div>
       <div class="form-login">
         <label for="password">Senha</label>
-        <input type="password" id="password" name="password">
+        <input type="password" id="password" name="password" required formControlName="password">
       </div>
+      <p class="reset_password">Esqueci minha senha</p>
+      <button type="submit" [disabled]="formGroup.invalid">Entrar</button>
     </form>
-    <p class="reset_password">Esqueci minha senha</p>
-    <button type="submit">Entrar</button>
   </div>
 </div>
