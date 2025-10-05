@@ -19,7 +19,7 @@ import { AuthService } from '../../../shared/services/auth/auth-service';
 export class LoginForm {
   private readonly router: Router;
   private readonly authService: AuthService;
-  formGroup: FormGroup;
+  private readonly formGroup: FormGroup;
 
   constructor(authService: AuthService, router: Router) {
     this.authService = authService;
@@ -32,10 +32,14 @@ export class LoginForm {
     );
   }
 
+  form(): FormGroup {
+    return this.formGroup;
+  }
+
   login() {
     if (this.formGroup.valid) {
       const auth = this.formGroup.value;
       this.authService.login(auth);
-   }
+    }
   }
 }
