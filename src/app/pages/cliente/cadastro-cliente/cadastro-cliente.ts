@@ -1,13 +1,19 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ClienteService } from '../../../shared/services/cliente/cliente-service';
-import { Cliente } from '../../../shared/models/cliente';
-import Swal from 'sweetalert2';
+import { CommonModule } from '@angular/common';
+import {
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators
+} from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatRadioModule } from '@angular/material/radio';
-import { CommonModule } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
+import Swal from 'sweetalert2';
+import { ClienteService } from '../../../shared/services/cliente/cliente-service';
+import { Cliente } from '../../../shared/models/cliente';
 
 @Component({
   selector: 'app-cadastro-cliente',
@@ -23,13 +29,20 @@ import { MatInputModule } from '@angular/material/input';
   styleUrl: './cadastro-cliente.scss'
 })
 export class CadastroCliente {
-  editar;
-  formGroup: FormGroup;
+  private readonly router: Router;
+  private readonly route: ActivatedRoute;
+  private readonly clienteService: ClienteService;
+  private readonly formGroup: FormGroup;
+  private editar: boolean;
+
   constructor(
-    private clienteService: ClienteService,
-    private router: Router,
-    private route: ActivatedRoute
+    router: Router,
+    route: ActivatedRoute,
+    clienteService: ClienteService
   ) {
+    this.router = router;
+    this.route = route;
+    this.clienteService = clienteService;
     this.formGroup = new FormGroup({
       id: new FormControl(null),
       nome: new FormControl('', Validators.required),
@@ -42,14 +55,20 @@ export class CadastroCliente {
   }
 
   ngOnInit(): void {
-    if (this.route.snapshot.params["id"]){
+    if (this.route.snapshot.params["id"]) {
       this.editar = true
-      this.clienteService.pesquisaPorId(this.route.snapshot.params["id"]).subscribe(
+      this.clienteService.pesquisaPorId(
+        this.route.snapshot.params["id"]
+      ).subscribe(
         cliente => {
           this.formGroup.patchValue(cliente)
         }
-      )
+      );
     }
+  }
+
+  form(): FormGroup {
+    return this.formGroup;
   }
 
   cadastrar() {
@@ -63,7 +82,7 @@ export class CadastroCliente {
             text: 'Cliente atualizado com sucesso!',
             showConfirmButton: false,
             timer: 1500
-          })
+          });
           this.router.navigate(['/cliente']);
         },
         error: (error) => {
@@ -76,7 +95,6 @@ export class CadastroCliente {
         }
       });
     } else {
-      // Modo de criação
       this.clienteService.insere(cliente).subscribe({
         next: () => {
           Swal.fire({
@@ -85,7 +103,7 @@ export class CadastroCliente {
             text: 'Cliente cadastrado com sucesso!',
             showConfirmButton: false,
             timer: 1500
-          })
+          });
           this.router.navigate(['/cliente']);
         },
         error: (error) => {
