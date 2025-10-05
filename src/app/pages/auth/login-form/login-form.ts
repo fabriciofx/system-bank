@@ -1,9 +1,14 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../../../shared/services/auth/auth-service';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import Swal from 'sweetalert2';
+import {
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators
+} from '@angular/forms';
+import { AuthService } from '../../../shared/services/auth/auth-service';
 
 @Component({
   selector: 'app-login-form',
@@ -12,19 +17,25 @@ import Swal from 'sweetalert2';
   styleUrl: './login-form.scss'
 })
 export class LoginForm {
+  private readonly router: Router;
+  private readonly authService: AuthService;
   formGroup: FormGroup;
 
-  constructor(private authService: AuthService, private router: Router) {
-    this.formGroup = new FormGroup({
-      username: new FormControl('', Validators.required),
-      password: new FormControl('', Validators.required)
-    });
+  constructor(authService: AuthService, router: Router) {
+    this.authService = authService;
+    this.router = router;
+    this.formGroup = new FormGroup(
+      {
+        username: new FormControl('', Validators.required),
+        password: new FormControl('', Validators.required)
+      }
+    );
   }
 
   login() {
     if (this.formGroup.valid) {
-      const data = this.formGroup.value;
-      this.authService.login(data)
+      const auth = this.formGroup.value;
+      this.authService.login(auth);
    }
   }
 }
