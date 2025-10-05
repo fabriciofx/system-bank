@@ -8,7 +8,11 @@ import {
   provideClientHydration,
   withEventReplay
 } from '@angular/platform-browser';
-import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import {
+  provideHttpClient,
+  withInterceptors,
+  withFetch
+} from '@angular/common/http';
 import { routes } from './app.routes';
 import { authInterceptor } from './shared/interceptors/auth-interceptor';
 
@@ -18,6 +22,6 @@ export const appConfig: ApplicationConfig = {
     provideZonelessChangeDetection(),
     provideRouter(routes),
     provideClientHydration(withEventReplay()),
-    provideHttpClient(withInterceptors([authInterceptor]))
+    provideHttpClient(withFetch(), withInterceptors([authInterceptor]))
   ]
 };
