@@ -1,9 +1,14 @@
-import { HttpErrorResponse, HttpInterceptorFn, HttpRequest } from '@angular/common/http';
+import {
+  HttpContextToken,
+  HttpErrorResponse,
+  HttpInterceptorFn,
+  HttpRequest
+} from '@angular/common/http';
 import { inject } from '@angular/core';
 import { AuthService } from '../services/auth/auth-service';
 import { catchError, switchMap, throwError } from 'rxjs';
 
-const RETRY_FLAG = 'x-refresh-tried';
+const RETRY_FLAG = new HttpContextToken<boolean>(() => false);
 
 // Helper: adiciona o header Authorization se existir token
 function withAuth(req: HttpRequest<any>, token: string | null) {
@@ -28,13 +33,13 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
       // Se não for 401, só propaga o erro
       if (error.status !== 401) return throwError(() => error);
       // Evita loop: só tentamos 1x o refresh por requisição
-      const alreadyTried = req.headers.has(RETRY_FLAG);
+      const alreadyTried = req.context.has(RETRY_FLAG);
       if (alreadyTried) {
         auth.logout(); // sessão realmente inválida
         return throwError(() => error);
       }
       // 2) Tenta o refresh usando o refresh_token salvo
-      const refresh = localStorage.getItem('refresh_token');
+      const refresh = auth.getRefresh();
       if (!refresh) {
         auth.logout();
         return throwError(() => error);
@@ -50,7 +55,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
           // Salva novo access e reenvia a mesma requisição com ele
           localStorage.setItem('access_token', newAccess);
           const retried = withAuth(
-            req.clone({ setHeaders: { [RETRY_FLAG]: 'true' } }),
+            req.clone({ context: req.context.set(RETRY_FLAG, true) }),
             newAccess
           );
           return next(retried);
