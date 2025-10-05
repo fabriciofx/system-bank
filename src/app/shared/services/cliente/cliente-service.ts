@@ -16,10 +16,7 @@ export class ClienteService {
   }
 
   insere(cliente: Cliente): Observable<Cliente> {
-    return this.http.post<Cliente>(
-      this.api,
-      cliente
-    );
+    return this.http.post<Cliente>(`${this.api}/`, cliente);
   }
 
   liste(): Observable<Cliente[]> {
