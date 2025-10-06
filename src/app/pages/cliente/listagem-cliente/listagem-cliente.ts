@@ -9,13 +9,7 @@ import { ConfirmMessage, SuccessMessage, ErrorMessage } from '../../../shared/me
 import { ClienteService } from '../../../shared/services/cliente/cliente-service';
 import { Cliente } from '../../../shared/models/cliente';
 import { SbError } from '../../../shared/error/sb-error';
-
-// Se sua API ainda não retorna este formato, ajuste o service para retornar {
-// items, total }.
-export interface PageResult<T> {
-  items: T[];
-  total: number;
-}
+import { PageResult } from '../../../shared/page/page-result';
 
 @Component({
   selector: 'app-listagem-cliente',
