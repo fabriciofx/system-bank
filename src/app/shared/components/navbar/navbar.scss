@@ -1,20 +1,43 @@
+/* Container principal ocupa a tela toda */
 .sidenav-container {
-  height: 64px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
-.toolbar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000;
-}
-
+/* O sidenav cobre toda a altura */
 .sidenav {
   width: 250px;
+  height: 100%;
 }
 
-.title {
-  margin-left: 12px;
-  font-weight: 500;
+/* Toolbar fixa no topo do conteúdo */
+.toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+/* Área principal do conteúdo */
+.content {
+  padding: 16px;
+}
+
+/* Corrige os itens do menu */
+mat-nav-list {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
+
+a[mat-list-item] {
+  display: block;
+  width: 100%;
+  padding: 12px 16px;
+  text-decoration: none;
+  color: inherit;
+}
+
+a[mat-list-item]:hover {
+  background: rgba(0, 0, 0, 0.05);
 }
