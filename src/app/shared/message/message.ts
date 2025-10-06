@@ -1,10 +1,6 @@
 import Swal from "sweetalert2";
 import { SbError } from "../error/sb-error";
 
-export interface Message {
-  show(): void;
-}
-
 export class SuccessMessage {
   private readonly title: string;
   private readonly message: string;
@@ -42,6 +38,30 @@ export class ErrorMessage {
       title: this.title,
       text: this.message,
       html: this.error.html()
+    });
+  }
+}
+
+export class ConfirmMessage {
+  private readonly title: string;
+  private readonly message: string;
+  private readonly buttonText: string;
+
+  constructor(title: string, message: string, buttonText: string) {
+    this.title = title;
+    this.message = message;
+    this.buttonText = buttonText;
+  }
+
+  show(): Promise<any> {
+    return Swal.fire({
+      icon: 'warning',
+      title: this.title,
+      text: this.message,
+      showCancelButton: true,
+      confirmButtonColor: 'red',
+      cancelButtonColor: 'grey',
+      confirmButtonText: this.buttonText,
     });
   }
 }
