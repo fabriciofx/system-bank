@@ -41,3 +41,7 @@ a[mat-list-item] {
 a[mat-list-item]:hover {
   background: rgba(0, 0, 0, 0.05);
 }
+
+button[mat-icon-button] {
+  margin-right: 0.5rem !important;
+}
