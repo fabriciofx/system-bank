@@ -1,56 +1,51 @@
 <div class="container mt-5 d-flex justify-content-center" >
   <div>
     <h1>Nova conta</h1>
-    <form [formGroup]="formGroup" class="example-form mt-4" (ngSubmit)="cadastrar()">
-      <!--Input de id da conta -->
-      <small class="text-danger mb-2" *ngIf="formGroup.get('id')?.errors &&
-      formGroup.get('id')?.hasError('required')">Campo obrigatório</small>
-      <mat-form-field class="example-full-width">
-        <mat-label>Id</mat-label>
-        <input matInput formControlName="id">
-      </mat-form-field>
-
+    <form [formGroup]="form()" class="example-form mt-4" (ngSubmit)="cadastrar()">
       <!--Input de id do cliente -->
-      <small class="text-danger mb-2" *ngIf="formGroup.get('cliente')?.errors &&
-      formGroup.get('cliente')?.hasError('required')">Campo obrigatório</small>
+      @if (form().get('cliente')?.errors &&
+        form().get('cliente')?.hasError('required')) {
+        <small class="text-danger mb-2">Campo obrigatório</small>
+      }
       <mat-form-field class="example-full-width">
         <mat-label>Cliente</mat-label>
         <input matInput formControlName="cliente">
       </mat-form-field>
-
       <!--Input do numero -->
-      <small class="text-danger mb-2" *ngIf="formGroup.get('numero')?.errors &&
-      formGroup.get('numero')?.hasError('required')">Campo obrigatório</small>
+      @if (form().get('numero')?.errors &&
+        form().get('numero')?.hasError('required')) {
+        <small class="text-danger mb-2">Campo obrigatório</small>
+      }
       <mat-form-field class="example-full-width">
         <mat-label>Número</mat-label>
         <input matInput formControlName="numero">
       </mat-form-field>
-
       <!--Input da agência -->
-      <small class="text-danger mb-2" *ngIf="formGroup.get('agencia')?.errors &&
-      formGroup.get('agencia')?.hasError('required')">Campo obrigatório</small>
+      @if (form().get('agencia')?.errors &&
+        form().get('agencia')?.hasError('required')) {
+        <small class="text-danger mb-2">Campo obrigatório</small>
+      }
       <mat-form-field class="example-full-width">
         <mat-label>Agência</mat-label>
         <input matInput formControlName="agencia">
       </mat-form-field>
-
       <!--Input do saldo -->
-      <small class="text-danger mb-2" *ngIf="formGroup.get('saldo')?.errors &&
-      formGroup.get('saldo')?.hasError('required')">Campo obrigatório</small>
+      @if (form().get('saldo')?.errors &&
+        form().get('saldo')?.hasError('required')) {
+        <small class="text-danger mb-2">Campo obrigatório</small>
+      }
       <mat-form-field class="example-full-width">
         <mat-label>Saldo</mat-label>
         <input matInput formControlName="saldo">
       </mat-form-field>
-
       <!--Bolas de selecao de status da conta -->
       <mat-radio-group formControlName="ativa">
         <mat-radio-button [value]="true">Ativa</mat-radio-button>
         <mat-radio-button [value]="false">Inativa</mat-radio-button>
       </mat-radio-group>
-
       <!--Botao de submissao do formulario -->
       <div class="d-flex justify-content-center">
-        <button [disabled]="!formGroup.valid" type="submit" mat-raised-button color="primary">
+        <button [disabled]="!form().valid" type="submit" mat-raised-button color="primary">
           Cadastrar
         </button>
       </div>

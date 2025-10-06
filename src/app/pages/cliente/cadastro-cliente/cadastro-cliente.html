@@ -3,32 +3,40 @@
     <h1>Novo cliente</h1>
     <form [formGroup]="form()" class="example-form mt-4" (ngSubmit)="cadastrar()">
       <!--Input de nome do cliente-->
-      <small class="text-danger mb-2" *ngIf="form().get('nome')?.errors &&
-      form().get('nome')?.hasError('required')">Campo obrigatório</small>
+      @if (form().get('nome')?.errors &&
+        form().get('nome')?.hasError('required')) {
+        <small class="text-danger mb-2">Campo obrigatório</small>
+      }
       <mat-form-field class="example-full-width">
         <mat-label>Nome</mat-label>
         <input matInput formControlName="nome">
       </mat-form-field>
 
       <!--Input de cpf do cliente-->
-      <small class="text-danger mb-2" *ngIf="form().get('cpf')?.errors &&
-      form().get('cpf')?.hasError('required')">Campo obrigatório</small>
+      @if (form().get('cpf')?.errors &&
+        form().get('cpf')?.hasError('required')) {
+        <small class="text-danger mb-2">Campo obrigatório</small>
+      }
       <mat-form-field class="example-full-width">
         <mat-label>CPF</mat-label>
         <input matInput formControlName="cpf" mask="000.000.000-00">
       </mat-form-field>
 
       <!--Input de email do cliente-->
-      <small class="text-danger mb-2" *ngIf="form().get('email')?.errors &&
-      form().get('email')?.hasError('required')">Campo obrigatório</small>
+      @if (form().get('email')?.errors &&
+        form().get('email')?.hasError('required')) {
+        <small class="text-danger mb-2">Campo obrigatório</small>
+      }
       <mat-form-field class="example-full-width">
         <mat-label>Email</mat-label>
         <input matInput formControlName="email">
       </mat-form-field>
 
       <!--Input de observacoes do cliente-->
-      <small class="text-danger mb-2" *ngIf="form().get('observacoes')?.errors &&
-      form().get('observacoes')?.hasError('required')">Campo obrigatório</small>
+      @if (form().get('observacoes')?.errors &&
+        form().get('observacoes')?.hasError('required')) {
+        <small class="text-danger mb-2">Campo obrigatório</small>
+      }
       <mat-form-field class="example-full-width">
         <mat-label>Observações</mat-label>
         <textarea matInput formControlName="observacoes"></textarea>

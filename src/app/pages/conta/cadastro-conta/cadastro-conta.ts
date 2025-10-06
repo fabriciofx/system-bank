@@ -23,8 +23,9 @@ import { Conta } from '../../../shared/models/conta';
   styleUrl: './cadastro-conta.scss'
 })
 export class CadastroConta {
-  editar;
-  formGroup: FormGroup;
+  private readonly formGroup: FormGroup;
+  private editar: boolean;
+
   constructor(
     private contaService: ContaService,
     private router: Router,
@@ -50,8 +51,12 @@ export class CadastroConta {
         conta => {
           this.formGroup.patchValue(conta)
         }
-      )
+      );
     }
+  }
+
+  form(): FormGroup {
+    return this.formGroup;
   }
 
   cadastrar() {

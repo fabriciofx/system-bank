@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CommonModule } from '@angular/common';
 import {
   FormControl,
   FormGroup,
@@ -22,7 +21,6 @@ import { SuccessMessage, ErrorMessage } from '../../../shared/message/message';
     MatInputModule,
     MatFormFieldModule,
     MatRadioModule,
-    CommonModule,
     FormsModule,
     ReactiveFormsModule
   ],
