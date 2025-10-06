@@ -1,6 +1,5 @@
 /* Container principal ocupa a tela toda */
 .sidenav-container {
-  height: 100vh;
   display: flex;
   flex-direction: column;
 }
@@ -8,19 +7,19 @@
 /* O sidenav cobre toda a altura */
 .sidenav {
   width: 250px;
-  height: 100%;
 }
 
 /* Toolbar fixa no topo do conteúdo */
 .toolbar {
   position: sticky;
   top: 0;
-  z-index: 2;
+  z-index: 1000;
 }
 
 /* Área principal do conteúdo */
 .content {
   padding: 16px;
+  margin-top: 64px; /* ou menos, dependendo da altura da toolbar */
 }
 
 /* Corrige os itens do menu */
