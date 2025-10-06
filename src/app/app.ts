@@ -12,15 +12,23 @@ import { filter } from 'rxjs';
 })
 export class App {
   private readonly router: Router;
+  private readonly showNavbar: boolean[];
   protected readonly title = signal('system-bank');
-  showNavbar = true;
 
   constructor(router: Router) {
     this.router = router;
+    this.showNavbar = [];
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe((event: NavigationEnd) => {
-      this.showNavbar = event.url !== '/' && event.url !== '/auth';
+      while (this.showNavbar.length > 0) {
+        this.showNavbar.pop();
+      }
+      this.showNavbar.push(event.url !== '/' && event.url !== '/auth');
     });
+  }
+
+  navbar(): boolean {
+    return this.showNavbar.at(0) || false;
   }
 }
