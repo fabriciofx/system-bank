@@ -11,9 +11,10 @@ import {
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatInputModule } from '@angular/material/input';
-import Swal from 'sweetalert2';
 import { ClienteService } from '../../../shared/services/cliente/cliente-service';
 import { Cliente } from '../../../shared/models/cliente';
+import { SbError } from '../../../shared/error/sb-error';
+import { SuccessMessage, ErrorMessage } from '../../../shared/message/message';
 
 @Component({
   selector: 'app-cadastro-cliente',
@@ -76,43 +77,37 @@ export class CadastroCliente {
     if (this.editar) {
       this.clienteService.atualize(cliente).subscribe({
         next: () => {
-          Swal.fire({
-            icon: 'success',
-            title: 'Sucesso',
-            text: 'Cliente atualizado com sucesso!',
-            showConfirmButton: false,
-            timer: 1500
-          });
+          new SuccessMessage(
+            'Sucesso!',
+            'Cliente cadastrado com sucesso!'
+          ).show();
           this.router.navigate(['/cliente']);
         },
         error: (error) => {
           console.error(error);
-          Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Erro ao atualizar cliente!',
-          });
+          new ErrorMessage(
+            'Oops...',
+            'Erro ao atualizar o cliente!',
+            new SbError(error)
+          ).show();
         }
       });
     } else {
       this.clienteService.insere(cliente).subscribe({
         next: () => {
-          Swal.fire({
-            icon: 'success',
-            title: 'Sucesso',
-            text: 'Cliente cadastrado com sucesso!',
-            showConfirmButton: false,
-            timer: 1500
-          });
+          new SuccessMessage(
+            'Sucesso!',
+            'Cliente cadastrado com sucesso!'
+          ).show();
           this.router.navigate(['/cliente']);
         },
         error: (error) => {
           console.error(error);
-          Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Erro ao cadastrar cliente!',
-          });
+          new ErrorMessage(
+            'Oops...',
+            'Erro ao cadastrar o cliente!',
+            new SbError(error)
+          ).show();
         }
       });
     }
