@@ -8,11 +8,11 @@ export class SbError {
   }
 
   menssages(): string[] {
-    const errors = this.error?.error;
+    const error = this.error?.error;
     const messages: string[] = [];
-    for (const attr in errors) {
-      if (errors.hasOwnProperty(attr)) {
-        const msgs = errors[attr];
+    for (const attr in error) {
+      if (error.hasOwnProperty(attr)) {
+        const msgs = error[attr];
         if (Array.isArray(msgs)) {
           for (const msg of msgs) {
             messages.push(`${attr}: ${msg}`);
