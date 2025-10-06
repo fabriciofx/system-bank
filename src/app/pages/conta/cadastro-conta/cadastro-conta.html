@@ -7,10 +7,8 @@
         form().get('cliente')?.hasError('required')) {
         <small class="text-danger mb-2">Campo obrigatório</small>
       }
-      <mat-form-field class="example-full-width">
-        <mat-label>Cliente</mat-label>
-        <input matInput formControlName="cliente">
-      </mat-form-field>
+      <!-- Select do cliente -->
+      <app-infinite-select label="Selecione um cliente"></app-infinite-select>
       <!--Input do numero -->
       @if (form().get('numero')?.errors &&
         form().get('numero')?.hasError('required')) {

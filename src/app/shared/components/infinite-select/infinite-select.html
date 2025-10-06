@@ -1,0 +1,11 @@
+<mat-form-field class="example-full-width">
+  <mat-label>{{ label }}</mat-label>
+  <mat-select
+    #select [(ngModel)]="selected"
+    (click)="onClick()"
+    (openedChange)="onOpenedChange($event)">
+    <mat-option *ngFor="let item of items" [value]="item">
+      {{ item }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>

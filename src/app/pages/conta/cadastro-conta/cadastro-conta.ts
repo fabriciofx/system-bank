@@ -8,6 +8,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { CommonModule } from '@angular/common';
 import Swal from 'sweetalert2';
 import { Conta } from '../../../shared/models/conta';
+import { InfiniteSelect } from "../../../shared/components/infinite-select/infinite-select";
 
 @Component({
   selector: 'app-cadastro-conta',
@@ -17,8 +18,9 @@ import { Conta } from '../../../shared/models/conta';
     MatRadioModule,
     CommonModule,
     FormsModule,
-    ReactiveFormsModule
-  ],
+    ReactiveFormsModule,
+    InfiniteSelect
+],
   templateUrl: './cadastro-conta.html',
   styleUrl: './cadastro-conta.scss'
 })
