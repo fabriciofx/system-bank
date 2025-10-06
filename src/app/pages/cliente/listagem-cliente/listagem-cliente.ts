@@ -5,9 +5,10 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import Swal from 'sweetalert2';
+import { ConfirmMessage, SuccessMessage, ErrorMessage } from '../../../shared/message/message';
 import { ClienteService } from '../../../shared/services/cliente/cliente-service';
 import { Cliente } from '../../../shared/models/cliente';
+import { SbError } from '../../../shared/error/sb-error';
 
 // Se sua API ainda não retorna este formato, ajuste o service para retornar {
 // items, total }.
@@ -70,58 +71,50 @@ export class ListagemCliente implements AfterViewInit {
         }
         this.loading.set(false);
       },
-      error: (err) => {
-        console.error(err);
+      error: (error) => {
+        console.error(error);
         this.loading.set(false);
-        Swal.fire({
-          icon: 'error',
-          title: 'Erro',
-          text: 'Não foi possível carregar a lista de clientes.',
-        });
-      },
+        new ErrorMessage(
+          'Erro',
+          'Não foi possível carregar a lista de clientes.',
+          new SbError(error)
+        ).show();
+      }
     });
   }
 
   onPageChange(event: PageEvent): void {
-    this.pageIndex = event.pageIndex;         // zero-based
+    this.pageIndex = event.pageIndex;
     this.pageSize = event.pageSize;
-    this.listarClientes(this.pageIndex + 1, this.pageSize); // sua API usa 1-based
+    this.listarClientes(this.pageIndex + 1, this.pageSize);
   }
 
-  deletarCliente(id: number): void {
-    Swal.fire({
-      title: 'Você tem certeza que deseja deletar?',
-      text: 'Não tem como reverter essa ação',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: 'red',
-      cancelButtonColor: 'grey',
-      confirmButtonText: 'Deletar',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.clienteService.delete(id).subscribe({
-          next: () => {
-            Swal.fire({
-              icon: 'success',
-              title: 'Sucesso',
-              text: 'Cliente deletado com sucesso!',
-              showConfirmButton: false,
-              timer: 1500,
-            });
-            // Recarrega a página atual (mantendo página/size)
-            this.listarClientes(this.pageIndex + 1, this.pageSize);
-          },
-          error: (error) => {
-            console.error(error);
-            Swal.fire({
-              icon: 'error',
-              title: 'Oops...',
-              text: 'Erro ao deletar cliente!',
-            });
-          },
-        });
-      }
-    });
+  async deletarCliente(id: number): Promise<void> {
+    const result = await new ConfirmMessage(
+      'Você tem certeza que deseja deletar?',
+      'Não tem como reverter essa ação',
+      'Deletar'
+    ).show()
+    if (result.isConfirmed) {
+      this.clienteService.delete(id).subscribe({
+        next: () => {
+          new SuccessMessage(
+            'Sucesso',
+            'Cliente deletado com sucesso!'
+          ).show();
+          // Recarrega a página atual (mantendo página/size)
+          this.listarClientes(this.pageIndex + 1, this.pageSize);
+        },
+        error: (error) => {
+          console.error(error);
+          new ErrorMessage(
+            'Oops...',
+            'Erro ao deletar cliente!',
+            new SbError(error)
+          ).show();
+        },
+      });
+    }
   }
 
   // opcional: performance ao renderizar linhas
