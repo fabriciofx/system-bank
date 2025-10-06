@@ -1,3 +1,5 @@
+import { Page } from "../page/page";
+
 export class SbError {
   private readonly error: any;
 
@@ -16,7 +18,9 @@ export class SbError {
             messages.push(`${attr}: ${msg}`);
           }
         } else if (typeof msgs === 'string') {
-          messages.push(`${attr}: ${msgs}`);
+          if (!new Page(msgs).is_html()) {
+            messages.push(`${attr}: ${msgs}`);
+          }
         }
       }
     }
