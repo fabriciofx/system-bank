@@ -9,17 +9,14 @@ import { Conta } from '../../models/conta';
 })
 export class ContaService {
   private readonly http: HttpClient;
-  private readonly api:string = `${environment.api}/contas/`;
+  private readonly api:string = `${environment.api}/contas`;
 
   constructor(http: HttpClient) {
     this.http = http;
   }
 
   insere(conta: Conta): Observable<Conta> {
-    return this.http.post<Conta>(
-      this.api,
-      conta
-    );
+    return this.http.post<Conta>(`${this.api}/`, conta);
   }
 
   liste(): Observable<Conta[]> {

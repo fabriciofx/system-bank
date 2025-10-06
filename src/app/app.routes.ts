@@ -3,6 +3,7 @@ import { CadastroCliente } from './pages/cliente/cadastro-cliente/cadastro-clien
 import { ListagemCliente } from './pages/cliente/listagem-cliente/listagem-cliente';
 import { LoginTemplate } from './pages/auth/login-template/login-template';
 import { CadastroConta } from './pages/conta/cadastro-conta/cadastro-conta';
+import { ListagemConta } from './pages/conta/listagem-conta/listagem-conta';
 
 export const routes: Routes = [
   {
@@ -41,7 +42,11 @@ export const routes: Routes = [
       {
         path: 'editar/:id',
         component: CadastroConta
-      }
+      },
+      {
+        path: '',
+        component: ListagemConta,
+      },
     ]
   }
 ];
