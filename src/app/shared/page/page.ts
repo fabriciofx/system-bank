@@ -5,7 +5,7 @@ export class Page {
     this.content = content;
   }
 
-  is_html(): boolean {
+  isHtml(): boolean {
     return /<\/?[a-z][\w-]*\b[^>]*>/i.test(this.content);
   }
 }

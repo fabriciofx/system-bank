@@ -18,7 +18,7 @@ export class SbError {
             messages.push(`${attr}: ${msg}`);
           }
         } else if (typeof msgs === 'string') {
-          if (!new Page(msgs).is_html()) {
+          if (!new Page(msgs).isHtml()) {
             messages.push(`${attr}: ${msgs}`);
           }
         }
