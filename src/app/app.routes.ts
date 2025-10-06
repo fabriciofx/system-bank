@@ -7,7 +7,8 @@ import { CadastroConta } from './pages/conta/cadastro-conta/cadastro-conta';
 export const routes: Routes = [
   {
     path: '',
-    component: LoginTemplate,
+    redirectTo: 'auth',
+    pathMatch: 'full'
   },
   {
     path: 'auth',
