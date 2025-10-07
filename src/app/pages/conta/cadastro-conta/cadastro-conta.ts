@@ -61,6 +61,10 @@ export class CadastroConta {
     return this.formGroup;
   }
 
+  onClienteSelecionado(event: { value: number }): void {
+    console.log(`cliente selecionado: ${event.value}`);
+  }
+
   cadastrar() {
     const conta: Conta = this.formGroup.value;
     if (this.editar) {

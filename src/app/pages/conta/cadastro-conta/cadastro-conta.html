@@ -2,13 +2,12 @@
   <div>
     <h1>Nova conta</h1>
     <form [formGroup]="form()" class="example-form mt-4" (ngSubmit)="cadastrar()">
-      <!--Input de id do cliente -->
-      @if (form().get('cliente')?.errors &&
-        form().get('cliente')?.hasError('required')) {
-        <small class="text-danger mb-2">Campo obrigatório</small>
-      }
       <!-- Select do cliente -->
-      <app-infinite-select label="Selecione um cliente"></app-infinite-select>
+      <app-infinite-select
+        placeholder="Selecione um cliente"
+        [pageSize]="20"
+        (itemSelected)="onClienteSelecionado($event)">
+      </app-infinite-select>
       <!--Input do numero -->
       @if (form().get('numero')?.errors &&
         form().get('numero')?.hasError('required')) {
@@ -36,11 +35,6 @@
         <mat-label>Saldo</mat-label>
         <input matInput formControlName="saldo">
       </mat-form-field>
-      <!--Bolas de selecao de status da conta -->
-      <mat-radio-group formControlName="ativa">
-        <mat-radio-button [value]="true">Ativa</mat-radio-button>
-        <mat-radio-button [value]="false">Inativa</mat-radio-button>
-      </mat-radio-group>
       <!--Botao de submissao do formulario -->
       <div class="d-flex justify-content-center">
         <button [disabled]="!form().valid" type="submit" mat-raised-button color="primary">

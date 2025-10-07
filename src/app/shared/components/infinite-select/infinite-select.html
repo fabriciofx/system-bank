@@ -1,11 +1,23 @@
-<mat-form-field class="example-full-width">
-  <mat-label>{{ label }}</mat-label>
+<mat-form-field appearance="outline" style="width:100%">
+  <mat-label>{{ placeholder }}</mat-label>
   <mat-select
-    #select [(ngModel)]="selected"
-    (click)="onClick()"
-    (openedChange)="onOpenedChange($event)">
+    #select
+    [panelClass]="panelClass"
+    (openedChange)="onOpenedChange($event)"
+    (selectionChange)="onSelect($event)">
     <mat-option *ngFor="let item of items" [value]="item">
       {{ item }}
+    </mat-option>
+    <!-- Put loading spinner at the end  -->
+    <mat-option *ngIf="loading" class="loading-option" disabled>
+      <div class="loading-row">
+        <mat-progress-spinner diameter="20" mode="indeterminate"></mat-progress-spinner>
+        <span style="margin-left:8px">Loading...</span>
+      </div>
+    </mat-option>
+    <!--  No items found -->
+    <mat-option *ngIf="!loading && items.length === 0" disabled>
+      No items found
     </mat-option>
   </mat-select>
 </mat-form-field>
