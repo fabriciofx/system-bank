@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment.development';
-import { Observable } from 'rxjs';
+import { map, combineLatest, Observable } from 'rxjs';
 import { Conta } from '../../models/conta';
+import { PageResult } from '../../page/page-result';
 
 @Injectable({
   providedIn: 'root'
@@ -23,9 +24,20 @@ export class ContaService {
     return this.http.get<Conta[]>(this.api);
   }
 
-  paginas(num: number, size: number): Observable<Conta[]> {
-    const url:string = `${this.api}/?page=${num}&pageSize=${size}`;
-    return this.http.get<Conta[]>(url);
+  paginas(num: number, size: number): Observable<PageResult<Conta>> {
+    const url = `${this.api}/?page=${num}&pageSize=${size}`;
+    const urlAll = `${this.api}/?page=1&pageSize=10000`;
+    const contas = this.http.get<Conta[]>(url);
+    const all = this.http.get<Conta[]>(urlAll);
+    const result = combineLatest([contas, all]).pipe(
+      map(([contas, all]) => ({
+        items: contas,
+        page: num,
+        pageSize: size,
+        total: all.length
+      }))
+    );
+    return result;
   }
 
   delete(id: number): Observable<object> {
