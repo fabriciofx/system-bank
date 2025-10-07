@@ -1,8 +1,7 @@
 export interface Conta {
-  id: number;
-  cliente_id: number;
-  numero: number;
+  id?: number;
+  cliente: number;
+  numero: string;
   agencia: string;
   saldo: number;
-  ativa: boolean;
 }
