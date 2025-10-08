@@ -4,11 +4,12 @@ import { combineLatest, map, Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment.development';
 import { Cliente } from '../../models/cliente';
 import { PageResult } from '../../custom/page-result';
+import { Paginated } from '../../custom/paginated';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ClienteService {
+export class ClienteService implements Paginated<Cliente> {
   private readonly http: HttpClient;
   private readonly api:string = `${environment.api}/clientes`;
 

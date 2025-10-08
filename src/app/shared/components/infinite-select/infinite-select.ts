@@ -1,13 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, ChangeDetectorRef, Component, EventEmitter, inject, Input, NgZone, Output, signal, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, NgZone, Output, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { MatSelect, MatSelectModule } from '@angular/material/select';
+import { MatSelect, MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { PageResult } from '../../custom/page-result';
-import { Cliente } from '../../models/cliente';
-import { ClienteService } from '../../services/cliente/cliente-service';
 import { ErrorMessage } from '../../custom/message';
 import { ErrorReasons } from '../../custom/error-reasons';
+import { Paginated } from '../../custom/paginated';
 
 @Component({
   selector: 'app-infinite-select',
@@ -19,21 +18,21 @@ import { ErrorReasons } from '../../custom/error-reasons';
   templateUrl: './infinite-select.html',
   styleUrl: './infinite-select.scss'
 })
-export class InfiniteSelect implements AfterViewInit {
+export class InfiniteSelect<T> implements AfterViewInit {
   private readonly zone: NgZone;
   private readonly cdr: ChangeDetectorRef;
   private readonly onScrollBound = (event: Event) => this.onScroll(event);
-  private readonly clienteService: ClienteService = inject(ClienteService);
 
   @ViewChild('select') select!: MatSelect;
+  @Input() paginated!: Paginated<T>;
   @Input() placeholder: string = 'Selecione um item';
   @Input() panelClass: string = 'infinite-select';
   @Input() pageSize: number = 10;
 
   @Output() itemSelected: EventEmitter<any> = new EventEmitter<any>();
 
-  result!: PageResult<Cliente>;
-  items: number[] = [];
+  result!: PageResult<T>;
+  items: any[] = [];
   pageIndex = 1;
   loading = false;
 
@@ -43,7 +42,7 @@ export class InfiniteSelect implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.listarClientes(this.pageIndex, this.pageSize);
+    this.load(this.pageIndex, this.pageSize);
   }
 
   onOpenedChange(opened: boolean) {
@@ -60,9 +59,8 @@ export class InfiniteSelect implements AfterViewInit {
     }
   }
 
-  onSelect(event: any): void {
-    const item = { value: event.value };
-    this.itemSelected.emit(item);
+  onSelect(event: MatSelectChange): void {
+    this.itemSelected.emit(event.value);
   }
 
   onScroll(event: Event): void {
@@ -76,20 +74,20 @@ export class InfiniteSelect implements AfterViewInit {
         this.pageIndex++;
       }
       this.zone.run(async () => {
-        this.listarClientes(this.pageIndex, this.pageSize);
+        this.paginated.paginas(this.pageIndex, this.pageSize);
         this.cdr.detectChanges();
       });
       this.loading = false;
     }
   }
 
-  listarClientes(page: number, pageSize: number): void {
-    this.clienteService.paginas(page, pageSize).subscribe({
-      next: (result: PageResult<Cliente>) => {
+  load(page: number, pageSize: number): void {
+    this.paginated.paginas(page, pageSize).subscribe({
+      next: (result: PageResult<T>) => {
         this.items = Array.from(
           new Set([
             ...this.items,
-            ...result.items.map(cliente => cliente.id)
+            ...result.items.map(item => JSON.stringify(item))
           ])
         );
         this.result = result;
@@ -97,7 +95,7 @@ export class InfiniteSelect implements AfterViewInit {
       error: (error) => {
         console.error(error);
         new ErrorMessage(
-          'Erro',
+          'Error',
           'Não foi possível carregar a lista de contas do cliente.',
           new ErrorReasons(error)
         ).show();

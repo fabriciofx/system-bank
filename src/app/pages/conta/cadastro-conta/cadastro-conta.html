@@ -4,6 +4,7 @@
     <form [formGroup]="form()" class="example-form mt-4" (ngSubmit)="cadastrar()">
       <!-- Select do cliente -->
       <app-infinite-select
+        [paginated]="clientes()"
         placeholder="Selecione um cliente"
         [pageSize]="20"
         (itemSelected)="onClienteSelecionado($event)">

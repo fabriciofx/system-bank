@@ -4,11 +4,12 @@ import { environment } from '../../../../environments/environment.development';
 import { map, combineLatest, Observable } from 'rxjs';
 import { Conta } from '../../models/conta';
 import { PageResult } from '../../custom/page-result';
+import { Paginated } from '../../custom/paginated';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ContaService {
+export class ContaService implements Paginated<Conta> {
   private readonly http: HttpClient;
   private readonly api:string = `${environment.api}/contas`;
 

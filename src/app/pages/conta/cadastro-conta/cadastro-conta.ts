@@ -11,6 +11,9 @@ import { InfiniteSelect } from "../../../shared/components/infinite-select/infin
 import { Box, BoxOf } from '../../../shared/custom/box';
 import { ErrorMessage, SuccessMessage } from '../../../shared/custom/message';
 import { ErrorReasons } from '../../../shared/custom/error-reasons';
+import { Paginated } from '../../../shared/custom/paginated';
+import { ClienteService } from '../../../shared/services/cliente/cliente-service';
+import { Cliente } from '../../../shared/models/cliente';
 
 @Component({
   selector: 'app-cadastro-conta',
@@ -30,17 +33,20 @@ export class CadastroConta {
   private readonly router: Router;
   private readonly route: ActivatedRoute;
   private readonly contaService: ContaService;
+  private readonly clienteService: ClienteService;
   private readonly formGroup: FormGroup;
   private readonly editar: Box<boolean>;
 
   constructor(
     router: Router,
     route: ActivatedRoute,
-    contaService: ContaService
+    contaService: ContaService,
+    clienteService: ClienteService
   ) {
     this.router = router;
     this.route = route;
     this.contaService = contaService;
+    this.clienteService = clienteService;
     this.formGroup = new FormGroup({
       id: new FormControl(null),
       cliente: new FormControl('', Validators.required),
@@ -68,8 +74,13 @@ export class CadastroConta {
     return this.formGroup;
   }
 
-  onClienteSelecionado(event: { value: number }): void {
-    this.formGroup.get('cliente')?.setValue(event.value);
+  clientes(): Paginated<Cliente> {
+    return this.clienteService;
+  }
+
+  onClienteSelecionado(value: any): void {
+    const cliente = JSON.parse(value) as Cliente;
+    this.formGroup.get('cliente')?.setValue(cliente.id);
   }
 
   cadastrar() {
