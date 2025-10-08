@@ -7,6 +7,7 @@ import { PageResult } from '../../custom/page-result';
 import { ErrorMessage } from '../../custom/message';
 import { ErrorReasons } from '../../custom/error-reasons';
 import { Paginated } from '../../custom/paginated';
+import { Text } from '../../custom/text';
 
 @Component({
   selector: 'app-infinite-select',
@@ -18,7 +19,7 @@ import { Paginated } from '../../custom/paginated';
   templateUrl: './infinite-select.html',
   styleUrl: './infinite-select.scss'
 })
-export class InfiniteSelect<T> implements AfterViewInit {
+export class InfiniteSelect<T extends Text> implements AfterViewInit {
   private readonly zone: NgZone;
   private readonly cdr: ChangeDetectorRef;
   private readonly onScrollBound = (event: Event) => this.onScroll(event);
@@ -32,7 +33,7 @@ export class InfiniteSelect<T> implements AfterViewInit {
   @Output() itemSelected: EventEmitter<any> = new EventEmitter<any>();
 
   result!: PageResult<T>;
-  items: any[] = [];
+  items: T[] = [];
   pageIndex = 1;
   loading = false;
 
@@ -87,7 +88,7 @@ export class InfiniteSelect<T> implements AfterViewInit {
         this.items = Array.from(
           new Set([
             ...this.items,
-            ...result.items.map(item => JSON.stringify(item))
+            ...result.items
           ])
         );
         this.result = result;

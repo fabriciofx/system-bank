@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { combineLatest, map, Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment.development';
-import { Cliente } from '../../models/cliente';
+import { Cliente, ClienteDe } from '../../models/cliente';
 import { PageResult } from '../../custom/page-result';
 import { Paginated } from '../../custom/paginated';
 
@@ -28,11 +28,11 @@ export class ClienteService implements Paginated<Cliente> {
   paginas(num: number, size: number): Observable<PageResult<Cliente>> {
     const url = `${this.api}/?page=${num}&pageSize=${size}`;
     const urlAll = `${this.api}/?page=1&pageSize=10000`;
-    const clientes = this.http.get<Cliente[]>(url);
-    const all = this.http.get<Cliente[]>(urlAll);
+    const clientes = this.http.get<ClienteDe[]>(url);
+    const all = this.http.get<ClienteDe[]>(urlAll);
     const result = combineLatest([clientes, all]).pipe(
       map(([clientes, all]) => ({
-        items: clientes,
+        items: clientes.map(cliente => new ClienteDe(cliente)),
         page: num,
         pageSize: size,
         total: all.length

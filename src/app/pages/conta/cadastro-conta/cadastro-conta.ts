@@ -79,7 +79,7 @@ export class CadastroConta {
   }
 
   onClienteSelecionado(value: any): void {
-    const cliente = JSON.parse(value) as Cliente;
+    const cliente = value as Cliente;
     this.formGroup.get('cliente')?.setValue(cliente.id);
   }
 

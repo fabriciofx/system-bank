@@ -6,7 +6,7 @@
     (openedChange)="onOpenedChange($event)"
     (selectionChange)="onSelect($event)">
     <mat-option *ngFor="let item of items" [value]="item">
-      {{ item }}
+      {{ item.asString() }}
     </mat-option>
     <!-- Put loading spinner at the end  -->
     <mat-option *ngIf="loading" class="loading-option" disabled>
