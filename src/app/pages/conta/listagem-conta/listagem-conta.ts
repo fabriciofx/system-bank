@@ -7,7 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { Conta } from '../../../shared/models/conta';
 import { ContaService } from '../../../shared/services/conta/conta-service';
-import { SbError } from '../../../shared/custom/sb-error';
+import { ErrorReasons } from '../../../shared/custom/error-reasons';
 import { PageResult } from '../../../shared/page/page-result';
 import {
   ConfirmMessage,
@@ -80,7 +80,7 @@ export class ListagemConta implements AfterViewInit {
         new ErrorMessage(
           'Erro',
           'Não foi possível carregar a lista de contas do cliente.',
-          new SbError(error)
+          new ErrorReasons(error)
         ).show();
       }
     });
@@ -109,7 +109,7 @@ export class ListagemConta implements AfterViewInit {
           new ErrorMessage(
             'Oops...',
             'Erro ao deletar a conta!',
-            new SbError(error)
+            new ErrorReasons(error)
           ).show();
         },
       });

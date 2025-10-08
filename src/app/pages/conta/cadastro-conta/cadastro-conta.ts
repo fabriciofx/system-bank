@@ -10,7 +10,7 @@ import { Conta } from '../../../shared/models/conta';
 import { InfiniteSelect } from "../../../shared/components/infinite-select/infinite-select";
 import { Box, BoxOf } from '../../../shared/custom/box';
 import { ErrorMessage, SuccessMessage } from '../../../shared/custom/message';
-import { SbError } from '../../../shared/custom/sb-error';
+import { ErrorReasons } from '../../../shared/custom/error-reasons';
 
 @Component({
   selector: 'app-cadastro-conta',
@@ -88,7 +88,7 @@ export class CadastroConta {
           new ErrorMessage(
             'Oops...',
             'Erro ao atualizar a conta!',
-            new SbError(error)
+            new ErrorReasons(error)
           ).show();
         }
       });
@@ -106,7 +106,7 @@ export class CadastroConta {
           new ErrorMessage(
             'Oops...',
             'Erro ao cadastrar a conta!',
-            new SbError(error)
+            new ErrorReasons(error)
           ).show();
         }
       });

@@ -12,7 +12,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatInputModule } from '@angular/material/input';
 import { ClienteService } from '../../../shared/services/cliente/cliente-service';
 import { Cliente } from '../../../shared/models/cliente';
-import { SbError } from '../../../shared/custom/sb-error';
+import { ErrorReasons } from '../../../shared/custom/error-reasons';
 import { SuccessMessage, ErrorMessage } from '../../../shared/custom/message';
 import { Box, BoxOf } from '../../../shared/custom/box';
 
@@ -87,7 +87,7 @@ export class CadastroCliente {
           new ErrorMessage(
             'Oops...',
             'Erro ao atualizar o cliente!',
-            new SbError(error)
+            new ErrorReasons(error)
           ).show();
         }
       });
@@ -105,7 +105,7 @@ export class CadastroCliente {
           new ErrorMessage(
             'Oops...',
             'Erro ao cadastrar o cliente!',
-            new SbError(error)
+            new ErrorReasons(error)
           ).show();
         }
       });

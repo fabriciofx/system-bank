@@ -8,7 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { ConfirmMessage, SuccessMessage, ErrorMessage } from '../../../shared/custom/message';
 import { ClienteService } from '../../../shared/services/cliente/cliente-service';
 import { Cliente } from '../../../shared/models/cliente';
-import { SbError } from '../../../shared/custom/sb-error';
+import { ErrorReasons } from '../../../shared/custom/error-reasons';
 import { PageResult } from '../../../shared/page/page-result';
 import { Box, BoxOf } from '../../../shared/custom/box';
 
@@ -83,7 +83,7 @@ export class ListagemCliente implements AfterViewInit {
         new ErrorMessage(
           'Erro',
           'Não foi possível carregar a lista de clientes.',
-          new SbError(error)
+          new ErrorReasons(error)
         ).show();
       }
     });
@@ -112,7 +112,7 @@ export class ListagemCliente implements AfterViewInit {
           new ErrorMessage(
             'Oops...',
             'Erro ao deletar cliente!',
-            new SbError(error)
+            new ErrorReasons(error)
           ).show();
         },
       });

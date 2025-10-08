@@ -1,5 +1,5 @@
 import Swal from "sweetalert2";
-import { SbError } from "./sb-error";
+import { ErrorReasons } from "./error-reasons";
 
 export class SuccessMessage {
   private readonly title: string;
@@ -24,12 +24,12 @@ export class SuccessMessage {
 export class ErrorMessage {
   private readonly title: string;
   private readonly message: string;
-  private readonly error: SbError;
+  private readonly reasons: ErrorReasons;
 
-  constructor(title: string, message: string, error: SbError) {
+  constructor(title: string, message: string, reasons: ErrorReasons) {
     this.title = title;
     this.message = message;
-    this.error = error;
+    this.reasons = reasons;
   }
 
   show(): void {
@@ -37,7 +37,7 @@ export class ErrorMessage {
       icon: 'error',
       title: this.title,
       text: this.message,
-      html: this.error.html()
+      html: this.reasons.asHtml()
     });
   }
 }

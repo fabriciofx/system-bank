@@ -7,7 +7,7 @@ import { PageResult } from '../../page/page-result';
 import { Cliente } from '../../models/cliente';
 import { ClienteService } from '../../services/cliente/cliente-service';
 import { ErrorMessage } from '../../custom/message';
-import { SbError } from '../../custom/sb-error';
+import { ErrorReasons } from '../../custom/error-reasons';
 
 @Component({
   selector: 'app-infinite-select',
@@ -99,7 +99,7 @@ export class InfiniteSelect implements AfterViewInit {
         new ErrorMessage(
           'Erro',
           'Não foi possível carregar a lista de contas do cliente.',
-          new SbError(error)
+          new ErrorReasons(error)
         ).show();
       }
     });
