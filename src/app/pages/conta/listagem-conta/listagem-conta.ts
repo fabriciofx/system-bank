@@ -50,7 +50,7 @@ export class ListagemConta implements AfterViewInit {
     const old = this.result.value();
     this.result.store({
       items: old.items,
-      page: event.pageIndex,
+      page: event.pageIndex + 1,
       pageSize: event.pageSize,
       total: old.total
     });
