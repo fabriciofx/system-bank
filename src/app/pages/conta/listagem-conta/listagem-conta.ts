@@ -34,7 +34,7 @@ export class ListagemConta implements AfterViewInit {
   private contaService = inject(ContaService);
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   displayedColumns: string[] = [
-    'id', 'cliente', 'numero', 'agencia', 'saldo', 'status', 'funcoes'
+    'id', 'cliente', 'numero', 'agencia', 'saldo', 'funcoes'
   ];
   pageIndex = 0;
   pageSize = 5;
