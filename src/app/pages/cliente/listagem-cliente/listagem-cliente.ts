@@ -1,8 +1,8 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { ConfirmMessage, SuccessMessage, ErrorMessage } from '../../../shared/message/message';
@@ -10,6 +10,7 @@ import { ClienteService } from '../../../shared/services/cliente/cliente-service
 import { Cliente } from '../../../shared/models/cliente';
 import { SbError } from '../../../shared/error/sb-error';
 import { PageResult } from '../../../shared/page/page-result';
+import { Box, BoxOf } from '../../../shared/box/box';
 
 @Component({
   selector: 'app-listagem-cliente',
@@ -28,25 +29,35 @@ import { PageResult } from '../../../shared/page/page-result';
 export class ListagemCliente implements AfterViewInit {
   private readonly clienteService: ClienteService;
   private readonly dataSource: MatTableDataSource<Cliente>;
-  pageIndex = 0;
-  pageSize = 5;
-  result: PageResult<Cliente> | null = null;
-
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  private readonly result: Box<PageResult<Cliente>>;
 
   constructor(clienteService: ClienteService) {
     this.clienteService = clienteService;
     this.dataSource = new MatTableDataSource<Cliente>();
+    this.result = new BoxOf<PageResult<Cliente>>({
+      items: [], page: 1, pageSize: 5, total: 5
+    });
   }
 
   ngAfterViewInit(): void {
-    this.listarClientes(this.pageIndex + 1, this.pageSize);
+    this.carregaClientes(
+      this.result.value().page,
+      this.result.value().pageSize
+    );
   }
 
   onPageChange(event: PageEvent): void {
-    this.pageIndex = event.pageIndex;
-    this.pageSize = event.pageSize;
-    this.listarClientes(this.pageIndex + 1, this.pageSize);
+    const old = this.result.value();
+    this.result.store({
+      items: old.items,
+      page: event.pageIndex + 1,
+      pageSize: event.pageSize,
+      total: old.total
+    });
+    this.carregaClientes(
+      this.result.value().page,
+      this.result.value().pageSize
+    );
   }
 
   columns(): string[] {
@@ -57,10 +68,14 @@ export class ListagemCliente implements AfterViewInit {
     return this.dataSource;
   }
 
-  listarClientes(page: number, pageSize: number): void {
+  content(): PageResult<Cliente> {
+    return this.result.value();
+  }
+
+  carregaClientes(page: number, pageSize: number): void {
     this.clienteService.paginas(page, pageSize).subscribe({
       next: (result: PageResult<Cliente>) => {
-        this.result = result;
+        this.result.store(result);
         this.dataSource.data = result.items;
       },
       error: (error) => {
@@ -87,7 +102,10 @@ export class ListagemCliente implements AfterViewInit {
             'Sucesso',
             'Cliente deletado com sucesso!'
           ).show();
-          this.listarClientes(this.pageIndex + 1, this.pageSize);
+          this.carregaClientes(
+            this.result.value().page,
+            this.result.value().pageSize
+          );
         },
         error: (error) => {
           console.error(error);
