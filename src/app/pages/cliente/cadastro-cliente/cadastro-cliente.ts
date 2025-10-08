@@ -14,6 +14,7 @@ import { ClienteService } from '../../../shared/services/cliente/cliente-service
 import { Cliente } from '../../../shared/models/cliente';
 import { SbError } from '../../../shared/error/sb-error';
 import { SuccessMessage, ErrorMessage } from '../../../shared/message/message';
+import { Box, BoxOf } from '../../../shared/box/box';
 
 @Component({
   selector: 'app-cadastro-cliente',
@@ -32,7 +33,7 @@ export class CadastroCliente {
   private readonly route: ActivatedRoute;
   private readonly clienteService: ClienteService;
   private readonly formGroup: FormGroup;
-  private editar: boolean;
+  private readonly editar: Box<boolean>;
 
   constructor(
     router: Router,
@@ -50,12 +51,12 @@ export class CadastroCliente {
       observacoes: new FormControl('', Validators.required),
       ativo: new FormControl(true)
     });
-    this.editar = false
+    this.editar = new BoxOf<boolean>(false);
   }
 
   ngOnInit(): void {
     if (this.route.snapshot.params["id"]) {
-      this.editar = true
+      this.editar.store(true);
       this.clienteService.pesquisaPorId(
         this.route.snapshot.params["id"]
       ).subscribe(
@@ -72,7 +73,7 @@ export class CadastroCliente {
 
   cadastrar() {
     const cliente: Cliente = this.formGroup.value;
-    if (this.editar) {
+    if (this.editar.value()) {
       this.clienteService.atualize(cliente).subscribe({
         next: () => {
           new SuccessMessage(
