@@ -5,7 +5,7 @@
       Nova conta
     </button>
   </div>
-  <table mat-table class="mt-5" [dataSource]="dataSource">
+  <table mat-table class="mt-5" [dataSource]="source()">
     <!-- Coluna ID -->
     <ng-container matColumnDef="id">
       <th mat-header-cell *matHeaderCellDef> No. </th>
@@ -39,17 +39,17 @@
           [routerLink]="'/conta/editar/' + element.id">
         </mat-icon>
         <mat-icon fontIcon="delete"
-          (click)="deletarConta(element.id)">
+          (click)="deletaConta(element.id)">
         </mat-icon>
       </td>
     </ng-container>
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    <tr mat-header-row *matHeaderRowDef="columns()"></tr>
+    <tr mat-row *matRowDef="let row; columns: columns();"></tr>
   </table>
   <mat-paginator
     [pageSizeOptions]="[5, 10, 20]"
     showFirstLastButtons
-    [length]="result?.total"
+    [length]="content().total"
     (page)="onPageChange($event)">
   </mat-paginator>
 </div>
