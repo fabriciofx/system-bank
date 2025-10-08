@@ -5,7 +5,7 @@
       Novo cliente
     </button>
   </div>
-  <table mat-table class="mt-5" [dataSource]="dataSource">
+  <table mat-table class="mt-5" [dataSource]="source()">
     <!-- Coluna ID -->
     <ng-container matColumnDef="id">
       <th mat-header-cell *matHeaderCellDef> No. </th>

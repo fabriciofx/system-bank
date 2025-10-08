@@ -27,7 +27,7 @@ import { PageResult } from '../../../shared/page/page-result';
 })
 export class ListagemCliente implements AfterViewInit {
   private readonly clienteService: ClienteService;
-  dataSource = new MatTableDataSource<Cliente>([]);
+  private readonly dataSource: MatTableDataSource<Cliente>;
   pageIndex = 0;
   pageSize = 5;
   result: PageResult<Cliente> | null = null;
@@ -36,6 +36,7 @@ export class ListagemCliente implements AfterViewInit {
 
   constructor(clienteService: ClienteService) {
     this.clienteService = clienteService;
+    this.dataSource = new MatTableDataSource<Cliente>();
   }
 
   ngAfterViewInit(): void {
@@ -50,6 +51,10 @@ export class ListagemCliente implements AfterViewInit {
 
   columns(): string[] {
     return ['id', 'nome', 'cpf', 'email', 'status', 'funcoes'];
+  }
+
+  source(): MatTableDataSource<Cliente> {
+    return this.dataSource;
   }
 
   listarClientes(page: number, pageSize: number): void {
