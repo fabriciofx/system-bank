@@ -6,10 +6,11 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatRadioModule } from '@angular/material/radio';
 import { CommonModule } from '@angular/common';
-import Swal from 'sweetalert2';
 import { Conta } from '../../../shared/models/conta';
 import { InfiniteSelect } from "../../../shared/components/infinite-select/infinite-select";
 import { Box, BoxOf } from '../../../shared/box/box';
+import { ErrorMessage, SuccessMessage } from '../../../shared/message/message';
+import { SbError } from '../../../shared/error/sb-error';
 
 @Component({
   selector: 'app-cadastro-conta',
@@ -76,43 +77,37 @@ export class CadastroConta {
     if (this.editar.value()) {
       this.contaService.atualize(conta).subscribe({
         next: () => {
-          Swal.fire({
-            icon: 'success',
-            title: 'Sucesso',
-            text: 'Conta atualizada com sucesso!',
-            showConfirmButton: false,
-            timer: 1500
-          })
+          new SuccessMessage(
+            'Sucesso',
+            'Conta atualizada com sucesso!'
+          ).show();
           this.router.navigate(['/conta']);
         },
         error: (error) => {
           console.error(error);
-          Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Erro ao atualizar a conta!',
-          });
+          new ErrorMessage(
+            'Oops...',
+            'Erro ao atualizar a conta!',
+            new SbError(error)
+          ).show();
         }
       });
     } else {
       this.contaService.insere(conta).subscribe({
         next: () => {
-          Swal.fire({
-            icon: 'success',
-            title: 'Sucesso',
-            text: 'Conta cadastrada com sucesso!',
-            showConfirmButton: false,
-            timer: 1500
-          })
+          new SuccessMessage(
+            'Sucesso',
+            'Conta cadastrada com sucesso!'
+          ).show();
           this.router.navigate(['/conta']);
         },
         error: (error) => {
           console.error(error);
-          Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Erro ao cadastrar a conta!',
-          });
+          new ErrorMessage(
+            'Oops...',
+            'Erro ao cadastrar a conta!',
+            new SbError(error)
+          ).show();
         }
       });
     }
