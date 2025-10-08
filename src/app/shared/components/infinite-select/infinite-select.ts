@@ -25,7 +25,7 @@ export class InfiniteSelect<T> implements AfterViewInit {
 
   @ViewChild('select') select!: MatSelect;
   @Input() paginated!: Paginated<T>;
-  @Input() placeholder: string = 'Selecione um item';
+  @Input() placeholder: string = 'Select an item';
   @Input() panelClass: string = 'infinite-select';
   @Input() pageSize: number = 10;
 
@@ -96,7 +96,7 @@ export class InfiniteSelect<T> implements AfterViewInit {
         console.error(error);
         new ErrorMessage(
           'Error',
-          'Não foi possível carregar a lista de contas do cliente.',
+          'Do not possible load pages from Paginated.',
           new ErrorReasons(error)
         ).show();
       }
