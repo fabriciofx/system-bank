@@ -1,6 +1,6 @@
-import { AfterViewInit, Component, inject, ViewChild } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
@@ -14,6 +14,7 @@ import {
   ErrorMessage,
   SuccessMessage
 } from '../../../shared/message/message';
+import { Box, BoxOf } from '../../../shared/box/box';
 
 @Component({
   selector: 'app-listagem-conta',
@@ -29,30 +30,49 @@ import {
   styleUrl: './listagem-conta.scss'
 })
 export class ListagemConta implements AfterViewInit {
-  dataSource = new MatTableDataSource<Conta>();
-  result: PageResult<Conta> | null = null;
-  private contaService = inject(ContaService);
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  displayedColumns: string[] = [
-    'id', 'cliente', 'numero', 'agencia', 'saldo', 'funcoes'
-  ];
-  pageIndex = 0;
-  pageSize = 5;
+  private readonly contaService: ContaService;
+  private readonly dataSource: MatTableDataSource<Conta>;
+  private readonly result: Box<PageResult<Conta>>;
+
+  constructor(contaService: ContaService) {
+    this.contaService = contaService;
+    this.dataSource = new MatTableDataSource<Conta>();
+    this.result = new BoxOf<PageResult<Conta>>({
+      items: [], page: 1, pageSize: 5, total: 5
+    });
+  }
 
   ngAfterViewInit(): void {
-    this.listarContas(this.pageIndex + 1, this.pageSize);
+    this.listarContas(this.result.value().page, this.result.value().pageSize);
   }
 
   onPageChange(event: PageEvent): void {
-    this.pageIndex = event.pageIndex;
-    this.pageSize = event.pageSize;
-    this.listarContas(this.pageIndex + 1, this.pageSize);
+    const old = this.result.value();
+    this.result.store({
+      items: old.items,
+      page: event.pageIndex,
+      pageSize: event.pageSize,
+      total: old.total
+    });
+    this.listarContas(this.result.value().page, this.result.value().pageSize);
+  }
+
+  source(): MatTableDataSource<Conta> {
+    return this.dataSource;
+  }
+
+  columns(): string[] {
+    return ['id', 'cliente', 'numero', 'agencia', 'saldo', 'funcoes'];
+  }
+
+  content(): PageResult<Conta> {
+    return this.result.value();
   }
 
   listarContas(page: number, pageSize: number): void {
     this.contaService.paginas(page, pageSize).subscribe({
       next: (result: PageResult<Conta>) => {
-        this.result = result;
+        this.result.store(result);
         this.dataSource.data = result.items;
       },
       error: (error) => {
@@ -79,7 +99,10 @@ export class ListagemConta implements AfterViewInit {
             'Sucesso',
             'Conta deletada com sucesso!'
           ).show();
-          this.listarContas(this.pageIndex + 1, this.pageSize);
+          this.listarContas(
+            this.result.value().page,
+            this.result.value().pageSize
+          );
         },
         error: (error) => {
           console.error(error);
