@@ -42,28 +42,24 @@ export class ListagemCliente implements AfterViewInit {
   loading = signal(false);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  result: PageResult<Cliente> | null = null;
 
   ngAfterViewInit(): void {
     this.listarClientes(this.pageIndex + 1, this.pageSize);
   }
 
+  onPageChange(event: PageEvent): void {
+    this.pageIndex = event.pageIndex;
+    this.pageSize = event.pageSize;
+    this.listarClientes(this.pageIndex + 1, this.pageSize);
+  }
+
   listarClientes(page: number, pageSize: number): void {
     this.loading.set(true);
-    // Ajuste seu service para retornar Observable<PageResult<Cliente>>
     this.clienteService.paginas(page, pageSize).subscribe({
-      next: (res: PageResult<Cliente> | Cliente[]) => {
-        // fallback: se a API ainda retornar apenas array, tenta deduzir total
-        if (Array.isArray(res)) {
-          this.dataSource.data = res;
-          // Caso não saiba o total, use um valor aproximado (ex.: page *
-          // pageSize + 1) Recomendo fortemente evoluir sua API para retornar {
-          // items, total }
-          this.totalClientes = this.pageIndex * this.pageSize + res.length;
-        } else {
-          this.dataSource.data = res.items;
-          this.totalClientes = res.total;
-        }
-        this.loading.set(false);
+      next: (result: PageResult<Cliente>) => {
+        this.result = result;
+        this.dataSource.data = result.items;
       },
       error: (error) => {
         console.error(error);
@@ -75,12 +71,6 @@ export class ListagemCliente implements AfterViewInit {
         ).show();
       }
     });
-  }
-
-  onPageChange(event: PageEvent): void {
-    this.pageIndex = event.pageIndex;
-    this.pageSize = event.pageSize;
-    this.listarClientes(this.pageIndex + 1, this.pageSize);
   }
 
   async deletarCliente(id: number): Promise<void> {
@@ -96,7 +86,6 @@ export class ListagemCliente implements AfterViewInit {
             'Sucesso',
             'Cliente deletado com sucesso!'
           ).show();
-          // Recarrega a página atual (mantendo página/size)
           this.listarClientes(this.pageIndex + 1, this.pageSize);
         },
         error: (error) => {

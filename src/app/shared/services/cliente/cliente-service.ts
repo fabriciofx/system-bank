@@ -24,12 +24,7 @@ export class ClienteService {
     return this.http.get<Cliente[]>(this.api);
   }
 
-  paginas(num: number, size: number): Observable<Cliente[]> {
-    const url:string = `${this.api}/?page=${num}&pageSize=${size}`;
-    return this.http.get<Cliente[]>(url);
-  }
-
-  paginas2(num: number, size: number): Observable<PageResult<Cliente>> {
+  paginas(num: number, size: number): Observable<PageResult<Cliente>> {
     const url = `${this.api}/?page=${num}&pageSize=${size}`;
     const urlAll = `${this.api}/?page=1&pageSize=10000`;
     const contas = this.http.get<Cliente[]>(url);

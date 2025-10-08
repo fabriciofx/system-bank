@@ -84,7 +84,7 @@ export class InfiniteSelect implements AfterViewInit {
   }
 
   listarClientes(page: number, pageSize: number): void {
-    this.clienteService.paginas2(page, pageSize).subscribe({
+    this.clienteService.paginas(page, pageSize).subscribe({
       next: (result: PageResult<Cliente>) => {
         this.items = Array.from(
           new Set([

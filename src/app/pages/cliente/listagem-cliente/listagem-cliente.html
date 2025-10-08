@@ -51,6 +51,7 @@
   <mat-paginator
     [pageSizeOptions]="[5, 10, 20]"
     showFirstLastButtons
-    [length]="dataSource.data.length + 1" (page)="onPageChange($event)">
+    [length]="result?.total"
+    (page)="onPageChange($event)">
   </mat-paginator>
 </div>
