@@ -27,11 +27,11 @@ export class ClienteService {
   paginas(num: number, size: number): Observable<PageResult<Cliente>> {
     const url = `${this.api}/?page=${num}&pageSize=${size}`;
     const urlAll = `${this.api}/?page=1&pageSize=10000`;
-    const contas = this.http.get<Cliente[]>(url);
+    const clientes = this.http.get<Cliente[]>(url);
     const all = this.http.get<Cliente[]>(urlAll);
-    const result = combineLatest([contas, all]).pipe(
-      map(([contas, all]) => ({
-        items: contas,
+    const result = combineLatest([clientes, all]).pipe(
+      map(([clientes, all]) => ({
+        items: clientes,
         page: num,
         pageSize: size,
         total: all.length
