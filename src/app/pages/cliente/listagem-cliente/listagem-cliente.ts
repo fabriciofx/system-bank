@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ViewChild, signal } from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
@@ -32,7 +32,6 @@ export class ListagemCliente implements AfterViewInit {
   totalClientes = 0;
   pageIndex = 0;
   pageSize = 5;
-  loading = signal(false);
   result: PageResult<Cliente> | null = null;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -52,7 +51,6 @@ export class ListagemCliente implements AfterViewInit {
   }
 
   listarClientes(page: number, pageSize: number): void {
-    this.loading.set(true);
     this.clienteService.paginas(page, pageSize).subscribe({
       next: (result: PageResult<Cliente>) => {
         this.result = result;
@@ -60,7 +58,6 @@ export class ListagemCliente implements AfterViewInit {
       },
       error: (error) => {
         console.error(error);
-        this.loading.set(false);
         new ErrorMessage(
           'Erro',
           'Não foi possível carregar a lista de clientes.',
