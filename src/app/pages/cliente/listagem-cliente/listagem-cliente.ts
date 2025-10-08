@@ -29,7 +29,6 @@ export class ListagemCliente implements AfterViewInit {
   private readonly clienteService: ClienteService;
   displayedColumns: string[] = ['id', 'nome', 'cpf', 'email', 'status', 'funcoes'];
   dataSource = new MatTableDataSource<Cliente>([]);
-  totalClientes = 0;
   pageIndex = 0;
   pageSize = 5;
   result: PageResult<Cliente> | null = null;
