@@ -38,8 +38,7 @@ export class CadastroConta {
       cliente: new FormControl('', Validators.required),
       numero: new FormControl('', Validators.required),
       agencia: new FormControl('', Validators.required),
-      saldo: new FormControl('', Validators.required),
-      ativa: new FormControl(true)
+      saldo: new FormControl('', Validators.required)
     });
     this.editar = false
   }
@@ -62,7 +61,7 @@ export class CadastroConta {
   }
 
   onClienteSelecionado(event: { value: number }): void {
-    console.log(`cliente selecionado: ${event.value}`);
+    this.formGroup.get('cliente')?.setValue(event.value);
   }
 
   cadastrar() {
@@ -89,7 +88,6 @@ export class CadastroConta {
         }
       });
     } else {
-      // Modo de criação
       this.contaService.insere(conta).subscribe({
         next: () => {
           Swal.fire({
