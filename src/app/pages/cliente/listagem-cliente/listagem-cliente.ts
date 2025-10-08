@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ViewChild, inject, signal } from '@angular/core';
+import { AfterViewInit, Component, ViewChild, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
@@ -26,23 +26,20 @@ import { PageResult } from '../../../shared/page/page-result';
   ],
 })
 export class ListagemCliente implements AfterViewInit {
-  private clienteService = inject(ClienteService);
-
-  // colunas exibidas na tabela
+  private readonly clienteService: ClienteService;
   displayedColumns: string[] = ['id', 'nome', 'cpf', 'email', 'status', 'funcoes'];
-
-  // datasource do Material (poderia ser Cliente[]; usando MatTableDataSource
-  // por compatibilidade com seu template)
   dataSource = new MatTableDataSource<Cliente>([]);
-
-  // paginação (server-side)
   totalClientes = 0;
-  pageIndex = 0; // zero-based para o paginator
+  pageIndex = 0;
   pageSize = 5;
   loading = signal(false);
+  result: PageResult<Cliente> | null = null;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-  result: PageResult<Cliente> | null = null;
+
+  constructor(clienteService: ClienteService) {
+    this.clienteService = clienteService;
+  }
 
   ngAfterViewInit(): void {
     this.listarClientes(this.pageIndex + 1, this.pageSize);
