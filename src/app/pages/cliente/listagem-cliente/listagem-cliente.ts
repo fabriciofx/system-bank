@@ -27,7 +27,6 @@ import { PageResult } from '../../../shared/page/page-result';
 })
 export class ListagemCliente implements AfterViewInit {
   private readonly clienteService: ClienteService;
-  displayedColumns: string[] = ['id', 'nome', 'cpf', 'email', 'status', 'funcoes'];
   dataSource = new MatTableDataSource<Cliente>([]);
   pageIndex = 0;
   pageSize = 5;
@@ -47,6 +46,10 @@ export class ListagemCliente implements AfterViewInit {
     this.pageIndex = event.pageIndex;
     this.pageSize = event.pageSize;
     this.listarClientes(this.pageIndex + 1, this.pageSize);
+  }
+
+  columns(): string[] {
+    return ['id', 'nome', 'cpf', 'email', 'status', 'funcoes'];
   }
 
   listarClientes(page: number, pageSize: number): void {
