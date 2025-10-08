@@ -9,7 +9,7 @@ import { ConfirmMessage, SuccessMessage, ErrorMessage } from '../../../shared/cu
 import { ClienteService } from '../../../shared/services/cliente/cliente-service';
 import { Cliente } from '../../../shared/models/cliente';
 import { ErrorReasons } from '../../../shared/custom/error-reasons';
-import { PageResult } from '../../../shared/page/page-result';
+import { PageResult } from '../../../shared/custom/page-result';
 import { Box, BoxOf } from '../../../shared/custom/box';
 
 @Component({

@@ -8,7 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { Conta } from '../../../shared/models/conta';
 import { ContaService } from '../../../shared/services/conta/conta-service';
 import { ErrorReasons } from '../../../shared/custom/error-reasons';
-import { PageResult } from '../../../shared/page/page-result';
+import { PageResult } from '../../../shared/custom/page-result';
 import {
   ConfirmMessage,
   ErrorMessage,

@@ -1,5 +1,3 @@
-import { Page } from "../page/page";
-
 export class ErrorReasons {
   private readonly error: any;
 
@@ -18,7 +16,7 @@ export class ErrorReasons {
             reasons.push(`${attr}: ${msg}`);
           }
         } else if (typeof reason === 'string') {
-          if (!new Page(reason).isHtml()) {
+          if (!new Reason(reason).isHtml()) {
             reasons.push(`${attr}: ${reason}`);
           }
         }
@@ -29,5 +27,17 @@ export class ErrorReasons {
 
   asHtml(): string {
     return `<ul style="text-align: left;">${this.content().map(msg => `<li>${msg}</li>`).join('')}</ul>`;
+  }
+}
+
+class Reason {
+  private readonly text: string
+
+  constructor(text: string) {
+    this.text = text;
+  }
+
+  isHtml(): boolean {
+    return /<\/?[a-z][\w-]*\b[^>]*>/i.test(this.text);
   }
 }

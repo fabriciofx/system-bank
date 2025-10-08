@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { combineLatest, map, Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment.development';
 import { Cliente } from '../../models/cliente';
-import { PageResult } from '../../page/page-result';
+import { PageResult } from '../../custom/page-result';
 
 @Injectable({
   providedIn: 'root'

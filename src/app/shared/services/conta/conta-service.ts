@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment.development';
 import { map, combineLatest, Observable } from 'rxjs';
 import { Conta } from '../../models/conta';
-import { PageResult } from '../../page/page-result';
+import { PageResult } from '../../custom/page-result';
 
 @Injectable({
   providedIn: 'root'

@@ -3,7 +3,7 @@ import { AfterViewInit, ChangeDetectorRef, Component, EventEmitter, inject, Inpu
 import { FormsModule } from '@angular/forms';
 import { MatSelect, MatSelectModule } from '@angular/material/select';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { PageResult } from '../../page/page-result';
+import { PageResult } from '../../custom/page-result';
 import { Cliente } from '../../models/cliente';
 import { ClienteService } from '../../services/cliente/cliente-service';
 import { ErrorMessage } from '../../custom/message';
