@@ -5,12 +5,12 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { ConfirmMessage, SuccessMessage, ErrorMessage } from '../../../shared/message/message';
+import { ConfirmMessage, SuccessMessage, ErrorMessage } from '../../../shared/custom/message';
 import { ClienteService } from '../../../shared/services/cliente/cliente-service';
 import { Cliente } from '../../../shared/models/cliente';
-import { SbError } from '../../../shared/error/sb-error';
+import { SbError } from '../../../shared/custom/sb-error';
 import { PageResult } from '../../../shared/page/page-result';
-import { Box, BoxOf } from '../../../shared/box/box';
+import { Box, BoxOf } from '../../../shared/custom/box';
 
 @Component({
   selector: 'app-listagem-cliente',

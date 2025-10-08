@@ -7,14 +7,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { Conta } from '../../../shared/models/conta';
 import { ContaService } from '../../../shared/services/conta/conta-service';
-import { SbError } from '../../../shared/error/sb-error';
+import { SbError } from '../../../shared/custom/sb-error';
 import { PageResult } from '../../../shared/page/page-result';
 import {
   ConfirmMessage,
   ErrorMessage,
   SuccessMessage
-} from '../../../shared/message/message';
-import { Box, BoxOf } from '../../../shared/box/box';
+} from '../../../shared/custom/message';
+import { Box, BoxOf } from '../../../shared/custom/box';
 
 @Component({
   selector: 'app-listagem-conta',

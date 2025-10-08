@@ -12,9 +12,9 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatInputModule } from '@angular/material/input';
 import { ClienteService } from '../../../shared/services/cliente/cliente-service';
 import { Cliente } from '../../../shared/models/cliente';
-import { SbError } from '../../../shared/error/sb-error';
-import { SuccessMessage, ErrorMessage } from '../../../shared/message/message';
-import { Box, BoxOf } from '../../../shared/box/box';
+import { SbError } from '../../../shared/custom/sb-error';
+import { SuccessMessage, ErrorMessage } from '../../../shared/custom/message';
+import { Box, BoxOf } from '../../../shared/custom/box';
 
 @Component({
   selector: 'app-cadastro-cliente',

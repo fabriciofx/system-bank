@@ -8,9 +8,9 @@ import { MatRadioModule } from '@angular/material/radio';
 import { CommonModule } from '@angular/common';
 import { Conta } from '../../../shared/models/conta';
 import { InfiniteSelect } from "../../../shared/components/infinite-select/infinite-select";
-import { Box, BoxOf } from '../../../shared/box/box';
-import { ErrorMessage, SuccessMessage } from '../../../shared/message/message';
-import { SbError } from '../../../shared/error/sb-error';
+import { Box, BoxOf } from '../../../shared/custom/box';
+import { ErrorMessage, SuccessMessage } from '../../../shared/custom/message';
+import { SbError } from '../../../shared/custom/sb-error';
 
 @Component({
   selector: 'app-cadastro-conta',

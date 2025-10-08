@@ -6,8 +6,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { PageResult } from '../../page/page-result';
 import { Cliente } from '../../models/cliente';
 import { ClienteService } from '../../services/cliente/cliente-service';
-import { ErrorMessage } from '../../message/message';
-import { SbError } from '../../error/sb-error';
+import { ErrorMessage } from '../../custom/message';
+import { SbError } from '../../custom/sb-error';
 
 @Component({
   selector: 'app-infinite-select',

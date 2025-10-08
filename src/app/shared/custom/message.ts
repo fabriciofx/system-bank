@@ -1,5 +1,5 @@
 import Swal from "sweetalert2";
-import { SbError } from "../error/sb-error";
+import { SbError } from "./sb-error";
 
 export class SuccessMessage {
   private readonly title: string;
