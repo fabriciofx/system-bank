@@ -5,8 +5,6 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { Conta } from '../../../shared/models/conta';
-import { ContaService } from '../../../shared/services/conta/conta-service';
 import { ErrorReasons } from '../../../shared/custom/error-reasons';
 import { PageResult } from '../../../shared/custom/page-result';
 import {
@@ -15,6 +13,8 @@ import {
   SuccessMessage
 } from '../../../shared/custom/message';
 import { Box, BoxOf } from '../../../shared/custom/box';
+import { ContaClienteService } from '../../../shared/services/conta-cliente/conta-cliente-service';
+import { ContaCliente } from '../../../shared/models/conta-cliente';
 
 @Component({
   selector: 'app-listagem-conta',
@@ -30,14 +30,14 @@ import { Box, BoxOf } from '../../../shared/custom/box';
   styleUrl: './listagem-conta.scss'
 })
 export class ListagemConta implements AfterViewInit {
-  private readonly contaService: ContaService;
-  private readonly dataSource: MatTableDataSource<Conta>;
-  private readonly result: Box<PageResult<Conta>>;
+  private readonly contaClienteService: ContaClienteService;
+  private readonly dataSource: MatTableDataSource<ContaCliente>;
+  private readonly result: Box<PageResult<ContaCliente>>;
 
-  constructor(contaService: ContaService) {
-    this.contaService = contaService;
-    this.dataSource = new MatTableDataSource<Conta>();
-    this.result = new BoxOf<PageResult<Conta>>({
+  constructor(contaClienteService: ContaClienteService) {
+    this.contaClienteService = contaClienteService;
+    this.dataSource = new MatTableDataSource<ContaCliente>();
+    this.result = new BoxOf<PageResult<ContaCliente>>({
       items: [], page: 1, pageSize: 5, total: 5
     });
   }
@@ -57,7 +57,7 @@ export class ListagemConta implements AfterViewInit {
     this.carregaContas(this.result.value().page, this.result.value().pageSize);
   }
 
-  source(): MatTableDataSource<Conta> {
+  source(): MatTableDataSource<ContaCliente> {
     return this.dataSource;
   }
 
@@ -65,13 +65,13 @@ export class ListagemConta implements AfterViewInit {
     return ['id', 'cliente', 'numero', 'agencia', 'saldo', 'funcoes'];
   }
 
-  content(): PageResult<Conta> {
+  content(): PageResult<ContaCliente> {
     return this.result.value();
   }
 
   carregaContas(page: number, pageSize: number): void {
-    this.contaService.paginas(page, pageSize).subscribe({
-      next: (result: PageResult<Conta>) => {
+    this.contaClienteService.paginas(page, pageSize).subscribe({
+      next: (result: PageResult<ContaCliente>) => {
         this.result.store(result);
         this.dataSource.data = result.items;
       },
@@ -93,7 +93,7 @@ export class ListagemConta implements AfterViewInit {
       'Deletar'
     ).show()
     if (result.isConfirmed) {
-      this.contaService.delete(id).subscribe({
+      this.contaClienteService.delete(id).subscribe({
         next: () => {
           new SuccessMessage(
             'Sucesso',
@@ -117,5 +117,5 @@ export class ListagemConta implements AfterViewInit {
   }
 
   // opcional: performance ao renderizar linhas
-  trackById = (_: number, item: Conta) => item.id;
+  trackById = (_: number, item: ContaCliente) => item.id;
 }
