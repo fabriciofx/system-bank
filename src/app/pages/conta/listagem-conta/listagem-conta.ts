@@ -89,7 +89,7 @@ export class ListagemConta implements AfterViewInit {
     });
   }
 
-  async deletaConta(id: number): Promise<void> {
+  async deleteConta(id: number): Promise<void> {
     const answer = await new ConfirmMessage(
       'Você tem certeza que deseja deletar?',
       'Não tem como reverter essa ação',
