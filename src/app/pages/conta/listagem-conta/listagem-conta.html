@@ -15,7 +15,7 @@
     <ng-container matColumnDef="cliente">
       <th mat-header-cell *matHeaderCellDef> Cliente </th>
       <td mat-cell *matCellDef="let element">
-        {{ `${element.cliente.nome} (${element.cliente.cpf})` }}
+        {{ element.cliente.asString() }}
       </td>
     </ng-container>
     <!-- Coluna Numero -->

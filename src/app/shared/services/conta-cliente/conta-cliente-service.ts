@@ -5,7 +5,7 @@ import { ContaCliente } from '../../models/conta-cliente';
 import { combineLatest, map, Observable } from 'rxjs';
 import { PageResult } from '../../custom/page-result';
 import { environment } from '../../../../environments/environment.development';
-import { ClienteDe } from '../../models/cliente';
+import { Cliente, ClienteDe } from '../../models/cliente';
 import { ContaService } from '../conta/conta-service';
 import { Conta } from '../../models/conta';
 
@@ -26,15 +26,15 @@ export class ContaClienteService implements Paginated<ContaCliente> {
       `${environment.api}/contas/?page=1&pageSize=10000`
     );
     const contas = this.contaService.paginas(num, size);
-    const clientes = this.http.get<ClienteDe[]>(`${environment.api}/clientes/`);
+    const clientes = this.http.get<Cliente[]>(`${environment.api}/clientes/`);
     const merge = combineLatest([contas, clientes]).pipe(
       map(([contas, clientes]) => {
-        const mapClientes = new Map(
-          clientes.map(cliente => [cliente.id, cliente])
+        const mapa = new Map(
+          clientes.map(cliente => [cliente.id, new ClienteDe(cliente)])
         );
         const contasClientes = contas.items.map(conta => ({
             ...conta,
-            cliente: mapClientes.get(conta.cliente)
+            cliente: mapa.get(conta.cliente)
           })
         );
         return {
