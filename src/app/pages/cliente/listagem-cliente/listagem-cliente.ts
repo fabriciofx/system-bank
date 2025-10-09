@@ -86,7 +86,7 @@ export class ListagemCliente implements AfterViewInit {
     });
   }
 
-  async deletarCliente(id: number): Promise<void> {
+  async deleteCliente(id: number): Promise<void> {
     const result = await new ConfirmMessage(
       'Você tem certeza que deseja deletar?',
       'Não tem como reverter essa ação',
