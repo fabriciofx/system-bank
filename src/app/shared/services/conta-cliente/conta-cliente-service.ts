@@ -55,7 +55,7 @@ export class ContaClienteService implements Paginated<ContaCliente> {
     );
   }
 
-  delete(id: number): Observable<object> {
-    return this.http.delete(`${environment.api}/clientes/${id}`);
+  delete(id: number): Observable<ContaCliente> {
+    return this.http.delete<ContaCliente>(`${environment.api}/contas/${id}`);
   }
 }

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component } from '@angular/core';
+import { AfterViewInit, Component, computed, Signal, signal, WritableSignal } from '@angular/core';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { CommonModule } from '@angular/common';
@@ -12,9 +12,9 @@ import {
   ErrorMessage,
   SuccessMessage
 } from '../../../shared/custom/message';
-import { Box, BoxOf } from '../../../shared/custom/box';
 import { ContaClienteService } from '../../../shared/services/conta-cliente/conta-cliente-service';
 import { ContaCliente } from '../../../shared/models/conta-cliente';
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 
 @Component({
   selector: 'app-listagem-conta',
@@ -25,36 +25,34 @@ import { ContaCliente } from '../../../shared/models/conta-cliente';
     MatPaginatorModule,
     MatIconModule,
     MatButtonModule,
+    MatProgressSpinnerModule
   ],
   templateUrl: './listagem-conta.html',
   styleUrl: './listagem-conta.scss'
 })
 export class ListagemConta implements AfterViewInit {
   private readonly contaClienteService: ContaClienteService;
+  private readonly result: WritableSignal<PageResult<ContaCliente>>;
   private readonly dataSource: MatTableDataSource<ContaCliente>;
-  private readonly result: Box<PageResult<ContaCliente>>;
+  private readonly busy: WritableSignal<boolean>;
+  private readonly full: Signal<number>;
 
   constructor(contaClienteService: ContaClienteService) {
     this.contaClienteService = contaClienteService;
-    this.dataSource = new MatTableDataSource<ContaCliente>();
-    this.result = new BoxOf<PageResult<ContaCliente>>({
-      items: [], page: 1, pageSize: 5, total: 5
+    this.result = signal<PageResult<ContaCliente>>({
+      items: [], page: 1, pageSize: 5, total: 0
     });
-  }
+    this.dataSource = new MatTableDataSource<ContaCliente>();
+    this.busy = signal(true);
+    this.full = computed(() => this.result().total ?? 0);
+}
 
   ngAfterViewInit(): void {
-    this.carregaContas(this.result.value().page, this.result.value().pageSize);
+    this.load(1, 5);
   }
 
   onPageChange(event: PageEvent): void {
-    const old = this.result.value();
-    this.result.store({
-      items: old.items,
-      page: event.pageIndex + 1,
-      pageSize: event.pageSize,
-      total: old.total
-    });
-    this.carregaContas(this.result.value().page, this.result.value().pageSize);
+    this.load(event.pageIndex + 1, event.pageSize);
   }
 
   source(): MatTableDataSource<ContaCliente> {
@@ -65,18 +63,23 @@ export class ListagemConta implements AfterViewInit {
     return ['id', 'cliente', 'numero', 'agencia', 'saldo', 'funcoes'];
   }
 
-  content(): PageResult<ContaCliente> {
-    return this.result.value();
+  total(): number {
+    return this.full();
   }
 
-  carregaContas(page: number, pageSize: number): void {
-    this.contaClienteService.paginas(page, pageSize).subscribe({
+  loading(): boolean {
+    return this.busy();
+  }
+
+  load(index: number, size: number): void {
+    this.busy.set(true);
+    this.contaClienteService.paginas(index, size).subscribe({
       next: (result: PageResult<ContaCliente>) => {
-        this.result.store(result);
+        this.result.set(result);
         this.dataSource.data = result.items;
+        this.busy.set(false);
       },
       error: (error) => {
-        console.error(error);
         new ErrorMessage(
           'Erro',
           'Não foi possível carregar a lista de contas do cliente.',
@@ -87,25 +90,21 @@ export class ListagemConta implements AfterViewInit {
   }
 
   async deletaConta(id: number): Promise<void> {
-    const result = await new ConfirmMessage(
+    const answer = await new ConfirmMessage(
       'Você tem certeza que deseja deletar?',
       'Não tem como reverter essa ação',
       'Deletar'
     ).show()
-    if (result.isConfirmed) {
+    if (answer.isConfirmed) {
       this.contaClienteService.delete(id).subscribe({
         next: () => {
           new SuccessMessage(
             'Sucesso',
             'Conta deletada com sucesso!'
           ).show();
-          this.carregaContas(
-            this.result.value().page,
-            this.result.value().pageSize
-          );
+          this.load(this.result().page, this.result().pageSize);
         },
         error: (error) => {
-          console.error(error);
           new ErrorMessage(
             'Oops...',
             'Erro ao deletar a conta!',
