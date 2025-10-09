@@ -11,7 +11,7 @@ import { Paginated } from '../../custom/paginated';
 })
 export class ClienteService implements Paginated<Cliente> {
   private readonly http: HttpClient;
-  private readonly api:string = `${environment.api}/clientes`;
+  private readonly api = `${environment.api}/clientes`;
 
   constructor(http: HttpClient) {
     this.http = http;

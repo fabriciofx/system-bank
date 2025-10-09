@@ -11,7 +11,7 @@ import { Paginated } from '../../custom/paginated';
 })
 export class ContaService implements Paginated<Conta> {
   private readonly http: HttpClient;
-  private readonly api:string = `${environment.api}/contas`;
+  private readonly api = `${environment.api}/contas`;
 
   constructor(http: HttpClient) {
     this.http = http;
