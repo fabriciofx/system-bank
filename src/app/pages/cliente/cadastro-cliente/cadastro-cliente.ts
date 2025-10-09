@@ -57,7 +57,7 @@ export class CadastroCliente {
   ngOnInit(): void {
     if (this.route.snapshot.params["id"]) {
       this.editar.store(true);
-      this.clienteService.pesquisaPorId(
+      this.clienteService.pesquisePorId(
         this.route.snapshot.params["id"]
       ).subscribe(
         cliente => {

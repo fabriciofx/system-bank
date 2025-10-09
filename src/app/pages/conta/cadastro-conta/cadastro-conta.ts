@@ -60,7 +60,7 @@ export class CadastroConta {
   ngOnInit(): void {
     if (this.route.snapshot.params["id"]) {
       this.editar.store(true);
-      this.contaService.pesquisaPorId(
+      this.contaService.pesquisePorId(
         this.route.snapshot.params["id"]
       ).subscribe(
         conta => {
