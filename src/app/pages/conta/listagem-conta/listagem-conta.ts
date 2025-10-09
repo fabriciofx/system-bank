@@ -14,7 +14,7 @@ import {
 } from '../../../shared/custom/message';
 import { ContaClienteService } from '../../../shared/services/conta-cliente/conta-cliente-service';
 import { ContaCliente } from '../../../shared/models/conta-cliente';
-import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+import { LoadingSpinner } from "../../../shared/components/loading-spinner/loading-spinner";
 
 @Component({
   selector: 'app-listagem-conta',
@@ -25,8 +25,8 @@ import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
     MatPaginatorModule,
     MatIconModule,
     MatButtonModule,
-    MatProgressSpinnerModule
-  ],
+    LoadingSpinner
+],
   templateUrl: './listagem-conta.html',
   styleUrl: './listagem-conta.scss'
 })

@@ -7,9 +7,7 @@
   </div>
   <!-- Loading Spinner -->
   @if (loading()) {
-    <div class="spinner-container overlay">
-      <mat-spinner diameter="60"></mat-spinner>
-    </div>
+    <app-loading-spinner></app-loading-spinner>
   }
   @if (!loading()) {
     <table mat-table class="mt-5" [dataSource]="source()">

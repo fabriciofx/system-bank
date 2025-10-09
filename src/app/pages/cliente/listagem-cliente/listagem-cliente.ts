@@ -10,7 +10,7 @@ import { ClienteService } from '../../../shared/services/cliente/cliente-service
 import { Cliente } from '../../../shared/models/cliente';
 import { ErrorReasons } from '../../../shared/custom/error-reasons';
 import { PageResult } from '../../../shared/custom/page-result';
-import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+import { LoadingSpinner } from "../../../shared/components/loading-spinner/loading-spinner";
 
 @Component({
   selector: 'app-listagem-cliente',
@@ -24,8 +24,8 @@ import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
     MatPaginatorModule,
     MatIconModule,
     MatButtonModule,
-    MatProgressSpinnerModule
-  ],
+    LoadingSpinner
+  ]
 })
 export class ListagemCliente implements AfterViewInit {
   private readonly clienteService: ClienteService;
