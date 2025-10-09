@@ -87,12 +87,12 @@ export class ListagemCliente implements AfterViewInit {
   }
 
   async deleteCliente(id: number): Promise<void> {
-    const result = await new ConfirmMessage(
+    const answer = await new ConfirmMessage(
       'Você tem certeza que deseja deletar?',
       'Não tem como reverter essa ação',
       'Deletar'
     ).show()
-    if (result.isConfirmed) {
+    if (answer.isConfirmed) {
       this.clienteService.delete(id).subscribe({
         next: () => {
           new SuccessMessage(
