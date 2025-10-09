@@ -40,8 +40,8 @@ export class ContaService implements Paginated<Conta> {
     return result;
   }
 
-  delete(id: number): Observable<object> {
-    return this.http.delete(`${env.API}/contas/${id}`)
+  delete(id: number): Observable<Conta> {
+    return this.http.delete<Conta>(`${env.API}/contas/${id}`)
   }
 
   pesquisaPorId(id: number): Observable<Conta> {
