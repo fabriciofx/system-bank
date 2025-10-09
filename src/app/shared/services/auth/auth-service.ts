@@ -11,7 +11,6 @@ import Swal from 'sweetalert2';
 export class AuthService {
   private readonly router: Router;
   private readonly http: HttpClient;
-  private readonly api = `${env.API}/token/` ;
 
   constructor(http: HttpClient, router: Router) {
     this.http = http;
@@ -19,7 +18,7 @@ export class AuthService {
   }
 
   login(auth: Auth) {
-    return this.http.post(this.api, auth).subscribe(
+    return this.http.post(`${env.API}/token/`, auth).subscribe(
       {
         next: (response) => {
           localStorage.setItem('access_token', (response as any).access);
@@ -47,7 +46,7 @@ export class AuthService {
   }
 
   refreshToken(refresh: string) {
-    return this.http.post(`${this.api}refresh/`, { refresh });
+    return this.http.post<string>(`${env.API}/refresh/`, { refresh });
   }
 
   getRefresh(): string | null {
