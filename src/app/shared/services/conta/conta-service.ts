@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from '../../../../environments/environment.development';
+import { env } from '../../../../environments/env.dev';
 import { map, combineLatest, Observable } from 'rxjs';
 import { Conta } from '../../models/conta';
 import { PageResult } from '../../custom/page-result';
@@ -11,7 +11,7 @@ import { Paginated } from '../../custom/paginated';
 })
 export class ContaService implements Paginated<Conta> {
   private readonly http: HttpClient;
-  private readonly api = `${environment.api}/contas`;
+  private readonly api = `${env.API}/contas`;
 
   constructor(http: HttpClient) {
     this.http = http;

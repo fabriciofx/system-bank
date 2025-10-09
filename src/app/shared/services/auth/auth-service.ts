@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Auth } from '../../models/auth';
-import { environment } from '../../../../environments/environment.development';
+import { env } from '../../../../environments/env.dev';
 import Swal from 'sweetalert2';
 
 @Injectable({
@@ -11,7 +11,7 @@ import Swal from 'sweetalert2';
 export class AuthService {
   private readonly router: Router;
   private readonly http: HttpClient;
-  private readonly api = `${environment.api}/token/` ;
+  private readonly api = `${env.API}/token/` ;
 
   constructor(http: HttpClient, router: Router) {
     this.http = http;

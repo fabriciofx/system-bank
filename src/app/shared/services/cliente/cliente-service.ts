@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { combineLatest, map, Observable } from 'rxjs';
-import { environment } from '../../../../environments/environment.development';
+import { env } from '../../../../environments/env.dev';
 import { Cliente, ClienteDe } from '../../models/cliente';
 import { PageResult } from '../../custom/page-result';
 import { Paginated } from '../../custom/paginated';
@@ -11,7 +11,7 @@ import { Paginated } from '../../custom/paginated';
 })
 export class ClienteService implements Paginated<Cliente> {
   private readonly http: HttpClient;
-  private readonly api = `${environment.api}/clientes`;
+  private readonly api = `${env.API}/clientes`;
 
   constructor(http: HttpClient) {
     this.http = http;
