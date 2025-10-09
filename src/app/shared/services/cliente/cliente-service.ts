@@ -11,23 +11,22 @@ import { Paginated } from '../../custom/paginated';
 })
 export class ClienteService implements Paginated<Cliente> {
   private readonly http: HttpClient;
-  private readonly api = `${env.API}/clientes`;
 
   constructor(http: HttpClient) {
     this.http = http;
   }
 
   insere(cliente: Cliente): Observable<Cliente> {
-    return this.http.post<Cliente>(`${this.api}/`, cliente);
+    return this.http.post<Cliente>(`${env.API}/clientes/`, cliente);
   }
 
   liste(): Observable<Cliente[]> {
-    return this.http.get<Cliente[]>(this.api);
+    return this.http.get<Cliente[]>(`${env.API}/clientes/`);
   }
 
   paginas(num: number, size: number): Observable<PageResult<Cliente>> {
-    const url = `${this.api}/?page=${num}&pageSize=${size}`;
-    const urlAll = `${this.api}/?page=1&pageSize=10000`;
+    const url = `${env.API}/clientes/?page=${num}&pageSize=${size}`;
+    const urlAll = `${env.API}/clientes/?page=1&pageSize=10000`;
     const clientes = this.http.get<ClienteDe[]>(url);
     const all = this.http.get<ClienteDe[]>(urlAll);
     const result = combineLatest([clientes, all]).pipe(
@@ -42,14 +41,17 @@ export class ClienteService implements Paginated<Cliente> {
   }
 
   delete(id: number): Observable<object> {
-    return this.http.delete(`${this.api}/${id}`)
+    return this.http.delete(`${env.API}/clientes/${id}`)
   }
 
   pesquisaPorId(id: number): Observable<Cliente> {
-    return this.http.get<Cliente>(`${this.api}/${id}`);
+    return this.http.get<Cliente>(`${env.API}/clientes/${id}`);
   }
 
   atualize(cliente: Cliente): Observable<Cliente> {
-    return this.http.put<Cliente>(`${this.api}/${cliente.id}/`, cliente);
+    return this.http.put<Cliente>(
+      `${env.API}/clientes/${cliente.id}/`,
+      cliente
+    );
   }
 }
