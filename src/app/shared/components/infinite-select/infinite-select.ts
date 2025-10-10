@@ -8,6 +8,7 @@ import { ErrorMessage } from '../../custom/message';
 import { ErrorReasons } from '../../custom/error-reasons';
 import { Paginated } from '../../custom/paginated';
 import { Text } from '../../custom/text';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-infinite-select',
@@ -93,7 +94,7 @@ export class InfiniteSelect<T extends Text> implements AfterViewInit {
         );
         this.result = result;
       },
-      error: (error) => {
+      error: (error: HttpErrorResponse) => {
         console.error(error);
         new ErrorMessage(
           'Error',
