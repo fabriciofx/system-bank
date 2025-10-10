@@ -1,0 +1,33 @@
+<div class="container mt-5 d-flex justify-content-center" >
+  <div>
+    <h1>Saque</h1>
+    <form [formGroup]="form()" class="example-form mt-4" (ngSubmit)="saque()">
+      <!-- Select da Conta -->
+      <app-infinite-select
+        [paginated]="contas()"
+        placeholder="Selecione uma conta"
+        [pageSize]="20"
+        (itemSelected)="onContaSelecionada($event)">
+      </app-infinite-select>
+      <!-- Input do Valor -->
+      @if (form().get('valor')?.errors &&
+        form().get('valor')?.hasError('required')) {
+        <small class="text-danger mb-2">Campo obrigatório</small>
+      }
+      <mat-form-field class="example-full-width">
+        <mat-label>Valor</mat-label>
+        <input matInput formControlName="valor">
+      </mat-form-field>
+      <!-- Botão de submissão do formulário -->
+      <div class="d-flex justify-content-center">
+        <button
+          [disabled]="!form().valid"
+          type="submit"
+          mat-raised-button
+          color="primary">
+          Sacar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

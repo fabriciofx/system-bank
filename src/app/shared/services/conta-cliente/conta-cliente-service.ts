@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Paginated } from '../../custom/paginated';
-import { ContaCliente } from '../../models/conta-cliente';
+import { ContaCliente, ContaClienteDe } from '../../models/conta-cliente';
 import { combineLatest, map, Observable } from 'rxjs';
 import { PageResult } from '../../custom/page-result';
 import { env } from '../../../../environments/env.dev';
@@ -36,7 +36,7 @@ export class ContaClienteService implements Paginated<ContaCliente> {
             ...conta,
             cliente: mapa.get(conta.cliente)
           })
-        );
+        ).map(conta => new ContaClienteDe(conta));
         return {
           items: contasClientes,
           page: num,

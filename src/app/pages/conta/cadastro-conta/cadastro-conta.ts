@@ -94,7 +94,6 @@ export class CadastroConta {
           this.router.navigate(['/conta']);
         },
         error: (error) => {
-          console.error(error);
           new ErrorMessage(
             'Oops...',
             'Erro ao atualizar a conta!',
@@ -112,7 +111,6 @@ export class CadastroConta {
           this.router.navigate(['/conta']);
         },
         error: (error) => {
-          console.error(error);
           new ErrorMessage(
             'Oops...',
             'Erro ao cadastrar a conta!',

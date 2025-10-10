@@ -1,9 +1,14 @@
 <div class="container mt-5">
   <div class="d-flex justify-content-between">
     <h1>Listagem de contas</h1>
-    <button mat-raised-button color="primary" routerLink="/conta/nova">
-      Nova conta
-    </button>
+    <div class="d-flex btn-spacing">
+      <button mat-raised-button color="primary" routerLink="/conta/nova">
+        Nova conta
+      </button>
+      <button mat-raised-button color="primary" routerLink="/conta/saque">
+        Saque
+      </button>
+    </div>
   </div>
   <!-- Loading Spinner -->
   @if (loading()) {

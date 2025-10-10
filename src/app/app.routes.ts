@@ -4,6 +4,7 @@ import { ListagemCliente } from './pages/cliente/listagem-cliente/listagem-clien
 import { LoginTemplate } from './pages/auth/login-template/login-template';
 import { CadastroConta } from './pages/conta/cadastro-conta/cadastro-conta';
 import { ListagemConta } from './pages/conta/listagem-conta/listagem-conta';
+import { SaqueConta } from './pages/conta/saque-conta/saque-conta';
 
 export const routes: Routes = [
   {
@@ -47,6 +48,10 @@ export const routes: Routes = [
         path: '',
         component: ListagemConta,
       },
+      {
+        path: 'saque',
+        component: SaqueConta
+      }
     ]
   }
 ];

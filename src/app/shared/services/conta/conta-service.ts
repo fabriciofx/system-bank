@@ -2,9 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { env } from '../../../../environments/env.dev';
 import { map, combineLatest, Observable } from 'rxjs';
-import { Conta } from '../../models/conta';
+import { Conta, ContaDe } from '../../models/conta';
 import { PageResult } from '../../custom/page-result';
 import { Paginated } from '../../custom/paginated';
+import { Saque } from '../../models/saque';
 
 @Injectable({
   providedIn: 'root'
@@ -27,11 +28,11 @@ export class ContaService implements Paginated<Conta> {
   paginas(num: number, size: number): Observable<PageResult<Conta>> {
     const url = `${env.API}/contas/?page=${num}&pageSize=${size}`;
     const urlAll = `${env.API}/contas/?page=1&pageSize=10000`;
-    const contas = this.http.get<Conta[]>(url);
-    const all = this.http.get<Conta[]>(urlAll);
+    const contas = this.http.get<ContaDe[]>(url);
+    const all = this.http.get<ContaDe[]>(urlAll);
     const result = combineLatest([contas, all]).pipe(
       map(([contas, all]) => ({
-        items: contas,
+        items: contas.map(conta => new ContaDe(conta)),
         page: num,
         pageSize: size,
         total: all.length
@@ -50,5 +51,10 @@ export class ContaService implements Paginated<Conta> {
 
   atualize(conta: Conta): Observable<Conta> {
     return this.http.put<Conta>(`${env.API}/contas/${conta.id}`, conta);
+  }
+
+  saque(saque: Saque): Observable<Saque> {
+    const url = `${env.API}/contas/${saque.conta}/saque/`;
+    return this.http.post<Saque>(url, saque);
   }
 }
