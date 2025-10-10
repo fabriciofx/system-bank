@@ -10,60 +10,67 @@ import { catchError, switchMap, throwError } from 'rxjs';
 
 const RETRY_FLAG = new HttpContextToken<boolean>(() => false);
 
-// Helper: adiciona o header Authorization se existir token
-function withAuth(req: HttpRequest<any>, token: string | null) {
-  return token ?
-    req.clone({ setHeaders: { Authorization: `Bearer ${token}` } })
-    : req;
+// Adiciona o header Authorization se existir token
+function withAuth(request: HttpRequest<any>, token: string): HttpRequest<any> {
+  if (token) {
+    return request.clone({ setHeaders: { Authorization: `Bearer ${token}` } })
+  } else {
+    return request;
+  }
 }
 
-// Evita interceptar as rotas de autenticação
-function isAuthRoute(url: string) {
+// Verifica se é uma rota de autenticação
+function isAuthRoute(url: string): boolean {
   return url.includes('/token/');
 }
 
-export const authInterceptor: HttpInterceptorFn = (req, next) => {
-  const auth = inject(AuthService);
+export const authInterceptor: HttpInterceptorFn = (request, next) => {
+  const authService = inject(AuthService);
   // Não intercepta login/refresh
-  if (isAuthRoute(req.url)) return next(req);
+  if (isAuthRoute(request.url)) {
+    return next(request);
+  }
   // 1) Envia a requisição com o access token atual (se existir)
-  const reqWithToken = withAuth(req, auth.getToken());
-  return next(reqWithToken).pipe(
+  const requestWithToken = withAuth(request, authService.getToken());
+  return next(requestWithToken).pipe(
     catchError((error: HttpErrorResponse) => {
       // Se não for 401, só propaga o erro
-      if (error.status !== 401) return throwError(() => error);
+      if (error.status !== 401) {
+        return throwError(() => error);
+      }
       // Evita loop: só tentamos 1x o refresh por requisição
-      const alreadyTried = req.context.has(RETRY_FLAG);
+      const alreadyTried = request.context.has(RETRY_FLAG);
       if (alreadyTried) {
-        auth.logout(); // sessão realmente inválida
+        // Sessão realmente inválida
+        authService.logout();
         return throwError(() => error);
       }
       // 2) Tenta o refresh usando o refresh_token salvo
-      const refresh = auth.getRefresh();
+      const refresh = authService.getRefresh();
       if (!refresh) {
-        auth.logout();
+        authService.logout();
         return throwError(() => error);
       }
-      return auth.refreshToken(refresh).pipe(
-        switchMap((resp: any) => {
+      return authService.refreshToken(refresh).pipe(
+        switchMap((response: any) => {
           // SimpleJWT costuma devolver { access: '...' }
-          const newAccess = resp?.access;
+          const newAccess = response?.access;
           if (!newAccess) {
-            auth.logout();
+            authService.logout();
             return throwError(() => error);
           }
           // Salva novo access e reenvia a mesma requisição com ele
           localStorage.setItem('access_token', newAccess);
           const retried = withAuth(
-            req.clone({ context: req.context.set(RETRY_FLAG, true) }),
+            request.clone({ context: request.context.set(RETRY_FLAG, true) }),
             newAccess
           );
           return next(retried);
         }),
-        catchError((err) => {
+        catchError((error) => {
           // Refresh falhou → força login
-          auth.logout();
-          return throwError(() => err);
+          authService.logout();
+          return throwError(() => error);
         })
       );
     })
