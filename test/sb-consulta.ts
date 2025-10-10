@@ -1,7 +1,7 @@
-const urlBase3 = 'https://aula-angular.bcorp.tec.br/api';
-const urlAuth3 = `${urlBase3}/token/`;
+const api = 'https://aula-angular.bcorp.tec.br/api';
+const urlAuth = `${api}/token/`;
 
-async function authenticate3(url: string): Promise<any> {
+async function authenticate(url: string): Promise<any> {
   try {
     const response = await fetch(
       url,
@@ -50,11 +50,11 @@ async function consulta(
   }
 }
 
-async function main3(): Promise<void> {
+async function main(): Promise<void> {
   const args = process.argv.slice(2);
-  const auth = await authenticate3(urlAuth3);
+  const auth = await authenticate(urlAuth);
   const response = await consulta(args[0], auth.access);
   console.log(response);
 }
 
-main3();
+main();
