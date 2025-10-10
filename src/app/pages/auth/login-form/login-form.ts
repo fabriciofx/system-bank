@@ -11,6 +11,11 @@ import {
 import { AuthService } from '../../../shared/services/auth/auth-service';
 import { Auth } from '../../../shared/models/auth';
 
+type AuthFormGroup = FormGroup<{
+  username: FormControl<string>;
+  password: FormControl<string>;
+}>;
+
 @Component({
   selector: 'app-login-form',
   imports: [CommonModule, FormsModule, ReactiveFormsModule],
@@ -20,14 +25,20 @@ import { Auth } from '../../../shared/models/auth';
 export class LoginForm {
   private readonly router: Router;
   private readonly authService: AuthService;
-  private readonly formGroup: FormGroup;
+  private readonly formGroup: AuthFormGroup;
 
   constructor(authService: AuthService, router: Router) {
     this.authService = authService;
     this.router = router;
     this.formGroup = new FormGroup({
-      username: new FormControl('', Validators.required),
-      password: new FormControl('', Validators.required)
+      username: new FormControl(
+        '',
+        { nonNullable: true, validators: [Validators.required] }
+      ),
+      password: new FormControl(
+        '',
+        { nonNullable: true, validators: [Validators.required] }
+      )
     });
   }
 
@@ -37,7 +48,7 @@ export class LoginForm {
 
   login(): void {
     if (this.formGroup.valid) {
-      const auth = this.formGroup.value;
+      const auth:Auth = this.formGroup.getRawValue();
       this.authService.login(auth);
     }
   }
