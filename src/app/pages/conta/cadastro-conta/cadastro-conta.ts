@@ -58,11 +58,10 @@ export class CadastroConta {
   }
 
   ngOnInit(): void {
-    if (this.route.snapshot.params["id"]) {
+    const param = this.route.snapshot.params["id"];
+    if (param) {
       this.editar.store(true);
-      this.contaService.pesquisePorId(
-        this.route.snapshot.params["id"]
-      ).subscribe(
+      this.contaService.pesquisePorId(param).subscribe(
         conta => {
           this.formGroup.patchValue(conta)
         }

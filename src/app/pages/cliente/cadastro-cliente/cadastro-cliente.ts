@@ -55,11 +55,10 @@ export class CadastroCliente {
   }
 
   ngOnInit(): void {
-    if (this.route.snapshot.params["id"]) {
+    const param = this.route.snapshot.params["id"];
+    if (param) {
       this.editar.store(true);
-      this.clienteService.pesquisePorId(
-        this.route.snapshot.params["id"]
-      ).subscribe(
+      this.clienteService.pesquisePorId(param).subscribe(
         cliente => {
           this.formGroup.patchValue(cliente)
         }
