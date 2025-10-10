@@ -1,7 +1,27 @@
-import Swal from "sweetalert2";
+import Swal, { SweetAlertResult } from "sweetalert2";
 import { ErrorReasons } from "./error-reasons";
 
-export class SuccessMessage {
+export interface Message<T> {
+  show(): Promise<T>;
+}
+
+export class Answer {
+  private readonly result: SweetAlertResult<boolean>;
+
+  constructor(result: SweetAlertResult<boolean>) {
+    this.result = result;
+  }
+
+  yes(): boolean {
+    return this.result.isConfirmed;
+  }
+
+  no(): boolean {
+    return this.result.isDismissed;
+  }
+}
+
+export class SuccessMessage implements Message<void> {
   private readonly title: string;
   private readonly message: string;
 
@@ -10,18 +30,18 @@ export class SuccessMessage {
     this.message = message;
   }
 
-  show(): void {
-    Swal.fire({
+  async show(): Promise<void> {
+    await Swal.fire({
       icon: 'success',
       title: this.title,
       text: this.message,
       showConfirmButton: false,
-      timer: 1500
+      timer: 2000
     });
   }
 }
 
-export class ErrorMessage {
+export class ErrorMessage implements Message<void> {
   private readonly title: string;
   private readonly message: string;
   private readonly reasons?: ErrorReasons;
@@ -32,15 +52,15 @@ export class ErrorMessage {
     this.reasons = reasons;
   }
 
-  show(): void {
+  async show(): Promise<void> {
     if (this.reasons) {
-      Swal.fire({
+      await Swal.fire({
         icon: 'error',
         title: this.title,
         html: `<p>${this.message}</p>${this.reasons.asHtml()}`
       });
     } else {
-      Swal.fire({
+      await Swal.fire({
         icon: 'error',
         title: this.title,
         text: this.message
@@ -49,7 +69,7 @@ export class ErrorMessage {
   }
 }
 
-export class ConfirmMessage {
+export class ConfirmMessage implements Message<Answer> {
   private readonly title: string;
   private readonly message: string;
   private readonly buttonText: string;
@@ -60,15 +80,42 @@ export class ConfirmMessage {
     this.buttonText = buttonText;
   }
 
-  show(): Promise<any> {
-    return Swal.fire({
+  async show(): Promise<Answer> {
+    const result = await Swal.fire<boolean>({
       icon: 'warning',
       title: this.title,
       text: this.message,
       showCancelButton: true,
-      confirmButtonColor: 'red',
+      showConfirmButton: true,
       cancelButtonColor: 'grey',
+      confirmButtonColor: 'red',
       confirmButtonText: this.buttonText,
     });
+    return new Answer(result);
+  }
+}
+
+export class YesNoMessage implements Message<Answer> {
+  private readonly title: string;
+  private readonly message: string;
+
+  constructor(title: string, message: string) {
+    this.title = title;
+    this.message = message;
+  }
+
+  async show(): Promise<Answer> {
+    const result = await Swal.fire<boolean>({
+      icon: 'question',
+      title: this.title,
+      text: this.message,
+      showCancelButton: true,
+      cancelButtonColor: 'red',
+      cancelButtonText: 'Não',
+      showConfirmButton: true,
+      confirmButtonColor: 'green',
+      confirmButtonText: 'Sim',
+    });
+    return new Answer(result);
   }
 }

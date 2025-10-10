@@ -93,7 +93,7 @@ export class ListagemCliente implements AfterViewInit {
       'Não tem como reverter essa ação',
       'Deletar'
     ).show()
-    if (answer.isConfirmed) {
+    if (answer.yes()) {
       this.clienteService.delete(id).subscribe({
         next: () => {
           new SuccessMessage(
