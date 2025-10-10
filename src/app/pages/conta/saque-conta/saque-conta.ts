@@ -13,13 +13,14 @@ import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ContaClienteService } from '../../../shared/services/conta-cliente/conta-cliente-service';
 import { ContaCliente } from '../../../shared/models/conta-cliente';
-
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-saque-conta',
   imports: [
     MatInputModule,
     MatFormFieldModule,
+    MatButtonModule,
     CommonModule,
     FormsModule,
     ReactiveFormsModule,

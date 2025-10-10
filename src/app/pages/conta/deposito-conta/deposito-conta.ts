@@ -12,12 +12,14 @@ import { ContaClienteService } from '../../../shared/services/conta-cliente/cont
 import { ContaService } from '../../../shared/services/conta/conta-service';
 import { Router } from '@angular/router';
 import { Deposito } from '../../../shared/models/deposito';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-deposito-conta',
   imports: [
     MatInputModule,
     MatFormFieldModule,
+    MatButtonModule,
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
