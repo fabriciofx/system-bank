@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Auth, AuthTokens } from '../../models/auth';
 import { env } from '../../../../environments/env.dev';
 import { ErrorMessage } from '../../custom/message';
@@ -26,11 +26,10 @@ export class AuthService {
         localStorage.setItem('refresh_token', tokens.refresh);
         this.router.navigate(['/cliente']);
       },
-      error: (error) => {
+      error: () => {
         new ErrorMessage(
           'Oops...',
-          'Usuário e/ou senha inválidos!',
-          new ErrorReasons(error)
+          'Usuário e/ou senha inválidos!'
         ).show();
       }
     });

@@ -13,6 +13,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { InfiniteSelect } from '../../../shared/components/infinite-select/infinite-select';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-transferencia-contas',
@@ -77,7 +78,7 @@ export class TransferenciaContas {
           ).show();
           this.router.navigate(['/conta']);
         },
-        error: (error) => {
+        error: (error: HttpErrorResponse) => {
           new ErrorMessage(
             'Oops...',
             'Erro ao transferir!',

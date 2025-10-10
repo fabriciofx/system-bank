@@ -13,6 +13,7 @@ import { ContaService } from '../../../shared/services/conta/conta-service';
 import { Router } from '@angular/router';
 import { Deposito } from '../../../shared/models/deposito';
 import { MatButtonModule } from '@angular/material/button';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-deposito-conta',
@@ -71,7 +72,7 @@ export class DepositoConta {
           ).show();
           this.router.navigate(['/conta']);
         },
-        error: (error) => {
+        error: (error: HttpErrorResponse) => {
           new ErrorMessage(
             'Oops...',
             'Erro ao depositar na conta!',

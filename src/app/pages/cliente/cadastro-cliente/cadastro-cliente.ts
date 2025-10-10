@@ -16,6 +16,7 @@ import { ErrorReasons } from '../../../shared/custom/error-reasons';
 import { SuccessMessage, ErrorMessage } from '../../../shared/custom/message';
 import { Box, BoxOf } from '../../../shared/custom/box';
 import { MatButtonModule } from '@angular/material/button';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-cadastro-cliente',
@@ -83,8 +84,7 @@ export class CadastroCliente {
           ).show();
           this.router.navigate(['/cliente']);
         },
-        error: (error) => {
-          console.error(error);
+        error: (error: HttpErrorResponse) => {
           new ErrorMessage(
             'Oops...',
             'Erro ao atualizar o cliente!',
@@ -101,8 +101,7 @@ export class CadastroCliente {
           ).show();
           this.router.navigate(['/cliente']);
         },
-        error: (error) => {
-          console.error(error);
+        error: (error: HttpErrorResponse) => {
           new ErrorMessage(
             'Oops...',
             'Erro ao cadastrar o cliente!',

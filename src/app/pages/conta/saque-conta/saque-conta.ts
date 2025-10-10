@@ -14,6 +14,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { ContaClienteService } from '../../../shared/services/conta-cliente/conta-cliente-service';
 import { ContaCliente } from '../../../shared/models/conta-cliente';
 import { MatButtonModule } from '@angular/material/button';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-saque-conta',
@@ -72,7 +73,7 @@ export class SaqueConta {
           ).show();
           this.router.navigate(['/conta']);
         },
-        error: (error) => {
+        error: (error: HttpErrorResponse) => {
           new ErrorMessage(
             'Oops...',
             'Erro ao sacar a conta!',

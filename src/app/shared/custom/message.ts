@@ -24,21 +24,28 @@ export class SuccessMessage {
 export class ErrorMessage {
   private readonly title: string;
   private readonly message: string;
-  private readonly reasons: ErrorReasons;
+  private readonly reasons?: ErrorReasons;
 
-  constructor(title: string, message: string, reasons: ErrorReasons) {
+  constructor(title: string, message: string, reasons?: ErrorReasons) {
     this.title = title;
     this.message = message;
     this.reasons = reasons;
   }
 
   show(): void {
-    Swal.fire({
-      icon: 'error',
-      title: this.title,
-      text: this.message,
-      html: this.reasons.asHtml()
-    });
+    if (this.reasons) {
+      Swal.fire({
+        icon: 'error',
+        title: this.title,
+        html: this.reasons.asHtml()
+      });
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: this.title,
+        text: this.message
+      });
+    }
   }
 }
 

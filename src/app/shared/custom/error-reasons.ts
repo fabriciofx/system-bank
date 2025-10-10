@@ -1,23 +1,29 @@
-export class ErrorReasons {
-  private readonly error: any;
+import { HttpErrorResponse } from "@angular/common/http";
 
-  constructor(error: any) {
+export class ErrorReasons {
+  private readonly error: HttpErrorResponse;
+
+  constructor(error: HttpErrorResponse) {
     this.error = error;
   }
 
-  content(): string[] {
-    const error = this.error?.error;
+  reasons(): string[] {
+    const others = this.error.error;
     const reasons: string[] = [];
-    for (const attr in error) {
-      if (error.hasOwnProperty(attr)) {
-        const reason = error[attr];
-        if (Array.isArray(reason)) {
-          for (const msg of reason) {
-            reasons.push(`${attr}: ${msg}`);
-          }
-        } else if (typeof reason === 'string') {
-          if (!new Reason(reason).isHtml()) {
-            reasons.push(`${attr}: ${reason}`);
+    if (others["detail"]) {
+      reasons.push(others["detail"]);
+    } else {
+      for (const attr in others) {
+        if (others.hasOwnProperty(attr)) {
+          const reason = others[attr];
+          if (Array.isArray(reason)) {
+            for (const msg of reason) {
+              reasons.push(`${attr}: ${msg}`);
+            }
+          } else if (typeof reason === 'string') {
+            if (!new Reason(reason).isHtml()) {
+              reasons.push(`${attr}: ${reason}`);
+            }
           }
         }
       }
@@ -26,7 +32,7 @@ export class ErrorReasons {
   }
 
   asHtml(): string {
-    return `<ul style="text-align: left;">${this.content().map(msg => `<li>${msg}</li>`).join('')}</ul>`;
+    return `<ul style="text-align: left;">${this.reasons().map(msg => `<li>${msg}</li>`).join('')}</ul>`;
   }
 }
 

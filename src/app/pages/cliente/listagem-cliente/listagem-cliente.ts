@@ -11,6 +11,7 @@ import { Cliente } from '../../../shared/models/cliente';
 import { ErrorReasons } from '../../../shared/custom/error-reasons';
 import { PageResult } from '../../../shared/custom/page-result';
 import { LoadingSpinner } from "../../../shared/components/loading-spinner/loading-spinner";
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-listagem-cliente',
@@ -76,7 +77,7 @@ export class ListagemCliente implements AfterViewInit {
         this.dataSource.data = result.items;
         this.busy.set(false);
       },
-      error: (error) => {
+      error: (error: HttpErrorResponse) => {
         new ErrorMessage(
           'Erro',
           'Não foi possível carregar a lista de clientes.',
@@ -101,7 +102,7 @@ export class ListagemCliente implements AfterViewInit {
           ).show();
           this.load(this.result().page, this.result().pageSize);
         },
-        error: (error) => {
+        error: (error: HttpErrorResponse) => {
           new ErrorMessage(
             'Oops...',
             'Erro ao deletar cliente!',

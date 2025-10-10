@@ -15,6 +15,7 @@ import {
 import { ContaClienteService } from '../../../shared/services/conta-cliente/conta-cliente-service';
 import { ContaCliente } from '../../../shared/models/conta-cliente';
 import { LoadingSpinner } from "../../../shared/components/loading-spinner/loading-spinner";
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-listagem-conta',
@@ -79,7 +80,7 @@ export class ListagemConta implements AfterViewInit {
         this.dataSource.data = result.items;
         this.busy.set(false);
       },
-      error: (error) => {
+      error: (error: HttpErrorResponse) => {
         new ErrorMessage(
           'Erro',
           'Não foi possível carregar a lista de contas do cliente.',
@@ -104,7 +105,7 @@ export class ListagemConta implements AfterViewInit {
           ).show();
           this.load(this.result().page, this.result().pageSize);
         },
-        error: (error) => {
+        error: (error: HttpErrorResponse) => {
           new ErrorMessage(
             'Oops...',
             'Erro ao deletar a conta!',

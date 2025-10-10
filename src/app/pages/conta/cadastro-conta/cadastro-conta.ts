@@ -15,6 +15,7 @@ import { Paginated } from '../../../shared/custom/paginated';
 import { ClienteService } from '../../../shared/services/cliente/cliente-service';
 import { Cliente } from '../../../shared/models/cliente';
 import { MatButtonModule } from '@angular/material/button';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-cadastro-conta',
@@ -95,7 +96,7 @@ export class CadastroConta {
           ).show();
           this.router.navigate(['/conta']);
         },
-        error: (error) => {
+        error: (error: HttpErrorResponse) => {
           new ErrorMessage(
             'Oops...',
             'Erro ao atualizar a conta!',
@@ -112,7 +113,7 @@ export class CadastroConta {
           ).show();
           this.router.navigate(['/conta']);
         },
-        error: (error) => {
+        error: (error: HttpErrorResponse) => {
           new ErrorMessage(
             'Oops...',
             'Erro ao cadastrar a conta!',
