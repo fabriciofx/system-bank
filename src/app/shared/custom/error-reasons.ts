@@ -44,6 +44,6 @@ class Reason {
   }
 
   isHtml(): boolean {
-    return /<\/?[a-z][\w-]*\b[^>]*>/i.test(this.text);
+    return /^\s*(?:<!DOCTYPE html>\s*)?<html[\s\S]*<\/html>\s*$/i.test(this.text);
   }
 }
