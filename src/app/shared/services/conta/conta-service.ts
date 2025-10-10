@@ -7,6 +7,7 @@ import { PageResult } from '../../custom/page-result';
 import { Paginated } from '../../custom/paginated';
 import { Saque } from '../../models/saque';
 import { Deposito } from '../../models/deposito';
+import { Transferencia } from '../../models/transferencia';
 
 @Injectable({
   providedIn: 'root'
@@ -62,5 +63,10 @@ export class ContaService implements Paginated<Conta> {
   deposito(deposito: Deposito): Observable<Deposito> {
     const url = `${env.API}/contas/${deposito.conta}/deposito/`;
     return this.http.post<Saque>(url, deposito);
+  }
+
+  transferencia(transferencia: Transferencia): Observable<Transferencia> {
+    const url = `${env.API}/contas/${transferencia.conta_origem}/transferencia/`;
+    return this.http.post<Transferencia>(url, transferencia);
   }
 }
