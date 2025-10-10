@@ -37,7 +37,7 @@ export class ErrorMessage {
       Swal.fire({
         icon: 'error',
         title: this.title,
-        html: this.reasons.asHtml()
+        html: `<p>${this.message}</p>${this.reasons.asHtml()}`
       });
     } else {
       Swal.fire({
