@@ -14,6 +14,7 @@ import { ErrorReasons } from '../../../shared/custom/error-reasons';
 import { Paginated } from '../../../shared/custom/paginated';
 import { ClienteService } from '../../../shared/services/cliente/cliente-service';
 import { Cliente } from '../../../shared/models/cliente';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-cadastro-conta',
@@ -21,6 +22,7 @@ import { Cliente } from '../../../shared/models/cliente';
     MatInputModule,
     MatFormFieldModule,
     MatRadioModule,
+    MatButtonModule,
     CommonModule,
     FormsModule,
     ReactiveFormsModule,

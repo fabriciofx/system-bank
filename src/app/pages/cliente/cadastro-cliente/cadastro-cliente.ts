@@ -15,6 +15,7 @@ import { Cliente } from '../../../shared/models/cliente';
 import { ErrorReasons } from '../../../shared/custom/error-reasons';
 import { SuccessMessage, ErrorMessage } from '../../../shared/custom/message';
 import { Box, BoxOf } from '../../../shared/custom/box';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-cadastro-cliente',
@@ -22,6 +23,7 @@ import { Box, BoxOf } from '../../../shared/custom/box';
     MatInputModule,
     MatFormFieldModule,
     MatRadioModule,
+    MatButtonModule,
     FormsModule,
     ReactiveFormsModule
   ],
