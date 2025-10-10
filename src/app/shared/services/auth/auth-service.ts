@@ -3,14 +3,15 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Auth } from '../../models/auth';
 import { env } from '../../../../environments/env.dev';
-import Swal from 'sweetalert2';
+import { ErrorMessage } from '../../custom/message';
+import { ErrorReasons } from '../../custom/error-reasons';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private readonly router: Router;
   private readonly http: HttpClient;
+  private readonly router: Router;
 
   constructor(http: HttpClient, router: Router) {
     this.http = http;
@@ -26,12 +27,11 @@ export class AuthService {
           this.router.navigate(['/cliente']);
         },
         error: (error) => {
-          console.error('Login error', error);
-          Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Usuário e/ou senha inválidos!',
-          });
+          new ErrorMessage(
+            'Oops...',
+            'Usuário e/ou senha inválidos!',
+            new ErrorReasons(error)
+          ).show();
         }
       }
     );
