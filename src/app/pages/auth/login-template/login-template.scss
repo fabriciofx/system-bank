@@ -28,11 +28,14 @@
 }
 
 .logo {
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
     margin-left: 160px;
     margin-right: 160px;
     margin-top: 80px;
-    img{
+    img {
         width: 150px;
     }
 }
@@ -41,4 +44,9 @@
     margin-left: 160px;
     margin-right: 160px;
     margin-top: 120px;
+}
+
+.title {
+    font-size: 4.5rem;
+    font-weight: bold;
 }
