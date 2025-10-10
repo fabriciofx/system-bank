@@ -15,6 +15,9 @@
       <a mat-list-item routerLink="/conta" (click)="drawer.close()">
         Contas
       </a>
+      <a mat-list-item (click)="drawer.close(); logout()">
+        Sair
+      </a>
     </mat-nav-list>
   </mat-sidenav>
   <!-- Toolbar principal -->

@@ -5,6 +5,8 @@ import { MatNavList } from "@angular/material/list";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatIconModule } from "@angular/material/icon";
 import { MatButtonModule } from '@angular/material/button';
+import { YesNoMessage } from '../../custom/message';
+import { AuthService } from '../../services/auth/auth-service';
 
 @Component({
   selector: 'app-navbar',
@@ -21,8 +23,10 @@ import { MatButtonModule } from '@angular/material/button';
 })
 export class Navbar {
   private readonly opened: WritableSignal<boolean>;
+  private readonly authService: AuthService;
 
-  constructor() {
+  constructor(authService: AuthService) {
+    this.authService = authService;
     this.opened = signal<boolean>(false);
   }
 
@@ -32,5 +36,15 @@ export class Navbar {
 
   onOpenedChange(event: boolean): void {
     this.opened.set(event);
+  }
+
+  async logout(): Promise<void> {
+    const answer = await new YesNoMessage(
+      'Você deseja sair do sistema?',
+      'Se sim, você será redirecionado para a tela de login.'
+    ).show()
+    if (answer.yes()) {
+      this.authService.logout();
+    }
   }
 }
