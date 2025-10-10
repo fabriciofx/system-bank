@@ -5,7 +5,7 @@ export interface Conta extends Text {
   cliente: number;
   numero: string;
   agencia: string;
-  saldo: number;
+  saldo: string;
 }
 
 export class ContaDe implements Conta {
@@ -13,7 +13,7 @@ export class ContaDe implements Conta {
   cliente!: number;
   numero!: string;
   agencia!: string;
-  saldo!: number;
+  saldo!: string;
 
   constructor(json: any) {
     Object.assign(this, json);

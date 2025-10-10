@@ -6,7 +6,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatRadioModule } from '@angular/material/radio';
 import { CommonModule } from '@angular/common';
-import { Conta } from '../../../shared/models/conta';
+import { ContaDe } from '../../../shared/models/conta';
 import { InfiniteSelect } from "../../../shared/components/infinite-select/infinite-select";
 import { Box, BoxOf } from '../../../shared/custom/box';
 import { ErrorMessage, SuccessMessage } from '../../../shared/custom/message';
@@ -16,6 +16,14 @@ import { ClienteService } from '../../../shared/services/cliente/cliente-service
 import { Cliente } from '../../../shared/models/cliente';
 import { MatButtonModule } from '@angular/material/button';
 import { HttpErrorResponse } from '@angular/common/http';
+
+type ContaFormGroup = FormGroup<{
+  id: FormControl<number>;
+  cliente: FormControl<number>;
+  numero: FormControl<string>;
+  agencia: FormControl<string>;
+  saldo: FormControl<string>;
+}>;
 
 @Component({
   selector: 'app-cadastro-conta',
@@ -37,7 +45,7 @@ export class CadastroConta {
   private readonly route: ActivatedRoute;
   private readonly contaService: ContaService;
   private readonly clienteService: ClienteService;
-  private readonly formGroup: FormGroup;
+  private readonly formGroup: ContaFormGroup;
   private readonly editar: Box<boolean>;
 
   constructor(
@@ -51,11 +59,26 @@ export class CadastroConta {
     this.contaService = contaService;
     this.clienteService = clienteService;
     this.formGroup = new FormGroup({
-      id: new FormControl(null),
-      cliente: new FormControl('', Validators.required),
-      numero: new FormControl('', Validators.required),
-      agencia: new FormControl('', Validators.required),
-      saldo: new FormControl('', Validators.required)
+      id: new FormControl(
+        0,
+        { nonNullable: true }
+      ),
+      cliente: new FormControl(
+        0,
+        { nonNullable: true, validators: [Validators.required] }
+      ),
+      numero: new FormControl(
+        '',
+        { nonNullable: true, validators: [Validators.required] }
+      ),
+      agencia: new FormControl(
+        '',
+        { nonNullable: true, validators: [Validators.required] }
+      ),
+      saldo: new FormControl(
+        '',
+        { nonNullable: true, validators: [Validators.required] }
+      )
     });
     this.editar = new BoxOf<boolean>(false);
   }
@@ -86,7 +109,7 @@ export class CadastroConta {
   }
 
   cadastre() {
-    const conta: Conta = this.formGroup.value;
+    const conta = new ContaDe(this.formGroup.getRawValue());
     if (this.editar.value()) {
       this.contaService.atualize(conta).subscribe({
         next: () => {
