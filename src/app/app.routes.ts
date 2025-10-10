@@ -5,6 +5,7 @@ import { LoginTemplate } from './pages/auth/login-template/login-template';
 import { CadastroConta } from './pages/conta/cadastro-conta/cadastro-conta';
 import { ListagemConta } from './pages/conta/listagem-conta/listagem-conta';
 import { SaqueConta } from './pages/conta/saque-conta/saque-conta';
+import { DepositoConta } from './pages/conta/deposito-conta/deposito-conta';
 
 export const routes: Routes = [
   {
@@ -51,6 +52,10 @@ export const routes: Routes = [
       {
         path: 'saque',
         component: SaqueConta
+      },
+      {
+        path: 'deposito',
+        component: DepositoConta
       }
     ]
   }
