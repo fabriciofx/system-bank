@@ -70,7 +70,7 @@ export class CadastroCliente {
     return this.formGroup;
   }
 
-  cadastrar() {
+  cadastre() {
     const cliente: Cliente = this.formGroup.value;
     if (this.editar.value()) {
       this.clienteService.atualize(cliente).subscribe({

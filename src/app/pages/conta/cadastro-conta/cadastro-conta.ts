@@ -82,7 +82,7 @@ export class CadastroConta {
     this.formGroup.get('cliente')?.setValue(cliente.id);
   }
 
-  cadastrar() {
+  cadastre() {
     const conta: Conta = this.formGroup.value;
     if (this.editar.value()) {
       this.contaService.atualize(conta).subscribe({
