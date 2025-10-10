@@ -19,11 +19,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { HttpErrorResponse } from '@angular/common/http';
 
 type ClienteFormGroup = FormGroup<{
-  id: FormControl<number | null>;
+  id: FormControl<number>;
   nome: FormControl<string>;
   cpf: FormControl<string>;
   email: FormControl<string>;
-  senha: FormControl<string | null>
+  senha: FormControl<string>
   observacoes: FormControl<string>;
   ativo: FormControl<boolean>
 }>;
@@ -59,7 +59,7 @@ export class CadastroCliente {
     this.formGroup = new FormGroup({
       id: new FormControl(
         0,
-        { nonNullable: false }
+        { nonNullable: true }
       ),
       nome: new FormControl(
         '',
@@ -78,7 +78,7 @@ export class CadastroCliente {
       ),
       senha: new FormControl(
         '',
-        { nonNullable: false }
+        { nonNullable: true }
       ),
       observacoes: new FormControl(
         '',
