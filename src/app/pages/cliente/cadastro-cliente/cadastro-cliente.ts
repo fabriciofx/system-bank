@@ -11,12 +11,22 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatInputModule } from '@angular/material/input';
 import { ClienteService } from '../../../shared/services/cliente/cliente-service';
-import { Cliente } from '../../../shared/models/cliente';
+import { ClienteDe } from '../../../shared/models/cliente';
 import { ErrorReasons } from '../../../shared/custom/error-reasons';
 import { SuccessMessage, ErrorMessage } from '../../../shared/custom/message';
 import { Box, BoxOf } from '../../../shared/custom/box';
 import { MatButtonModule } from '@angular/material/button';
 import { HttpErrorResponse } from '@angular/common/http';
+
+type ClienteFormGroup = FormGroup<{
+  id: FormControl<number | null>;
+  nome: FormControl<string>;
+  cpf: FormControl<string>;
+  email: FormControl<string>;
+  senha: FormControl<string | null>
+  observacoes: FormControl<string>;
+  ativo: FormControl<boolean>
+}>;
 
 @Component({
   selector: 'app-cadastro-cliente',
@@ -35,7 +45,7 @@ export class CadastroCliente {
   private readonly router: Router;
   private readonly route: ActivatedRoute;
   private readonly clienteService: ClienteService;
-  private readonly formGroup: FormGroup;
+  private readonly formGroup: ClienteFormGroup;
   private readonly editar: Box<boolean>;
 
   constructor(
@@ -47,12 +57,34 @@ export class CadastroCliente {
     this.route = route;
     this.clienteService = clienteService;
     this.formGroup = new FormGroup({
-      id: new FormControl(null),
-      nome: new FormControl('', Validators.required),
-      cpf: new FormControl('', Validators.required),
-      email: new FormControl('', [Validators.required, Validators.email]),
-      observacoes: new FormControl('', Validators.required),
-      ativo: new FormControl(true)
+      id: new FormControl(
+        0,
+        { nonNullable: false }
+      ),
+      nome: new FormControl(
+        '',
+        { nonNullable: true, validators: [Validators.required] }
+      ),
+      cpf: new FormControl(
+        '',
+        { nonNullable: true, validators: [Validators.required] }
+      ),
+      email: new FormControl(
+        '',
+        {
+          nonNullable: true,
+          validators: [Validators.required, Validators.email]
+        }
+      ),
+      senha: new FormControl(
+        '',
+        { nonNullable: false }
+      ),
+      observacoes: new FormControl(
+        '',
+        { nonNullable: true, validators: [Validators.required] }
+      ),
+      ativo: new FormControl(true, { nonNullable: true })
     });
     this.editar = new BoxOf<boolean>(false);
   }
@@ -74,7 +106,7 @@ export class CadastroCliente {
   }
 
   cadastre() {
-    const cliente: Cliente = this.formGroup.value;
+    const cliente = new ClienteDe(this.formGroup.getRawValue());
     if (this.editar.value()) {
       this.clienteService.atualize(cliente).subscribe({
         next: () => {

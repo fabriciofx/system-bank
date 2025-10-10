@@ -1,11 +1,11 @@
 import { Text } from '../custom/text';
 
 export interface Cliente extends Text {
-  id: number;
+  id: number | null;
   nome: string;
   cpf: string;
   email: string;
-  senha: string;
+  senha: string | null;
   ativo: boolean;
   observacoes: string;
 }
