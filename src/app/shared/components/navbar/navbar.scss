@@ -1,0 +1,47 @@
+mat-sidenav-content {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.toolbar {
+  height: 64px;
+  flex-shrink: 0;
+}
+
+.content {
+  flex: 1;
+  padding: 12px 24px;
+  background: #fafafa;
+}
+
+.sidenav-container {
+  height: 100vh;
+}
+
+.sidenav {
+  width: 250px;
+  z-index: 2000;
+}
+
+mat-nav-list {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
+
+a[mat-list-item] {
+  display: block;
+  width: 100%;
+  padding: 12px 16px;
+  text-decoration: none;
+  color: inherit;
+}
+
+a[mat-list-item]:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+button[mat-icon-button] {
+  margin-right: 0.5rem !important;
+}
