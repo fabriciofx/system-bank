@@ -16,7 +16,7 @@ export const routes: Routes = [
   },
   {
     path: 'auth',
-    component: LoginTemplate,
+    component: LoginTemplate
   },
   {
     path: 'cliente',
@@ -31,7 +31,7 @@ export const routes: Routes = [
       },
       {
         path: '',
-        component: ListagemCliente,
+        component: ListagemCliente
       },
     ]
   },
@@ -48,7 +48,7 @@ export const routes: Routes = [
       },
       {
         path: '',
-        component: ListagemConta,
+        component: ListagemConta
       },
       {
         path: 'saque',
