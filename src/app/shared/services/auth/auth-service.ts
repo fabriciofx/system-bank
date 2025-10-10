@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { Auth } from '../../models/auth';
+import { Auth, AuthTokens } from '../../models/auth';
 import { env } from '../../../../environments/env.dev';
 import { ErrorMessage } from '../../custom/message';
 import { ErrorReasons } from '../../custom/error-reasons';
@@ -20,10 +20,10 @@ export class AuthService {
   }
 
   login(auth: Auth): void {
-    this.http.post<Auth>(`${env.API}/token/`, auth).subscribe({
-      next: (response) => {
-        localStorage.setItem('access_token', (response as any).access);
-        localStorage.setItem('refresh_token', (response as any).refresh);
+    this.http.post<AuthTokens>(`${env.API}/token/`, auth).subscribe({
+      next: (tokens: AuthTokens) => {
+        localStorage.setItem('access_token', tokens.access);
+        localStorage.setItem('refresh_token', tokens.refresh);
         this.router.navigate(['/cliente']);
       },
       error: (error) => {
