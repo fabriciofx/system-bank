@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
 import {
   FormControl,
   FormGroup,
@@ -23,13 +22,11 @@ type AuthFormGroup = FormGroup<{
   styleUrl: './login-form.scss'
 })
 export class LoginForm {
-  private readonly router: Router;
   private readonly authService: AuthService;
   private readonly formGroup: AuthFormGroup;
 
-  constructor(authService: AuthService, router: Router) {
+  constructor(authService: AuthService) {
     this.authService = authService;
-    this.router = router;
     this.formGroup = new FormGroup({
       username: new FormControl(
         '',
