@@ -9,6 +9,7 @@ import {
   Validators
 } from '@angular/forms';
 import { AuthService } from '../../../shared/services/auth/auth-service';
+import { Auth } from '../../../shared/models/auth';
 
 @Component({
   selector: 'app-login-form',
@@ -24,19 +25,17 @@ export class LoginForm {
   constructor(authService: AuthService, router: Router) {
     this.authService = authService;
     this.router = router;
-    this.formGroup = new FormGroup(
-      {
-        username: new FormControl('', Validators.required),
-        password: new FormControl('', Validators.required)
-      }
-    );
+    this.formGroup = new FormGroup({
+      username: new FormControl('', Validators.required),
+      password: new FormControl('', Validators.required)
+    });
   }
 
   form(): FormGroup {
     return this.formGroup;
   }
 
-  login() {
+  login(): void {
     if (this.formGroup.valid) {
       const auth = this.formGroup.value;
       this.authService.login(auth);
