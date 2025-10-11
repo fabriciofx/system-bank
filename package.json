@@ -8,7 +8,8 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:system-bank": "node dist/system-bank/server/server.mjs",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "test:jest": "npx jest"
   },
   "prettier": {
     "printWidth": 100,
