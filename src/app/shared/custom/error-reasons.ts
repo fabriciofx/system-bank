@@ -36,7 +36,7 @@ export class ErrorReasons {
   }
 }
 
-class Reason {
+export class Reason {
   private readonly text: string
 
   constructor(text: string) {
@@ -44,6 +44,6 @@ class Reason {
   }
 
   isHtml(): boolean {
-    return /^\s*(?:<!DOCTYPE html>\s*)?<html[\s\S]*<\/html>\s*$/i.test(this.text);
+    return /^(\s*<!DOCTYPE html>\s*)?<html[\s\S]*<\/html>\s*$/i.test(this.text);
   }
 }
