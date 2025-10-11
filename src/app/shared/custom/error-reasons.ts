@@ -32,7 +32,9 @@ export class ErrorReasons {
   }
 
   asHtml(): string {
-    return `<ul style="text-align: left;">${this.reasons().map(msg => `<li>${msg}</li>`).join('')}</ul>`;
+    return `<ul style="text-align: left;">
+      ${this.reasons().map(msg => `<li>${msg}</li>`).join('')}
+      </ul>`;
   }
 }
 
