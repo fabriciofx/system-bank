@@ -3,7 +3,6 @@ import { ErrorReasons } from "./error-reasons";
 
 export interface Message<T> {
   show(): Promise<T>;
-  close(): void;
 }
 
 export class Answer {
@@ -32,17 +31,13 @@ export class SuccessMessage implements Message<void> {
   }
 
   async show(): Promise<void> {
-    await Swal.fire({
+    await Swal.fire<void>({
       icon: 'success',
       title: this.title,
       text: this.message,
       showConfirmButton: false,
       timer: 2000
     });
-  }
-
-  close(): void {
-    Swal.close();
   }
 }
 
@@ -68,13 +63,9 @@ export class ErrorMessage implements Message<void> {
       await Swal.fire({
         icon: 'error',
         title: this.title,
-        text: this.message
+        text: this.message,
       });
     }
-  }
-
-  close(): void {
-    Swal.close();
   }
 }
 
@@ -102,10 +93,6 @@ export class ConfirmMessage implements Message<Answer> {
     });
     return new Answer(result);
   }
-
-  close(): void {
-    Swal.close();
-  }
 }
 
 export class YesNoMessage implements Message<Answer> {
@@ -130,9 +117,5 @@ export class YesNoMessage implements Message<Answer> {
       confirmButtonText: 'Sim',
     });
     return new Answer(result);
-  }
-
-  close(): void {
-    Swal.close();
   }
 }
