@@ -3,6 +3,7 @@ import { ErrorReasons } from "./error-reasons";
 
 export interface Message<T> {
   show(): Promise<T>;
+  close(): void;
 }
 
 export class Answer {
@@ -39,6 +40,10 @@ export class SuccessMessage implements Message<void> {
       timer: 2000
     });
   }
+
+  close(): void {
+    Swal.close();
+  }
 }
 
 export class ErrorMessage implements Message<void> {
@@ -67,6 +72,10 @@ export class ErrorMessage implements Message<void> {
       });
     }
   }
+
+  close(): void {
+    Swal.close();
+  }
 }
 
 export class ConfirmMessage implements Message<Answer> {
@@ -93,6 +102,10 @@ export class ConfirmMessage implements Message<Answer> {
     });
     return new Answer(result);
   }
+
+  close(): void {
+    Swal.close();
+  }
 }
 
 export class YesNoMessage implements Message<Answer> {
@@ -117,5 +130,9 @@ export class YesNoMessage implements Message<Answer> {
       confirmButtonText: 'Sim',
     });
     return new Answer(result);
+  }
+
+  close(): void {
+    Swal.close();
   }
 }

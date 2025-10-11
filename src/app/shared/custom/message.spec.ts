@@ -2,7 +2,6 @@ import 'zone.js';
 import 'zone.js/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component } from '@angular/core';
-import Swal from 'sweetalert2';
 import { SuccessMessage } from './message';
 
 @Component({
@@ -27,7 +26,7 @@ describe('Test for Message(s)', () => {
       const msg = new SuccessMessage('Success', 'Operation completed');
       await msg.show();
 
-      // Pega o container do SweetAlert2
+      // Pega o container
       const container = document.body.querySelector('.swal2-container');
       expect(container).not.toBeNull();
 
@@ -39,12 +38,12 @@ describe('Test for Message(s)', () => {
       const text = container?.querySelector('.swal2-html-container');
       expect(text?.textContent).toBe('Operation completed');
 
-      // Verifica ícone (o Swal adiciona uma classe .swal2-success para alertas de sucesso)
+      // Verifica ícone
       const icon = container?.querySelector('.swal2-success');
       expect(icon).not.toBeNull();
 
-      // Fecha o alert para limpar o DOM
-      Swal.close();
+      // Fecha a message
+      msg.close();
     }
   );
 });
