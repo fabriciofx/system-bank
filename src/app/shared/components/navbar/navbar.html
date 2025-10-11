@@ -9,12 +9,45 @@
       <a mat-list-item routerLink="/dashboard" (click)="drawer.close()">
         Dashboard
       </a>
-      <a mat-list-item routerLink="/cliente" (click)="drawer.close()">
-        Clientes
-      </a>
-      <a mat-list-item routerLink="/conta" (click)="drawer.close()">
-        Contas
-      </a>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Clientes
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-nav-list>
+          <a mat-list-item routerLink="/cliente" (click)="drawer.close()">
+            Listar Clientes
+          </a>
+          <a mat-list-item routerLink="/cliente/novo" (click)="drawer.close()">
+            Novo Cliente
+          </a>
+        </mat-nav-list>
+      </mat-expansion-panel>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Contas
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-nav-list>
+          <a mat-list-item routerLink="/conta" (click)="drawer.close()">
+            Listar Contas
+          </a>
+          <a mat-list-item routerLink="/conta/nova" (click)="drawer.close()">
+            Nova Conta
+          </a>
+          <a mat-list-item routerLink="/conta/saque" (click)="drawer.close()">
+            Saque
+          </a>
+          <a mat-list-item routerLink="/conta/deposito" (click)="drawer.close()">
+            Depósito
+          </a>
+          <a mat-list-item routerLink="/conta/transferencia" (click)="drawer.close()">
+            Transferência
+          </a>
+        </mat-nav-list>
+      </mat-expansion-panel>
       <a mat-list-item (click)="drawer.close(); logout()">
         Sair
       </a>

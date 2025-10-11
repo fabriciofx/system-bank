@@ -5,6 +5,7 @@ import { MatNavList } from "@angular/material/list";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatIconModule } from "@angular/material/icon";
 import { MatButtonModule } from '@angular/material/button';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { YesNoMessage } from '../../custom/message';
 import { AuthService } from '../../services/auth/auth-service';
 
@@ -16,7 +17,8 @@ import { AuthService } from '../../services/auth/auth-service';
     MatNavList,
     MatToolbarModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    MatExpansionModule
   ],
   templateUrl: './navbar.html',
   styleUrl: './navbar.scss'

@@ -45,3 +45,7 @@ a[mat-list-item]:hover {
 button[mat-icon-button] {
   margin-right: 0.5rem !important;
 }
+
+mat-sidenav mat-expansion-panel {
+  margin-bottom: 8px;
+}
