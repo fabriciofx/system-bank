@@ -65,8 +65,8 @@ export class ContaService implements Paginated<Conta> {
     return this.http.post<Deposito>(url, deposito);
   }
 
-  transferencia(transferencia: Transferencia): Observable<Transferencia> {
-    const url = `${env.API}/contas/${transferencia.conta_origem}/transferencia/`;
-    return this.http.post<Transferencia>(url, transferencia);
+  transferencia(transf: Transferencia): Observable<Transferencia> {
+    const url = `${env.API}/contas/${transf.conta_origem}/transferencia/`;
+    return this.http.post<Transferencia>(url, transf);
   }
 }
