@@ -32,7 +32,7 @@ export const authInterceptor: HttpInterceptorFn = (request, next) => {
     return next(request);
   }
   // 1) Envia a requisição com o access token atual (se existir)
-  const requestWithToken = withAuth(request, authService.getToken());
+  const requestWithToken = withAuth(request, authService.accessToken());
   return next(requestWithToken).pipe(
     catchError((error: HttpErrorResponse) => {
       // Se não for 401, só propaga o erro
@@ -47,12 +47,12 @@ export const authInterceptor: HttpInterceptorFn = (request, next) => {
         return throwError(() => error);
       }
       // 2) Tenta o refresh usando o refresh_token salvo
-      const refresh = authService.getRefresh();
+      const refresh = authService.refreshToken();
       if (!refresh) {
         authService.logout();
         return throwError(() => error);
       }
-      return authService.refreshToken(refresh).pipe(
+      return authService.refresh(refresh).pipe(
         switchMap((token: AccessToken) => {
           // SimpleJWT costuma devolver { access: '...' }
           const newAccess = token.access;

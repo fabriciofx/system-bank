@@ -43,18 +43,18 @@ export class AuthService {
     this.router.navigate(['/auth']);
   }
 
-  refreshToken(refresh: string): Observable<AccessToken> {
+  refresh(token: string): Observable<AccessToken> {
     return this.http.post<AccessToken>(
       `${env.API}/token/refresh/`,
-      { 'refresh': refresh }
+      { 'refresh': token }
     );
   }
 
-  getRefresh(): string {
+  refreshToken(): string {
     return this.storage.value('refresh_token')?.[0] ?? "";
   }
 
-  getToken(): string {
+  accessToken(): string {
     return this.storage.value('access_token')?.[0] ?? "";
   }
 }
