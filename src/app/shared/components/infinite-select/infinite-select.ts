@@ -95,7 +95,6 @@ export class InfiniteSelect<T extends Text> implements AfterViewInit {
         this.result = result;
       },
       error: (error: HttpErrorResponse) => {
-        console.error(error);
         new ErrorMessage(
           'Error',
           'It is not possible to load pages from Paginated.',
