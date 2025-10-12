@@ -5,8 +5,8 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { ErrorReasons } from '../../../shared/custom/error-reasons';
-import { PageResult } from '../../../shared/custom/page-result';
+import { ErrorReasons } from '../../../shared/core/error-reasons';
+import { PageResult } from '../../../shared/core/page-result';
 import {
   ConfirmMessage,
   ErrorMessage,

@@ -4,9 +4,9 @@ import { FormsModule, ReactiveFormsModule, FormGroup, FormControl, Validators } 
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { InfiniteSelect } from '../../../shared/components/infinite-select/infinite-select';
-import { ErrorReasons } from '../../../shared/custom/error-reasons';
+import { ErrorReasons } from '../../../shared/core/error-reasons';
 import { SuccessMessage, ErrorMessage } from '../../../shared/components/message/message';
-import { Paginated } from '../../../shared/custom/paginated';
+import { Paginated } from '../../../shared/core/paginated';
 import { ContaCliente } from '../../../shared/models/conta-cliente';
 import { ContaClienteService } from '../../../shared/services/conta-cliente/conta-cliente-service';
 import { ContaService } from '../../../shared/services/conta/conta-service';

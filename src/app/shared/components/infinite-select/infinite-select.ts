@@ -3,11 +3,11 @@ import { AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, NgZon
 import { FormsModule } from '@angular/forms';
 import { MatSelect, MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { PageResult } from '../../custom/page-result';
+import { PageResult } from '../../core/page-result';
 import { ErrorMessage } from '../message/message';
-import { ErrorReasons } from '../../custom/error-reasons';
-import { Paginated } from '../../custom/paginated';
-import { Text } from '../../custom/text';
+import { ErrorReasons } from '../../core/error-reasons';
+import { Paginated } from '../../core/paginated';
+import { Text } from '../../core/text';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({

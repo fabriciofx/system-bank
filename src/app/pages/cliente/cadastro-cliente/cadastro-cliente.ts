@@ -12,9 +12,9 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatInputModule } from '@angular/material/input';
 import { ClienteService } from '../../../shared/services/cliente/cliente-service';
 import { ClienteDe } from '../../../shared/models/cliente';
-import { ErrorReasons } from '../../../shared/custom/error-reasons';
+import { ErrorReasons } from '../../../shared/core/error-reasons';
 import { SuccessMessage, ErrorMessage } from '../../../shared/components/message/message';
-import { Box, BoxOf } from '../../../shared/custom/box';
+import { Box, BoxOf } from '../../../shared/core/box';
 import { MatButtonModule } from '@angular/material/button';
 import { HttpErrorResponse } from '@angular/common/http';
 

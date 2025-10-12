@@ -1,4 +1,4 @@
-import { Text } from '../custom/text';
+import { Text } from '../core/text';
 
 export interface Cliente extends Text {
   id: number;

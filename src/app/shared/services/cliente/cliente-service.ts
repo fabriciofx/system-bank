@@ -3,8 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { combineLatest, map, Observable } from 'rxjs';
 import { env } from '../../../../environments/env.dev';
 import { Cliente, ClienteDe } from '../../models/cliente';
-import { PageResult } from '../../custom/page-result';
-import { Paginated } from '../../custom/paginated';
+import { PageResult } from '../../core/page-result';
+import { Paginated } from '../../core/paginated';
 
 @Injectable({
   providedIn: 'root'

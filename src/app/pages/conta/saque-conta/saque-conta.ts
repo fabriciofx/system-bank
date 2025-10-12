@@ -3,10 +3,10 @@ import { InfiniteSelect } from "../../../shared/components/infinite-select/infin
 import { MatInputModule } from "@angular/material/input";
 import { ContaService } from '../../../shared/services/conta/conta-service';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Paginated } from '../../../shared/custom/paginated';
+import { Paginated } from '../../../shared/core/paginated';
 import { Saque } from '../../../shared/models/saque';
 import { ErrorMessage, SuccessMessage } from '../../../shared/components/message/message';
-import { ErrorReasons } from '../../../shared/custom/error-reasons';
+import { ErrorReasons } from '../../../shared/core/error-reasons';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';

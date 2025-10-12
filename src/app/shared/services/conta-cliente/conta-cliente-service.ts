@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Paginated } from '../../custom/paginated';
+import { Paginated } from '../../core/paginated';
 import { ContaCliente, ContaClienteDe } from '../../models/conta-cliente';
 import { combineLatest, map, Observable } from 'rxjs';
-import { PageResult } from '../../custom/page-result';
+import { PageResult } from '../../core/page-result';
 import { env } from '../../../../environments/env.dev';
 import { Cliente, ClienteDe } from '../../models/cliente';
 import { ContaService } from '../conta/conta-service';
