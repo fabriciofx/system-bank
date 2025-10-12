@@ -51,6 +51,18 @@ module.exports = tseslint.config(
       ...angular.configs.templateRecommended,
       ...angular.configs.templateAccessibility,
     ],
-    rules: {},
+    rules: {
+      "max-len": [
+        "error",
+        {
+          "code": 80,
+          "ignoreUrls": false,
+          "ignoreComments": false,
+          "ignoreStrings": false,
+          "ignoreTemplateLiterals": false,
+          "ignorePattern": ""
+        }
+      ]
+    },
   }
 );
