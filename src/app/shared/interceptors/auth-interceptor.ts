@@ -14,7 +14,7 @@ const RETRY_FLAG = new HttpContextToken<boolean>(() => false);
 // Adiciona o header Authorization se existir token
 function withAuth<T>(request: HttpRequest<T>, token: string): HttpRequest<T> {
   if (token) {
-    return request.clone({ setHeaders: { Authorization: `Bearer ${token}` } })
+    return request.clone({ setHeaders: { Authorization: `Bearer ${token}` } });
   } else {
     return request;
   }
