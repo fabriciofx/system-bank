@@ -31,7 +31,17 @@ module.exports = tseslint.config(
         },
       ],
       "@angular-eslint/prefer-inject": "off",
-      "semi": ["error", "always"]
+      "semi": ["error", "always"],
+      "max-len": [
+        "error",
+        {
+          "code": 80,
+          "ignoreUrls": false,
+          "ignoreComments": false,
+          "ignoreStrings": false,
+          "ignoreTemplateLiterals": false
+        }
+      ]
     },
   },
   {
