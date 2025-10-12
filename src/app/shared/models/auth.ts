@@ -3,7 +3,10 @@ export interface Auth {
     password: string;
 }
 
-export interface AuthTokens {
-  refresh: string;
+export interface AccessToken {
   access: string;
+}
+
+export interface AuthTokens extends AccessToken {
+  refresh: string;
 }

@@ -49,9 +49,8 @@ export class DepositoConta {
     });
   }
 
-  onContaSelecionada(value: any): void {
-    const conta = value as ContaCliente;
-    this.formGroup.get('conta')?.setValue(conta.id);
+  onContaSelecionada(contaCliente: ContaCliente): void {
+    this.formGroup.get('conta')?.setValue(contaCliente.id);
   }
 
   form(): FormGroup {

@@ -14,7 +14,7 @@ export class ErrorReasons {
       reasons.push(others["detail"]);
     } else {
       for (const attr in others) {
-        if (others.hasOwnProperty(attr)) {
+        if (Reflect.has(others, attr)) {
           const reason = others[attr];
           if (Array.isArray(reason)) {
             for (const msg of reason) {

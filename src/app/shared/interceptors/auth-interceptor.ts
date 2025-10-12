@@ -7,11 +7,12 @@ import {
 import { inject } from '@angular/core';
 import { AuthService } from '../services/auth/auth-service';
 import { catchError, switchMap, throwError } from 'rxjs';
+import { AccessToken } from '../models/auth';
 
 const RETRY_FLAG = new HttpContextToken<boolean>(() => false);
 
 // Adiciona o header Authorization se existir token
-function withAuth(request: HttpRequest<any>, token: string): HttpRequest<any> {
+function withAuth<T>(request: HttpRequest<T>, token: string): HttpRequest<T> {
   if (token) {
     return request.clone({ setHeaders: { Authorization: `Bearer ${token}` } })
   } else {
@@ -52,9 +53,9 @@ export const authInterceptor: HttpInterceptorFn = (request, next) => {
         return throwError(() => error);
       }
       return authService.refreshToken(refresh).pipe(
-        switchMap((response: any) => {
+        switchMap((token: AccessToken) => {
           // SimpleJWT costuma devolver { access: '...' }
-          const newAccess = response?.access;
+          const newAccess = token.access;
           if (!newAccess) {
             authService.logout();
             return throwError(() => error);
@@ -67,7 +68,7 @@ export const authInterceptor: HttpInterceptorFn = (request, next) => {
           );
           return next(retried);
         }),
-        catchError((error) => {
+        catchError((error: HttpErrorResponse) => {
           // Refresh falhou → força login
           authService.logout();
           return throwError(() => error);

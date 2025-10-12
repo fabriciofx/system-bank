@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Auth, AuthTokens } from '../../models/auth';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { AccessToken, Auth, AuthTokens } from '../../models/auth';
 import { env } from '../../../../environments/env.dev';
 import { ErrorMessage } from '../../custom/message';
-import { ErrorReasons } from '../../custom/error-reasons';
-import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -43,8 +42,11 @@ export class AuthService {
     this.router.navigate(['/auth']);
   }
 
-  refreshToken(refresh: string): Observable<string> {
-    return this.http.post<string>(`${env.API}/refresh/`, { refresh });
+  refreshToken(refresh: string): Observable<AccessToken> {
+    return this.http.post<AccessToken>(
+      `${env.API}/token/refresh/`,
+      { 'refresh': refresh }
+    );
   }
 
   getRefresh(): string {

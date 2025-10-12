@@ -1,6 +1,6 @@
 import 'zone.js';
 import 'zone.js/testing';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { Component } from '@angular/core';
 import { ErrorMessage, SuccessMessage } from './message';
 
@@ -11,14 +11,10 @@ import { ErrorMessage, SuccessMessage } from './message';
 class DummyComponent {}
 
 describe('Test for Message(s)', () => {
-  let fixture: ComponentFixture<DummyComponent>;
-
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [DummyComponent],
     }).compileComponents();
-
-    fixture = TestBed.createComponent(DummyComponent);
   });
 
   it('Must show a SuccessMessage with correct icon, title, and text',

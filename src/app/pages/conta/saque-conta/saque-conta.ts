@@ -4,7 +4,6 @@ import { MatInputModule } from "@angular/material/input";
 import { ContaService } from '../../../shared/services/conta/conta-service';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Paginated } from '../../../shared/custom/paginated';
-import { Conta } from '../../../shared/models/conta';
 import { Saque } from '../../../shared/models/saque';
 import { ErrorMessage, SuccessMessage } from '../../../shared/custom/message';
 import { ErrorReasons } from '../../../shared/custom/error-reasons';
@@ -50,9 +49,8 @@ export class SaqueConta {
     });
   }
 
-  onContaSelecionada(value: any): void {
-    const conta = value as ContaCliente;
-    this.formGroup.get('conta')?.setValue(conta.id);
+  onContaSelecionada(contaCliente: ContaCliente): void {
+    this.formGroup.get('conta')?.setValue(contaCliente.id);
   }
 
   form(): FormGroup {

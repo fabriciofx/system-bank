@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
   FormControl,
@@ -41,7 +41,7 @@ type ClienteFormGroup = FormGroup<{
   templateUrl: './cadastro-cliente.html',
   styleUrl: './cadastro-cliente.scss'
 })
-export class CadastroCliente {
+export class CadastroCliente implements OnInit {
   private readonly router: Router;
   private readonly route: ActivatedRoute;
   private readonly clienteService: ClienteService;

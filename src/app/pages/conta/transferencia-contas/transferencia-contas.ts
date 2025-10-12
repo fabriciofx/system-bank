@@ -50,14 +50,12 @@ export class TransferenciaContas {
     });
   }
 
-  onContaOrigemSelecionada(value: any): void {
-    const conta = value as ContaCliente;
-    this.formGroup.get('conta_origem')?.setValue(conta.id);
+  onContaOrigemSelecionada(contaCliente: ContaCliente): void {
+    this.formGroup.get('conta_origem')?.setValue(contaCliente.id);
   }
 
-  onContaDestinoSelecionada(value: any): void {
-    const conta = value as ContaCliente;
-    this.formGroup.get('conta_destino')?.setValue(conta.id);
+  onContaDestinoSelecionada(contaCliente: ContaCliente): void {
+    this.formGroup.get('conta_destino')?.setValue(contaCliente.id);
   }
 
   form(): FormGroup {

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ContaService } from '../../../shared/services/conta/conta-service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -40,7 +40,7 @@ type ContaFormGroup = FormGroup<{
   templateUrl: './cadastro-conta.html',
   styleUrl: './cadastro-conta.scss'
 })
-export class CadastroConta {
+export class CadastroConta implements OnInit {
   private readonly router: Router;
   private readonly route: ActivatedRoute;
   private readonly contaService: ContaService;
@@ -103,8 +103,7 @@ export class CadastroConta {
     return this.clienteService;
   }
 
-  onClienteSelecionado(value: any): void {
-    const cliente = value as Cliente;
+  onClienteSelecionado(cliente: Cliente): void {
     this.formGroup.get('cliente')?.setValue(cliente.id);
   }
 

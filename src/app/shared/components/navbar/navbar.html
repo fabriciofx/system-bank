@@ -48,7 +48,13 @@
           </a>
         </mat-nav-list>
       </mat-expansion-panel>
-      <a mat-list-item (click)="drawer.close(); logout()">
+      <a
+        mat-list-item
+        (click)="drawer.close(); logout()"
+        (keydown.enter)="drawer.close(); logout()"
+        (keyup.space)="drawer.close(); logout()"
+        tabindex="0"
+        >
         Sair
       </a>
     </mat-nav-list>
