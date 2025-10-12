@@ -4,8 +4,7 @@ module.exports = function (config) {
     frameworks: ['jasmine', '@angular-devkit/build-angular'],
     plugins: [
       require('karma-jasmine'),
-      require('karma-chrome-launcher'),
-      require('@angular-devkit/build-angular/plugins/karma')
+      require('karma-chrome-launcher')
     ],
     client: {
       clearContext: false
