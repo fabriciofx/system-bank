@@ -56,7 +56,7 @@ module.exports = tseslint.config(
         "error",
         {
           "code": 80,
-          "ignoreUrls": false,
+          "ignoreUrls": true,
           "ignoreComments": false,
           "ignoreStrings": false,
           "ignoreTemplateLiterals": false,
