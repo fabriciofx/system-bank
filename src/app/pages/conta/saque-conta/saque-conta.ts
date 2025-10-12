@@ -5,7 +5,7 @@ import { ContaService } from '../../../shared/services/conta/conta-service';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Paginated } from '../../../shared/custom/paginated';
 import { Saque } from '../../../shared/models/saque';
-import { ErrorMessage, SuccessMessage } from '../../../shared/custom/message';
+import { ErrorMessage, SuccessMessage } from '../../../shared/components/message/message';
 import { ErrorReasons } from '../../../shared/custom/error-reasons';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';

@@ -11,7 +11,7 @@ import {
   ConfirmMessage,
   ErrorMessage,
   SuccessMessage
-} from '../../../shared/custom/message';
+} from '../../../shared/components/message/message';
 import { ContaClienteService } from '../../../shared/services/conta-cliente/conta-cliente-service';
 import { ContaCliente } from '../../../shared/models/conta-cliente';
 import { LoadingSpinner } from "../../../shared/components/loading-spinner/loading-spinner";

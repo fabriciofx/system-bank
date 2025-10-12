@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AccessToken, Auth, AuthTokens } from '../../models/auth';
 import { env } from '../../../../environments/env.dev';
-import { ErrorMessage } from '../../custom/message';
+import { ErrorMessage } from '../../components/message/message';
 
 @Injectable({
   providedIn: 'root'

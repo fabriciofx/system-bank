@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
 import { ContaDe } from '../../../shared/models/conta';
 import { InfiniteSelect } from "../../../shared/components/infinite-select/infinite-select";
 import { Box, BoxOf } from '../../../shared/custom/box';
-import { ErrorMessage, SuccessMessage } from '../../../shared/custom/message';
+import { ErrorMessage, SuccessMessage } from '../../../shared/components/message/message';
 import { ErrorReasons } from '../../../shared/custom/error-reasons';
 import { Paginated } from '../../../shared/custom/paginated';
 import { ClienteService } from '../../../shared/services/cliente/cliente-service';

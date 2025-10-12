@@ -6,7 +6,7 @@ import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatIconModule } from "@angular/material/icon";
 import { MatButtonModule } from '@angular/material/button';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { YesNoMessage } from '../../custom/message';
+import { YesNoMessage } from '../message/message';
 import { AuthService } from '../../services/auth/auth-service';
 
 @Component({

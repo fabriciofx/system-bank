@@ -5,7 +5,7 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { ContaClienteService } from '../../../shared/services/conta-cliente/conta-cliente-service';
 import { ContaCliente } from '../../../shared/models/conta-cliente';
 import { Paginated } from '../../../shared/custom/paginated';
-import { ErrorMessage, SuccessMessage } from '../../../shared/custom/message';
+import { ErrorMessage, SuccessMessage } from '../../../shared/components/message/message';
 import { ErrorReasons } from '../../../shared/custom/error-reasons';
 import { Transferencia } from '../../../shared/models/transferencia';
 import { CommonModule } from '@angular/common';

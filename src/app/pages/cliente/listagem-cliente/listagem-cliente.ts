@@ -5,7 +5,7 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { ConfirmMessage, SuccessMessage, ErrorMessage } from '../../../shared/custom/message';
+import { ConfirmMessage, SuccessMessage, ErrorMessage } from '../../../shared/components/message/message';
 import { ClienteService } from '../../../shared/services/cliente/cliente-service';
 import { Cliente } from '../../../shared/models/cliente';
 import { ErrorReasons } from '../../../shared/custom/error-reasons';
