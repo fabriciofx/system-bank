@@ -12,9 +12,6 @@ export interface Platform {
 export class DefaultPlatform implements Platform {
   private readonly platformId = inject(PLATFORM_ID);
 
-  constructor() {
-  }
-
   browser(): boolean {
     return isPlatformBrowser(this.platformId);
   }
