@@ -8,7 +8,7 @@ import {
   Validators
 } from '@angular/forms';
 import { AuthService } from '../../../shared/services/auth/auth-service';
-import { Auth, AuthOf } from '../../../shared/models/auth';
+import { AuthOf } from '../../../shared/models/auth';
 
 type AuthFormGroup = FormGroup<{
   username: FormControl<string>;
