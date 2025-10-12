@@ -61,7 +61,7 @@ export const authInterceptor: HttpInterceptorFn = (request, next) => {
             return throwError(() => error);
           }
           // Salva novo access e reenvia a mesma requisição com ele
-          localStorage.setItem('access_token', newAccess);
+          authService.storage().store('access_token', newAccess);
           const retried = withAuth(
             request.clone({ context: request.context.set(RETRY_FLAG, true) }),
             newAccess

@@ -13,19 +13,19 @@ import { Storage, BrowserStorage } from '../../core/storage';
 export class AuthService {
   private readonly http: HttpClient;
   private readonly router: Router;
-  private readonly storage: Storage;
+  private readonly depot: Storage;
 
   constructor(http: HttpClient, router: Router, storage: BrowserStorage) {
     this.http = http;
     this.router = router;
-    this.storage = storage;
+    this.depot = storage;
   }
 
   login(auth: Auth): void {
     this.http.post<AuthTokens>(`${env.API}/token/`, auth).subscribe({
       next: (tokens: AuthTokens) => {
-        this.storage.store('access_token', tokens.access);
-        this.storage.store('refresh_token', tokens.refresh);
+        this.depot.store('access_token', tokens.access);
+        this.depot.store('refresh_token', tokens.refresh);
         this.router.navigate(['/cliente']);
       },
       error: () => {
@@ -38,8 +38,8 @@ export class AuthService {
   }
 
   logout(): void {
-    this.storage.remove('access_token');
-    this.storage.remove('refresh_token');
+    this.depot.remove('access_token');
+    this.depot.remove('refresh_token');
     this.router.navigate(['/auth']);
   }
 
@@ -51,10 +51,14 @@ export class AuthService {
   }
 
   refreshToken(): string {
-    return this.storage.value('refresh_token')?.[0] ?? "";
+    return this.depot.value('refresh_token')?.[0] ?? "";
   }
 
   accessToken(): string {
-    return this.storage.value('access_token')?.[0] ?? "";
+    return this.depot.value('access_token')?.[0] ?? "";
+  }
+
+  storage(): Storage {
+    return this.depot;
   }
 }
