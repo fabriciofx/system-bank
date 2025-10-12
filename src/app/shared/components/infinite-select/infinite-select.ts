@@ -9,6 +9,8 @@ import { ErrorReasons } from '../../core/error-reasons';
 import { Paginated } from '../../core/paginated';
 import { Text } from '../../core/text';
 import { HttpErrorResponse } from '@angular/common/http';
+import { MatFormFieldModule, MatLabel } from '@angular/material/form-field';
+import { MatOptionModule } from '@angular/material/core';
 
 @Component({
   selector: 'app-infinite-select',
@@ -16,7 +18,11 @@ import { HttpErrorResponse } from '@angular/common/http';
     CommonModule,
     FormsModule,
     MatSelectModule,
-    MatProgressSpinnerModule],
+    MatProgressSpinnerModule,
+    MatFormFieldModule,
+    MatLabel,
+    MatOptionModule
+  ],
   templateUrl: './infinite-select.html',
   styleUrl: './infinite-select.scss'
 })
