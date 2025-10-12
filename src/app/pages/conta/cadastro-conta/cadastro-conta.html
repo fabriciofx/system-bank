@@ -1,20 +1,21 @@
 <div class="container mt-5 d-flex justify-content-center" >
   <div>
     <h1>Nova conta</h1>
-    <form [formGroup]="form()" class="example-form mt-4" (ngSubmit)="cadastre()">
+    <form [formGroup]="form()" class="form mt-4" (ngSubmit)="cadastre()">
       <!-- Select do cliente -->
       <app-infinite-select
         [paginated]="clientes()"
         placeholder="Selecione um cliente"
         [pageSize]="20"
-        (itemSelected)="onClienteSelecionado($event)">
+        (itemSelected)="onClienteSelecionado($event)"
+        >
       </app-infinite-select>
       <!--Input do numero -->
       @if (form().get('numero')?.errors &&
         form().get('numero')?.hasError('required')) {
         <small class="text-danger mb-2">Campo obrigatório</small>
       }
-      <mat-form-field class="example-full-width">
+      <mat-form-field class="full-width">
         <mat-label>Número</mat-label>
         <input matInput formControlName="numero">
       </mat-form-field>
@@ -23,7 +24,7 @@
         form().get('agencia')?.hasError('required')) {
         <small class="text-danger mb-2">Campo obrigatório</small>
       }
-      <mat-form-field class="example-full-width">
+      <mat-form-field class="full-width">
         <mat-label>Agência</mat-label>
         <input matInput formControlName="agencia">
       </mat-form-field>
@@ -32,13 +33,18 @@
         form().get('saldo')?.hasError('required')) {
         <small class="text-danger mb-2">Campo obrigatório</small>
       }
-      <mat-form-field class="example-full-width">
+      <mat-form-field class="full-width">
         <mat-label>Saldo</mat-label>
         <input matInput formControlName="saldo">
       </mat-form-field>
       <!--Botao de submissao do formulario -->
       <div class="d-flex justify-content-center">
-        <button [disabled]="!form().valid" type="submit" mat-raised-button color="primary">
+        <button
+          [disabled]="!form().valid"
+          type="submit"
+          mat-raised-button
+          color="primary"
+          >
           Cadastrar
         </button>
       </div>

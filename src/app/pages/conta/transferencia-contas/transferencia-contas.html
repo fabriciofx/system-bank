@@ -1,7 +1,7 @@
 <div class="container mt-5 d-flex justify-content-center" >
   <div>
     <h1>Transferência</h1>
-    <form [formGroup]="form()" class="example-form mt-4" (ngSubmit)="transfere()">
+    <form [formGroup]="form()" class="form mt-4" (ngSubmit)="transfere()">
       <!-- Select da Conta de Origem -->
       <app-infinite-select
         [paginated]="contas()"
@@ -21,7 +21,7 @@
         form().get('valor')?.hasError('required')) {
         <small class="text-danger mb-2">Campo obrigatório</small>
       }
-      <mat-form-field class="example-full-width">
+      <mat-form-field class="full-width">
         <mat-label>Valor</mat-label>
         <input matInput formControlName="valor">
       </mat-form-field>
