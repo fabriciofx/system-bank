@@ -89,7 +89,7 @@ export class CadastroConta implements OnInit {
       this.editar.store(true);
       this.contaService.pesquisePorId(param).subscribe(
         conta => {
-          this.formGroup.patchValue(conta)
+          this.formGroup.patchValue(conta);
         }
       );
     }

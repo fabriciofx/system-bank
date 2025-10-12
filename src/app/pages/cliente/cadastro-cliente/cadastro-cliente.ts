@@ -95,7 +95,7 @@ export class CadastroCliente implements OnInit {
       this.editar.store(true);
       this.clienteService.pesquisePorId(param).subscribe(
         cliente => {
-          this.formGroup.patchValue(cliente)
+          this.formGroup.patchValue(cliente);
         }
       );
     }

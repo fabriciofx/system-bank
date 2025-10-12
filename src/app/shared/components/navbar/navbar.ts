@@ -44,7 +44,7 @@ export class Navbar {
     const answer = await new YesNoMessage(
       'Você deseja sair do sistema?',
       'Se sim, você será redirecionado para a tela de login.'
-    ).show()
+    ).show();
     if (answer.yes()) {
       this.authService.logout();
     }

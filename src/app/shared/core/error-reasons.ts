@@ -39,7 +39,7 @@ export class ErrorReasons {
 }
 
 export class Reason {
-  private readonly text: string
+  private readonly text: string;
 
   constructor(text: string) {
     this.text = text;

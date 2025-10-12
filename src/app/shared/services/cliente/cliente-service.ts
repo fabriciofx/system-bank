@@ -41,7 +41,7 @@ export class ClienteService implements Paginated<Cliente> {
   }
 
   delete(id: number): Observable<Cliente> {
-    return this.http.delete<Cliente>(`${env.API}/clientes/${id}`)
+    return this.http.delete<Cliente>(`${env.API}/clientes/${id}`);
   }
 
   pesquisePorId(id: number): Observable<Cliente> {

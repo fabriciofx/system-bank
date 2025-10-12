@@ -92,7 +92,7 @@ export class ListagemCliente implements AfterViewInit {
       'Você tem certeza que deseja deletar?',
       'Não tem como reverter essa ação',
       'Deletar'
-    ).show()
+    ).show();
     if (answer.yes()) {
       this.clienteService.delete(id).subscribe({
         next: () => {
