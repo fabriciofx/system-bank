@@ -1,5 +1,3 @@
-import 'zone.js';
-import 'zone.js/testing';
 import { TestBed } from '@angular/core/testing';
 import { Component } from '@angular/core';
 import { ErrorMessage, SuccessMessage } from './message';
