@@ -6,7 +6,7 @@ export interface ContaCliente extends Text {
   cliente: Cliente | undefined;
   numero: string;
   agencia: string;
-  saldo: number;
+  saldo: string;
 }
 
 export class ContaClienteDe implements ContaCliente {
@@ -14,7 +14,7 @@ export class ContaClienteDe implements ContaCliente {
   cliente!: Cliente;
   numero!: string;
   agencia!: string;
-  saldo!: number;
+  saldo!: string;
 
   constructor(json: Partial<ContaCliente>) {
     Object.assign(this, json);
