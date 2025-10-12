@@ -27,11 +27,11 @@ export class InfiniteSelect<T extends Text> implements AfterViewInit {
 
   @ViewChild('select') select!: MatSelect;
   @Input() paginated!: Paginated<T>;
-  @Input() placeholder: string = 'Select an item';
-  @Input() panelClass: string = 'infinite-select';
-  @Input() pageSize: number = 10;
+  @Input() placeholder = 'Select an item';
+  @Input() panelClass = 'infinite-select';
+  @Input() pageSize = 10;
 
-  @Output() itemSelected: EventEmitter<any> = new EventEmitter<any>();
+  @Output() itemSelected: EventEmitter<T> = new EventEmitter<T>();
 
   result!: PageResult<T>;
   items: T[] = [];
