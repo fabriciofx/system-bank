@@ -74,7 +74,7 @@ export class ListagemConta implements AfterViewInit {
 
   load(index: number, size: number): void {
     this.busy.set(true);
-    this.contaClienteService.paginas(index, size).subscribe({
+    this.contaClienteService.pages(index, size).subscribe({
       next: (result: PageResult<ContaCliente>) => {
         this.result.set(result);
         this.dataSource.data = result.items;

@@ -27,7 +27,7 @@ export class ContaService implements Paginated<Conta> {
     return this.http.get<Conta[]>(`${env.API}/contas/`);
   }
 
-  paginas(num: number, size: number): Observable<PageResult<Conta>> {
+  pages(num: number, size: number): Observable<PageResult<Conta>> {
     const url = `${env.API}/contas/?page=${num}&pageSize=${size}`;
     const urlAll = `${env.API}/contas/?page=1&pageSize=10000`;
     const contas = this.http.get<Conta[]>(url);

@@ -76,7 +76,7 @@ export class InfiniteSelect<T extends Text> implements AfterViewInit {
         this.pageIndex++;
       }
       this.zone.run(async () => {
-        this.paginated.paginas(this.pageIndex, this.pageSize);
+        this.paginated.pages(this.pageIndex, this.pageSize);
         this.cdr.detectChanges();
       });
       this.loading = false;
@@ -84,7 +84,7 @@ export class InfiniteSelect<T extends Text> implements AfterViewInit {
   }
 
   load(page: number, pageSize: number): void {
-    this.paginated.paginas(page, pageSize).subscribe({
+    this.paginated.pages(page, pageSize).subscribe({
       next: (result: PageResult<T>) => {
         this.items = Array.from(
           new Set([

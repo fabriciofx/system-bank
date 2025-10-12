@@ -71,7 +71,7 @@ export class ListagemCliente implements AfterViewInit {
 
   load(index: number, size: number): void {
     this.busy.set(true);
-    this.clienteService.paginas(index, size).subscribe({
+    this.clienteService.pages(index, size).subscribe({
       next: (result: PageResult<Cliente>) => {
         this.result.set(result);
         this.dataSource.data = result.items;

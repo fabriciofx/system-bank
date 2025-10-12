@@ -21,11 +21,11 @@ export class ContaClienteService implements Paginated<ContaCliente> {
     this.contaService = contaService;
   }
 
-  paginas(num: number, size: number): Observable<PageResult<ContaCliente>> {
+  pages(num: number, size: number): Observable<PageResult<ContaCliente>> {
     const all = this.http.get<Conta[]>(
       `${env.API}/contas/?page=1&pageSize=10000`
     );
-    const contas = this.contaService.paginas(num, size);
+    const contas = this.contaService.pages(num, size);
     const clientes = this.http.get<Cliente[]>(`${env.API}/clientes/`);
     const merge = combineLatest([contas, clientes]).pipe(
       map(([contas, clientes]) => {

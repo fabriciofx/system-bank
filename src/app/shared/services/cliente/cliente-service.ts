@@ -24,7 +24,7 @@ export class ClienteService implements Paginated<Cliente> {
     return this.http.get<Cliente[]>(`${env.API}/clientes/`);
   }
 
-  paginas(num: number, size: number): Observable<PageResult<Cliente>> {
+  pages(num: number, size: number): Observable<PageResult<Cliente>> {
     const url = `${env.API}/clientes/?page=${num}&pageSize=${size}`;
     const urlAll = `${env.API}/clientes/?page=1&pageSize=10000`;
     const clientes = this.http.get<ClienteDe[]>(url);
