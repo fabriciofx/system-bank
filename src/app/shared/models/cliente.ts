@@ -19,7 +19,7 @@ export class ClienteDe implements Cliente {
   ativo!: boolean;
   observacoes!: string;
 
-  constructor(json: any) {
+  constructor(json: Partial<Cliente>) {
     Object.assign(this, json);
   }
 

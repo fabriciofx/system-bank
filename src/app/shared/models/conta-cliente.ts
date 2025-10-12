@@ -16,7 +16,7 @@ export class ContaClienteDe implements ContaCliente {
   agencia!: string;
   saldo!: number;
 
-  constructor(json: any) {
+  constructor(json: Partial<ContaCliente>) {
     Object.assign(this, json);
   }
 
