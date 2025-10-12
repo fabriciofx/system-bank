@@ -61,7 +61,7 @@ export class InfiniteSelect<T extends Text> implements AfterViewInit {
     }
   }
 
-  onSelect(event: MatSelectChange): void {
+  onSelect(event: MatSelectChange<T>): void {
     this.itemSelected.emit(event.value);
   }
 
