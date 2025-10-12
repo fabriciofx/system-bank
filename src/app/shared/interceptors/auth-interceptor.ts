@@ -12,9 +12,14 @@ import { AccessToken } from '../models/auth';
 const RETRY_FLAG = new HttpContextToken<boolean>(() => false);
 
 // Adiciona o header Authorization se existir token
-function withAuth<T>(request: HttpRequest<T>, token: string): HttpRequest<T> {
-  if (token) {
-    return request.clone({ setHeaders: { Authorization: `Bearer ${token}` } });
+function withAuth<T>(
+  request: HttpRequest<T>,
+  token: AccessToken
+): HttpRequest<T> {
+  if (token.valid()) {
+    return request.clone(
+      { setHeaders: { Authorization: `Bearer ${token.access}` } }
+    );
   } else {
     return request;
   }
@@ -47,24 +52,23 @@ export const authInterceptor: HttpInterceptorFn = (request, next) => {
         return throwError(() => error);
       }
       // 2) Tenta o refresh usando o refresh_token salvo
-      const refresh = authService.refreshToken();
-      if (!refresh) {
+      const refreshToken = authService.refreshToken();
+      if (!refreshToken.valid()) {
         authService.logout();
         return throwError(() => error);
       }
-      return authService.refresh(refresh).pipe(
-        switchMap((token: AccessToken) => {
+      return authService.refresh(refreshToken).pipe(
+        switchMap((accessToken: AccessToken) => {
           // SimpleJWT costuma devolver { access: '...' }
-          const newAccess = token.access;
-          if (!newAccess) {
+          if (!accessToken.valid()) {
             authService.logout();
             return throwError(() => error);
           }
           // Salva novo access e reenvia a mesma requisição com ele
-          authService.storage().store('access_token', newAccess);
+          authService.store(accessToken);
           const retried = withAuth(
             request.clone({ context: request.context.set(RETRY_FLAG, true) }),
-            newAccess
+            accessToken
           );
           return next(retried);
         }),

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { AccessToken, Auth, AuthTokens } from '../../models/auth';
+import { catchError, map, Observable, throwError } from 'rxjs';
+import { AccessToken, AccessTokenOf, Auth, AuthTokens, AuthTokensOf, RefreshToken, RefreshTokenOf } from '../../models/auth';
 import { env } from '../../../../environments/env.dev';
 import { ErrorMessage } from '../../components/message/message';
 import { Storage, BrowserStorage } from '../../core/storage';
@@ -13,52 +13,68 @@ import { Storage, BrowserStorage } from '../../core/storage';
 export class AuthService {
   private readonly http: HttpClient;
   private readonly router: Router;
-  private readonly depot: Storage;
+  private readonly storage: Storage;
 
   constructor(http: HttpClient, router: Router, storage: BrowserStorage) {
     this.http = http;
     this.router = router;
-    this.depot = storage;
+    this.storage = storage;
   }
 
   login(auth: Auth): void {
-    this.http.post<AuthTokens>(`${env.API}/token/`, auth).subscribe({
-      next: (tokens: AuthTokens) => {
-        this.depot.store('access_token', tokens.access);
-        this.depot.store('refresh_token', tokens.refresh);
-        this.router.navigate(['/cliente']);
-      },
-      error: () => {
-        new ErrorMessage(
-          'Oops...',
-          'Usuário e/ou senha inválidos!'
-        ).show();
-      }
-    });
+    this.http.post<AuthTokens>(`${env.API}/token/`, auth)
+      .pipe(
+        map(tokens => new AuthTokensOf(tokens.access, tokens.refresh)),
+        map(tokens => {
+          if (!tokens.valid()) {
+            throw new Error("Error: AuthTokens is invalid!");
+          }
+          return tokens;
+        }),
+        catchError(error => throwError(() => error))
+      )
+      .subscribe({
+        next: (tokens: AuthTokens) => {
+          this.storage.store('access_token', tokens.access);
+          this.storage.store('refresh_token', tokens.refresh);
+          this.router.navigate(['/cliente']);
+        },
+        error: () => {
+          new ErrorMessage(
+            'Oops...',
+            'Usuário e/ou senha inválidos!'
+          ).show();
+        }
+      });
   }
 
   logout(): void {
-    this.depot.remove('access_token');
-    this.depot.remove('refresh_token');
+    this.storage.remove('access_token');
+    this.storage.remove('refresh_token');
     this.router.navigate(['/auth']);
   }
 
-  refresh(token: string): Observable<AccessToken> {
-    return this.http.post<AccessToken>(
-      `${env.API}/token/refresh/`,
-      { 'refresh': token }
-    );
+  refresh(token: RefreshToken): Observable<AccessToken> {
+    if (token.valid()) {
+      return this.http.post<AccessToken>(`${env.API}/token/refresh/`, token);
+    } else {
+      throw new Error("Error: RefreshToken is invalid!");
+    }
   }
 
-  refreshToken(): string {
-    return this.depot.value('refresh_token')?.[0] ?? "";
+  refreshToken(): RefreshToken {
+    return new RefreshTokenOf(this.storage.value('refresh_token')?.[0] ?? "");
   }
 
-  accessToken(): string {
-    return this.depot.value('access_token')?.[0] ?? "";
+  accessToken(): AccessToken {
+    return new AccessTokenOf(this.storage.value('access_token')?.[0] ?? "");
   }
 
-  storage(): Storage {
-    return this.depot;
+  store(token: AccessToken): void {
+    if (token.valid()) {
+      this.storage.store('access_token', token.access);
+    } else {
+      throw new Error("Error: AccessToken is invalid!");
+    }
   }
 }
