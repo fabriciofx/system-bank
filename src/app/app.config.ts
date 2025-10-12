@@ -13,6 +13,7 @@ import {
   withInterceptors,
   withFetch
 } from '@angular/common/http';
+import { provideNgxMask } from 'ngx-mask';
 import { routes } from './app.routes';
 import { authInterceptor } from './shared/interceptors/auth-interceptor';
 
@@ -22,6 +23,7 @@ export const appConfig: ApplicationConfig = {
     provideZonelessChangeDetection(),
     provideRouter(routes),
     provideClientHydration(withEventReplay()),
-    provideHttpClient(withFetch(), withInterceptors([authInterceptor]))
+    provideHttpClient(withFetch(), withInterceptors([authInterceptor])),
+    provideNgxMask()
   ]
 };

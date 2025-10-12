@@ -17,6 +17,7 @@ import { SuccessMessage, ErrorMessage } from '../../../shared/components/message
 import { Box, BoxOf } from '../../../shared/core/box';
 import { MatButtonModule } from '@angular/material/button';
 import { HttpErrorResponse } from '@angular/common/http';
+import { NgxMaskDirective } from 'ngx-mask';
 
 type ClienteFormGroup = FormGroup<{
   id: FormControl<number>;
@@ -36,8 +37,9 @@ type ClienteFormGroup = FormGroup<{
     MatRadioModule,
     MatButtonModule,
     FormsModule,
-    ReactiveFormsModule
-  ],
+    ReactiveFormsModule,
+    NgxMaskDirective
+],
   templateUrl: './cadastro-cliente.html',
   styleUrl: './cadastro-cliente.scss'
 })
