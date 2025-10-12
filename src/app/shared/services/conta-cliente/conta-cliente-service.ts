@@ -36,7 +36,7 @@ export class ContaClienteService implements Paginated<ContaCliente> {
             ...conta,
             cliente: mapa.get(conta.cliente)
           })
-        ).map(conta => new ContaClienteDe(conta));
+        ).map(contaCliente => new ContaClienteDe(contaCliente));
         return {
           items: contasClientes,
           page: num,
