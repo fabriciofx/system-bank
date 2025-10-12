@@ -1,11 +1,18 @@
 import { isPlatformBrowser, isPlatformServer } from "@angular/common";
-import { InjectionToken, PLATFORM_ID } from "@angular/core";
+import { inject, Injectable, PLATFORM_ID } from "@angular/core";
 
-export class Platform {
-  private readonly platformId: InjectionToken<Object>;
+export interface Platform {
+  browser(): boolean;
+  server(): boolean;
+}
 
-  constructor(token: InjectionToken<Object> = PLATFORM_ID) {
-    this.platformId = token;
+@Injectable({
+  providedIn: 'root'
+})
+export class DefaultPlatform implements Platform {
+  private readonly platformId = inject(PLATFORM_ID);
+
+  constructor() {
   }
 
   browser(): boolean {
@@ -14,5 +21,23 @@ export class Platform {
 
   server(): boolean {
     return isPlatformServer(this.platformId);
+  }
+}
+
+export class FakePlatform implements Platform {
+  private readonly _browser: boolean;
+  private readonly _server: boolean;
+
+  constructor(browser: boolean, server: boolean) {
+    this._browser = browser;
+    this._server = server;
+  }
+
+  browser(): boolean {
+    return this._browser;
+  }
+
+  server(): boolean {
+    return this._server;
   }
 }
