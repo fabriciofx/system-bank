@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { AccessToken, Auth, AuthTokens } from '../../models/auth';
 import { env } from '../../../../environments/env.dev';
 import { ErrorMessage } from '../../components/message/message';
+import { Storage, BrowserStorage } from '../../core/storage';
 
 @Injectable({
   providedIn: 'root'
@@ -12,17 +13,19 @@ import { ErrorMessage } from '../../components/message/message';
 export class AuthService {
   private readonly http: HttpClient;
   private readonly router: Router;
+  private readonly storage: Storage;
 
-  constructor(http: HttpClient, router: Router) {
+  constructor(http: HttpClient, router: Router, storage: BrowserStorage) {
     this.http = http;
     this.router = router;
+    this.storage = storage;
   }
 
   login(auth: Auth): void {
     this.http.post<AuthTokens>(`${env.API}/token/`, auth).subscribe({
       next: (tokens: AuthTokens) => {
-        localStorage.setItem('access_token', tokens.access);
-        localStorage.setItem('refresh_token', tokens.refresh);
+        this.storage.store('access_token', tokens.access);
+        this.storage.store('refresh_token', tokens.refresh);
         this.router.navigate(['/cliente']);
       },
       error: () => {
@@ -35,10 +38,8 @@ export class AuthService {
   }
 
   logout(): void {
-    if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
-      localStorage.removeItem('access_token');
-      localStorage.removeItem('refresh_token');
-    }
+    this.storage.remove('access_token');
+    this.storage.remove('refresh_token');
     this.router.navigate(['/auth']);
   }
 
@@ -50,16 +51,10 @@ export class AuthService {
   }
 
   getRefresh(): string {
-    if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
-      return localStorage.getItem('refresh_token') || "";
-    }
-    return "";
+    return this.storage.value('refresh_token')?.[0] ?? "";
   }
 
   getToken(): string {
-    if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
-      return localStorage.getItem('access_token') || "";
-    }
-    return "";
+    return this.storage.value('access_token')?.[0] ?? "";
   }
 }
