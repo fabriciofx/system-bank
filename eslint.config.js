@@ -42,7 +42,8 @@ module.exports = tseslint.config(
           "ignoreTemplateLiterals": false,
           "ignorePattern": "^import\\s.+\\sfrom\\s.+;$"
         }
-      ]
+      ],
+      "curly": ["error", "all"]
     },
   },
   {
