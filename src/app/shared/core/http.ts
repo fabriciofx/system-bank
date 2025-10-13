@@ -94,7 +94,7 @@ export class ContentType<X, Y> implements Request<Y> {
   private readonly post: Post<X, Y>;
   private readonly type: string;
 
-  constructor(post: Post<X, Y>, type: string = 'application/json') {
+  constructor(post: Post<X, Y>, type = 'application/json') {
     this.post = post;
     this.type = type;
   }
