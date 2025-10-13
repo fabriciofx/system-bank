@@ -2,7 +2,7 @@ import { FormControl } from '@angular/forms';
 import { Cpf } from './cpf';
 
 describe('Cpf.validator', () => {
-  it('should return null for empty value', () => {
+  it('should return false for empty value', () => {
     const control = new FormControl('');
     expect(Cpf.validator(control)).toEqual({ cpf: false });
   });
