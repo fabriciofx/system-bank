@@ -1,5 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { provideZonelessChangeDetection } from '@angular/core';
+import { provideRouter } from '@angular/router';
+import { provideHttpClient } from '@angular/common/http';
 import { SaqueConta } from './saque-conta';
 
 describe('SaqueConta', () => {
@@ -8,7 +10,12 @@ describe('SaqueConta', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SaqueConta]
+      imports: [SaqueConta],
+      providers: [
+        provideZonelessChangeDetection(),
+        provideRouter([]),
+        provideHttpClient(),
+      ]
     })
     .compileComponents();
 

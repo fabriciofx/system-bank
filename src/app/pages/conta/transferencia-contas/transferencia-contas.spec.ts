@@ -1,5 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { provideZonelessChangeDetection } from '@angular/core';
+import { provideRouter } from '@angular/router';
+import { provideHttpClient } from '@angular/common/http';
 import { TransferenciaContas } from './transferencia-contas';
 
 describe('TransferenciaContas', () => {
@@ -8,7 +10,12 @@ describe('TransferenciaContas', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TransferenciaContas]
+      imports: [TransferenciaContas],
+      providers: [
+        provideZonelessChangeDetection(),
+        provideRouter([]),
+        provideHttpClient(),
+      ]
     })
     .compileComponents();
 

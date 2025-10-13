@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { provideZonelessChangeDetection } from '@angular/core';
 import { LoginTemplate } from './login-template';
+import { provideHttpClient } from '@angular/common/http';
 
 describe('LoginTemplate', () => {
   let component: LoginTemplate;
@@ -8,7 +9,11 @@ describe('LoginTemplate', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LoginTemplate]
+      imports: [LoginTemplate],
+      providers: [
+        provideZonelessChangeDetection(),
+        provideHttpClient()
+      ]
     })
     .compileComponents();
 

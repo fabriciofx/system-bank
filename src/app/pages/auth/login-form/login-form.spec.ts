@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { provideZonelessChangeDetection } from '@angular/core';
+import { provideHttpClient } from '@angular/common/http';
 import { LoginForm } from './login-form';
 
 describe('LoginForm', () => {
@@ -8,7 +9,11 @@ describe('LoginForm', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LoginForm]
+      imports: [LoginForm],
+      providers: [
+        provideZonelessChangeDetection(),
+        provideHttpClient()
+      ]
     })
     .compileComponents();
 

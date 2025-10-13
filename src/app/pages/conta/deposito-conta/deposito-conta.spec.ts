@@ -1,5 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { provideZonelessChangeDetection } from '@angular/core';
+import { provideRouter } from '@angular/router';
+import { provideHttpClient } from '@angular/common/http';
 import { DepositoConta } from './deposito-conta';
 
 describe('DepositoConta', () => {
@@ -8,7 +10,12 @@ describe('DepositoConta', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DepositoConta]
+      imports: [DepositoConta],
+      providers: [
+        provideZonelessChangeDetection(),
+        provideRouter([]),
+        provideHttpClient(),
+      ]
     })
     .compileComponents();
 

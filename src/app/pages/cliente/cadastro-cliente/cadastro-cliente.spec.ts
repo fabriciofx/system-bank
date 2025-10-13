@@ -1,5 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { provideZonelessChangeDetection } from '@angular/core';
+import { provideRouter } from '@angular/router';
+import { provideHttpClient } from '@angular/common/http';
+import { provideNgxMask } from 'ngx-mask';
 import { CadastroCliente } from './cadastro-cliente';
 
 describe('CadastroCliente', () => {
@@ -8,7 +11,13 @@ describe('CadastroCliente', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CadastroCliente]
+      imports: [CadastroCliente],
+      providers: [
+        provideZonelessChangeDetection(),
+        provideRouter([]),
+        provideHttpClient(),
+        provideNgxMask()
+      ]
     })
     .compileComponents();
 
