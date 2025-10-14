@@ -7,15 +7,21 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
+    "test:file": "node scripts/run-ng-test.js",
     "serve:ssr:system-bank": "node dist/system-bank/server/server.mjs",
     "lint": "ng lint",
-    "test:jest": "npx jest",
+    "lint:file": "eslint",
+    "test:jest": "jest",
     "prepare": "husky"
   },
   "lint-staged": {
     "*.{ts,js,html,scss}": [
-      "npm run lint",
-      "npm test",
+      "npm run lint:file"
+    ],
+    "*.spec.ts": [
+      "npm run test:file"
+    ],
+    "*.test.{ts,js}": [
       "npm run test:jest"
     ]
   },
