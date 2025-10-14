@@ -1,7 +1,7 @@
 /// <reference types="jest" />
 import { readFileSync } from "fs";
 import { join } from "path";
-import { Reason } from "../../../../app/shared/core/error-reasons";
+import { Reason } from "./error-reasons";
 
 describe('ErrorReasons', () => {
   it('Must check if text is an html page (with DOCTYPE)', () => {
