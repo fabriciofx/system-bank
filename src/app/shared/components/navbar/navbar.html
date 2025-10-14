@@ -6,9 +6,16 @@
     mode="over"
     class="sidenav">
     <mat-nav-list>
-      <a mat-list-item routerLink="/dashboard" (click)="drawer.close()">
-        Dashboard
-      </a>
+      <mat-expansion-panel hideToggle disabled>
+        <mat-expansion-panel-header>
+          <mat-panel-title
+            mat-list-item
+            routerLink="/dashboard"
+            (click)="drawer.close()">
+            Dashboard
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+      </mat-expansion-panel>
       <mat-expansion-panel>
         <mat-expansion-panel-header>
           <mat-panel-title>
@@ -68,15 +75,18 @@
           </a>
         </mat-nav-list>
       </mat-expansion-panel>
-      <a
-        mat-list-item
-        (click)="drawer.close(); logout()"
-        (keydown.enter)="drawer.close(); logout()"
-        (keyup.space)="drawer.close(); logout()"
-        tabindex="0"
-        >
-        Sair
-      </a>
+      <mat-expansion-panel hideToggle disabled>
+        <mat-expansion-panel-header>
+          <mat-panel-title
+            mat-list-item
+            (click)="drawer.close(); logout()"
+            (keydown.enter)="drawer.close(); logout()"
+            (keyup.space)="drawer.close(); logout()"
+            tabindex="0">
+            Sair
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+      </mat-expansion-panel>
     </mat-nav-list>
   </mat-sidenav>
   <!-- Toolbar principal -->

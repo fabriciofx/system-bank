@@ -49,3 +49,18 @@ button[mat-icon-button] {
 mat-sidenav mat-expansion-panel {
   margin-bottom: 8px;
 }
+
+mat-expansion-panel[disabled] {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+
+mat-expansion-panel[disabled] .mat-expansion-panel-header {
+  color: inherit !important;
+  background-color: inherit !important;
+  cursor: pointer !important;
+}
+
+mat-expansion-panel[disabled] .mat-expansion-panel-header:hover {
+  background-color: rgba(0, 0, 0, 0.04) !important;
+}
