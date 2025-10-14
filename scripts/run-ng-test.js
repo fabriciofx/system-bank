@@ -12,7 +12,7 @@ if (args.length === 0) {
 
 // Executa ng test apenas nos arquivos convertidos em relativos
 try {
-  execSync(`ng test --include ${args.join(' ')}`, { stdio: 'inherit' });
+  args.map(file => execSync(`ng test --include ${file}`, { stdio: 'inherit' }));
 } catch (error) {
   console.error(`Error: ${error}`);
   process.exit(1);
