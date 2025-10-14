@@ -46,7 +46,6 @@ export class LoginForm {
   login(): void {
     if (this.formGroup.valid) {
       const credentials = new CredentialsFrom(this.formGroup.getRawValue());
-      console.log(credentials);
       this.authService.login(credentials);
     }
   }
