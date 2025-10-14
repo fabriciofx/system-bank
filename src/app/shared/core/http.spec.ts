@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { HttpClient } from '@angular/common/http';
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting, HttpTestingController } from '@angular/common/http/testing';
-import { Get } from './http';
+import { Empty, Get } from './http';
 
 describe('http core', () => {
   let http: HttpClient;
@@ -26,7 +26,7 @@ describe('http core', () => {
     const response = new Get<{ detail: string }>(
       http,
       '/api/token'
-    ).send();
+    ).send(new Empty());
     response.value().subscribe(result => {
       expect(result.detail).toBe(msg);
     });
