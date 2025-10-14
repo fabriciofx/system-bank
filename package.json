@@ -10,12 +10,13 @@
     "serve:ssr:system-bank": "node dist/system-bank/server/server.mjs",
     "lint": "ng lint",
     "test:jest": "npx jest",
-    "prepare": "npx husky init"
+    "prepare": "husky"
   },
   "lint-staged": {
     "*.{ts,js,html,scss}": [
       "npm run lint",
-      "npm test && npm run test:jest"
+      "npm test",
+      "npm run test:jest"
     ]
   },
   "prettier": {
