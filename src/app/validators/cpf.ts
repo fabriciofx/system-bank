@@ -1,10 +1,12 @@
-import { AbstractControl, ValidatorFn } from '@angular/forms';
+import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 
 export class Cpf {
-  static validator: ValidatorFn = (control: AbstractControl<string>) => {
+  static validator: ValidatorFn = (
+    control: AbstractControl<string>
+  ): ValidationErrors | null => {
     const cpf = control.value?.replace(/\D/g, '');
     if (!cpf || cpf.length !== 11) {
-      return { cpf: false };
+      return { cpf: 'CPF inválido: verifique a quantidade de dígitos' };
     }
     let sum = 0;
     for (let i = 0; i < 9; i++) {
@@ -15,7 +17,7 @@ export class Cpf {
       check1 = 0;
     }
     if (check1 !== parseInt(cpf[9])) {
-      return { cpf: false };
+      return { cpf: 'CPF inválido: verifique se os dígitos estão corretos' };
     }
     sum = 0;
     for (let i = 0; i < 10; i++) {
@@ -26,8 +28,8 @@ export class Cpf {
       check2 = 0;
     }
     if (check2 !== parseInt(cpf[10])) {
-      return { cpf: false };
+      return { cpf: 'CPF inválido: verifique se os dígitos estão corretos' };
     }
-    return { cpf: true };
+    return null;
   };
 }
