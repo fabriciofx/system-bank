@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map, Observable, throwError } from 'rxjs';
-import { AccessToken, AccessTokenOf, Auth, AuthTokens, AuthTokensOf, RefreshToken, RefreshTokenOf } from '../../models/auth';
+import { AccessToken, AccessTokenOf, Credentials, AuthTokens, AuthTokensOf, RefreshToken, RefreshTokenOf } from '../../models/auth';
 import { env } from '../../../../environments/env.dev';
 import { ErrorMessage } from '../../components/message/message';
 import { Storage, BrowserStorage } from '../../core/storage';
@@ -21,8 +21,8 @@ export class AuthService {
     this.storage = storage;
   }
 
-  login(auth: Auth): void {
-    this.http.post<AuthTokens>(`${env.API}/token/`, auth)
+  login(credentials: Credentials): void {
+    this.http.post<AuthTokens>(`${env.API}/token/`, credentials)
       .pipe(
         map(tokens => new AuthTokensOf(tokens.access, tokens.refresh)),
         map(tokens => {

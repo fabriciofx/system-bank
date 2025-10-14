@@ -1,4 +1,4 @@
-export interface Auth {
+export interface Credentials {
   username: string;
   password: string;
   valid(): boolean;
@@ -18,7 +18,7 @@ export interface AuthTokens extends AccessToken, RefreshToken {
   valid(): boolean;
 }
 
-export class AuthOf implements Auth {
+export class CredentialsOf implements Credentials {
   username: string;
   password: string;
 
