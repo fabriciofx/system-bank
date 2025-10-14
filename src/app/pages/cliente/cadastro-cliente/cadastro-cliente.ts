@@ -18,6 +18,7 @@ import { Box, BoxOf } from '../../../shared/core/box';
 import { MatButtonModule } from '@angular/material/button';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NgxMaskDirective } from 'ngx-mask';
+import { Cpf } from '../../../validators/cpf';
 
 type ClienteFormGroup = FormGroup<{
   id: FormControl<number>;
@@ -69,7 +70,7 @@ export class CadastroCliente implements OnInit {
       ),
       cpf: new FormControl(
         '',
-        { nonNullable: true, validators: [Validators.required] }
+        { nonNullable: true, validators: [Cpf.validator] }
       ),
       email: new FormControl(
         '',
