@@ -26,9 +26,8 @@ export class ClienteService implements Paginated<Cliente> {
 
   pages(num: number, size: number): Observable<PageResult<Cliente>> {
     const url = `${env.API}/clientes/?page=${num}&pageSize=${size}`;
-    const urlAll = `${env.API}/clientes/?page=1&pageSize=10000`;
     const clientes = this.http.get<Cliente[]>(url);
-    const all = this.http.get<Cliente[]>(urlAll);
+    const all = this.liste();
     const result = combineLatest([clientes, all]).pipe(
       map(([clientes, all]) => ({
         items: clientes.map(cliente => new ClienteDe(cliente)),

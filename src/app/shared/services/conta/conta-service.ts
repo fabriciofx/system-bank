@@ -29,9 +29,8 @@ export class ContaService implements Paginated<Conta> {
 
   pages(num: number, size: number): Observable<PageResult<Conta>> {
     const url = `${env.API}/contas/?page=${num}&pageSize=${size}`;
-    const urlAll = `${env.API}/contas/?page=1&pageSize=10000`;
     const contas = this.http.get<Conta[]>(url);
-    const all = this.http.get<Conta[]>(urlAll);
+    const all = this.liste();
     const result = combineLatest([contas, all]).pipe(
       map(([contas, all]) => ({
         items: contas.map(conta => new ContaDe(conta)),

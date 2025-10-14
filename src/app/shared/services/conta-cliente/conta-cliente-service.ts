@@ -5,9 +5,9 @@ import { ContaCliente, ContaClienteDe } from '../../models/conta-cliente';
 import { combineLatest, map, Observable } from 'rxjs';
 import { PageResult } from '../../core/page-result';
 import { env } from '../../../../environments/env.dev';
-import { Cliente, ClienteDe } from '../../models/cliente';
+import { ClienteDe } from '../../models/cliente';
 import { ContaService } from '../conta/conta-service';
-import { Conta } from '../../models/conta';
+import { ClienteService } from '../cliente/cliente-service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,18 +15,22 @@ import { Conta } from '../../models/conta';
 export class ContaClienteService implements Paginated<ContaCliente> {
   private readonly http: HttpClient;
   private readonly contaService: ContaService;
+  private readonly clienteService: ClienteService;
 
-  constructor(http: HttpClient, contaService: ContaService) {
+  constructor(
+    http: HttpClient,
+    contaService: ContaService,
+    clienteService: ClienteService
+  ) {
     this.http = http;
     this.contaService = contaService;
+    this.clienteService = clienteService;
   }
 
   pages(num: number, size: number): Observable<PageResult<ContaCliente>> {
-    const all = this.http.get<Conta[]>(
-      `${env.API}/contas/?page=1&pageSize=10000`
-    );
+    const all = this.contaService.liste();
+    const clientes = this.clienteService.liste();
     const contas = this.contaService.pages(num, size);
-    const clientes = this.http.get<Cliente[]>(`${env.API}/clientes/`);
     const merge = combineLatest([contas, clientes]).pipe(
       map(([contas, clientes]) => {
         const mapa = new Map(
