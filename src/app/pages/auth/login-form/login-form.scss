@@ -54,4 +54,10 @@ button {
     background-color: #03B304;
     color: #FFFFFF;
     border: none;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+button:hover {
+    background-color: #029703;
 }
