@@ -7,9 +7,20 @@ module.exports = function (config) {
       require('karma-chrome-launcher')
     ],
     client: {
-      clearContext: false
+      clearContext: false,
+      captureConsole: true,
+      jasmine: {
+        random: false
+      }
     },
+    reporters: ['progress'],
     browsers: ['ChromeHeadless'],
+    browserConsoleLogOptions: {
+      level: 'log',
+      format: '%b %T: %m',
+      terminal: true
+    },
+    logLevel: config.LOG_LOG,
     singleRun: true,
     restartOnFileChange: false
   });
