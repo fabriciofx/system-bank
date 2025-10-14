@@ -8,7 +8,7 @@ import {
   Validators
 } from '@angular/forms';
 import { AuthService } from '../../../shared/services/auth/auth-service';
-import { CredentialsOf } from '../../../shared/models/auth';
+import { CredentialsFrom } from '../../../shared/models/auth';
 
 type AuthFormGroup = FormGroup<{
   username: FormControl<string>;
@@ -45,7 +45,7 @@ export class LoginForm {
 
   login(): void {
     if (this.formGroup.valid) {
-      const credentials = new CredentialsOf(this.formGroup.getRawValue());
+      const credentials = new CredentialsFrom(this.formGroup.getRawValue());
       console.log(credentials);
       this.authService.login(credentials);
     }

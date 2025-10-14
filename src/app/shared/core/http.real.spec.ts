@@ -32,13 +32,10 @@ describe('http core', () => {
   });
 
   it('should send a post request', (done) => {
-    const credentials = new CredentialsOf(
-      { username: 'admin', password: '12345678' }
-    );
     const response = new Post<Credentials, AuthTokens>(
       http,
       `${url}/token/`,
-      credentials
+      new CredentialsOf('admin', '12345678')
     ).send(new Empty());
     response.value().subscribe({
       next: (tokens: AuthTokens) => {
@@ -55,7 +52,7 @@ describe('http core', () => {
   it('should send an authenticated get request', (done) => {
     const response = new Authenticated(
       new Get<Cliente[]>(http, `${url}/clientes/`),
-      new CredentialsOf({ username: 'admin', password: '12345678'})
+      new CredentialsOf('admin', '12345678')
     ).send(new Empty());
     response.value().subscribe({
       next: (clientes: Cliente[]) => {

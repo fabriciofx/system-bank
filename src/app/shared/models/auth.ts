@@ -18,11 +18,25 @@ export interface AuthTokens extends AccessToken, RefreshToken {
   valid(): boolean;
 }
 
-export class CredentialsOf implements Credentials {
+export class CredentialsFrom implements Credentials {
   username: string;
   password: string;
 
   constructor({ username, password }: { username: string; password: string }) {
+    this.username = username;
+    this.password = password;
+  }
+
+  valid(): boolean {
+    return !!this.username && !!this.password;
+  }
+}
+
+export class CredentialsOf implements Credentials {
+  username: string;
+  password: string;
+
+  constructor(username: string, password: string) {
     this.username = username;
     this.password = password;
   }
