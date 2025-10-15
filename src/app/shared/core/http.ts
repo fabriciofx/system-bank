@@ -1,6 +1,7 @@
-import { HttpClient, HttpErrorResponse } from "@angular/common/http";
-import { catchError, Observable, switchMap, throwError } from "rxjs";
-import { AuthTokens, Credentials } from "../models/auth";
+import { HttpClient } from "@angular/common/http";
+import { Observable, throwError } from "rxjs";
+import { AuthTokens, AuthTokensOf } from "../models/auth";
+import { Storage } from "./storage";
 
 export type Header = Record<string, string>;
 
@@ -140,38 +141,25 @@ export class Post<X, Y> implements Request<Y> {
 
 export class Authenticated<T> implements Request<T> {
   private readonly origin: Request<T>;
-  private readonly credentials: Credentials;
-  private readonly url: string;
+  private readonly storage: Storage;
 
-  constructor(
-    origin: Request<T>,
-    credentials: Credentials,
-    url = 'https://aula-angular.bcorp.tec.br/api/token/'
-  ) {
+  constructor(origin: Request<T>, storage: Storage) {
     this.origin = origin;
-    this.credentials = credentials;
-    this.url = url;
+    this.storage = storage;
   }
 
   send(headers: Headers): Response<T> {
-    const original = this.origin.send(headers).value();
-    const authenticated = original.pipe(
-      catchError((error: HttpErrorResponse) => {
-        if (error.status !== 401) {
-          return throwError(() => error);
-        }
-        const login = new Post<Credentials, AuthTokens>(
-          this.origin.http(),
-          this.url,
-          this.credentials
-        ).send(headers).value();
-        return login.pipe(
-          switchMap((tokens: AuthTokens) => {
-            return this.origin.send(new Authorization(headers, tokens)).value();
-          })
-        );
-      })
-    );
+    const access = this.storage.value('access_token')?.[0] ?? "";
+    const refresh = this.storage.value('refresh_token')?.[0] ?? "";
+    const tokens = new AuthTokensOf(access, refresh);
+    if (!tokens.valid()) {
+      return new ObservableResponse(
+        throwError(() => new Error('Tokens de autenticação inválidos!'))
+      );
+    }
+    const authenticated = this.origin.send(
+      new Authorization(headers, tokens)
+    ).value();
     return new ObservableResponse(authenticated);
   }
 

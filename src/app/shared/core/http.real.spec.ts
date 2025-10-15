@@ -5,6 +5,8 @@ import { provideHttpClient } from '@angular/common/http';
 import { Authenticated, Empty, Get, Post } from './http';
 import { AuthTokens, Credentials, CredentialsOf } from '../models/auth';
 import { Cliente } from '../models/cliente';
+import { FakeStorage } from './storage';
+import { switchMap } from 'rxjs';
 
 describe('http core', () => {
   const url = 'https://aula-angular.bcorp.tec.br/api';
@@ -50,11 +52,24 @@ describe('http core', () => {
   });
 
   it('should send an authenticated get request', (done) => {
-    const response = new Authenticated(
-      new Get<Cliente[]>(http, `${url}/clientes/`),
+    const storage = new FakeStorage();
+    new Post<Credentials, AuthTokens>(
+      http,
+      `${url}/token/`,
       new CredentialsOf('admin', '12345678')
-    ).send(new Empty());
-    response.value().subscribe({
+    ).send(new Empty())
+    .value()
+    .pipe(
+      switchMap((tokens: AuthTokens) => {
+        storage.store('access_token', tokens.access);
+        storage.store('refresh_token', tokens.refresh);
+        return new Authenticated(
+          new Get<Cliente[]>(http, `${url}/clientes/`),
+          storage
+        ).send(new Empty())
+        .value();
+      })
+    ).subscribe({
       next: (clientes: Cliente[]) => {
         expect(clientes.length).toBeGreaterThanOrEqual(5);
         done();
