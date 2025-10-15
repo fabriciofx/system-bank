@@ -70,7 +70,7 @@ export class CadastroCliente implements OnInit {
       ),
       cpf: new FormControl(
         '',
-        { nonNullable: true, validators: [Cpf.validator] }
+        { nonNullable: true, validators: [Validators.required, Cpf.validator] }
       ),
       email: new FormControl(
         '',
