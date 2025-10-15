@@ -39,3 +39,27 @@ export class BrowserStorage implements Storage {
     return [];
   }
 }
+
+export class FakeStorage implements Storage {
+  private readonly map: Map<string, string>;
+
+  constructor(entries: readonly [string, string][] = []) {
+    this.map = new Map<string, string>(entries);
+  }
+
+  store(key: string, value: string): void {
+    this.map.set(key, value);
+  }
+
+  remove(key: string): void {
+    this.map.delete(key);
+  }
+
+  value(key: string): string[] {
+    const value = this.map.get(key);
+    if (value) {
+      return [value];
+    }
+    return [];
+  }
+}
