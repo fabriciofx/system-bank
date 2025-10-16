@@ -50,7 +50,6 @@
     "@angular/router": "^20.3.4",
     "@angular/ssr": "^20.3.5",
     "express": "^5.1.0",
-    "jwt-hs256": "^3.0.0",
     "ngx-mask": "^20.0.3",
     "rxjs": "~7.8.0",
     "sweetalert2": "^11.23.0",
