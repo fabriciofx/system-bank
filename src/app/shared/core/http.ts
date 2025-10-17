@@ -1,6 +1,6 @@
-import { HttpClient } from "@angular/common/http";
-import { Observable, throwError } from "rxjs";
-import { AuthTokens, AuthTokensOf } from "../models/auth";
+import { HttpClient, HttpErrorResponse } from "@angular/common/http";
+import { catchError, Observable, switchMap, throwError } from "rxjs";
+import { AuthTokens, AuthTokensFrom } from "../models/auth";
 import { Storage } from "./storage";
 
 export type Header = Record<string, string>;
@@ -149,9 +149,7 @@ export class Authenticated<T> implements Request<T> {
   }
 
   send(headers: Headers): Response<T> {
-    const access = this.storage.value('access_token')?.[0] ?? "";
-    const refresh = this.storage.value('refresh_token')?.[0] ?? "";
-    const tokens = new AuthTokensOf(access, refresh);
+    const tokens = new AuthTokensFrom(this.http(), this.storage);
     if (!tokens.valid()) {
       return new ObservableResponse(
         throwError(() => new Error('Tokens de autenticação inválidos!'))
@@ -159,7 +157,22 @@ export class Authenticated<T> implements Request<T> {
     }
     const authenticated = this.origin.send(
       new Authorization(headers, tokens)
-    ).value();
+    )
+    .value()
+    .pipe(
+      catchError((error: HttpErrorResponse) => {
+        if (error.status !== 401) {
+          return throwError(() => error);
+        }
+        return tokens.update().pipe(
+          switchMap((refreshedTokens: AuthTokens) =>
+            this.origin.send(
+              new Authorization(headers, refreshedTokens)
+            ).value()
+          )
+        );
+      })
+    );
     return new ObservableResponse(authenticated);
   }
 
