@@ -1,3 +1,8 @@
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Storage } from '../core/storage';
+import { Empty, Post } from '../core/http';
+import { catchError, map, Observable, throwError } from 'rxjs';
+
 export interface Credentials {
   username: string;
   password: string;
@@ -16,6 +21,7 @@ export interface RefreshToken {
 
 export interface AuthTokens extends AccessToken, RefreshToken {
   valid(): boolean;
+  update(): Observable<AuthTokens>;
 }
 
 export class CredentialsFrom implements Credentials {
@@ -71,15 +77,71 @@ export class RefreshTokenOf implements RefreshToken {
 }
 
 export class AuthTokensOf implements AuthTokens {
+  private readonly http: HttpClient;
+  private readonly url: string;
   access: string;
   refresh: string;
 
-  constructor(access: string, refresh: string) {
+  constructor(
+    http: HttpClient,
+    access: string,
+    refresh: string,
+    url = 'https://aula-angular.bcorp.tec.br/api/token/refresh/'
+  ) {
+    this.http = http;
     this.access = access;
     this.refresh = refresh;
+    this.url = url;
   }
 
   valid(): boolean {
     return !!this.access && !!this.refresh;
+  }
+
+  update(): Observable<AuthTokens> {
+    return new Post<RefreshToken, AccessToken>(
+      this.http,
+      this.url,
+      new RefreshTokenOf(this.refresh)
+    )
+    .send(new Empty())
+    .value()
+    .pipe(
+      map((token: AccessToken) => {
+        return new AuthTokensOf(
+          this.http,
+          token.access,
+          this.refresh,
+          this.url
+        );
+      }),
+      catchError((error: HttpErrorResponse) =>
+        throwError(() => new Error(`to refresh access token: ${error.message}`))
+      )
+    );
+  }
+}
+
+export class AuthTokensFrom implements AuthTokens {
+  private readonly tokens: AuthTokens;
+  access: string;
+  refresh: string;
+
+  constructor(
+    http: HttpClient,
+    storage: Storage,
+    url = 'https://aula-angular.bcorp.tec.br/api/token/refresh/'
+  ) {
+    this.access = storage.value('access_token')?.[0] ?? '';
+    this.refresh = storage.value('refresh_token')?.[0] ?? '';
+    this.tokens = new AuthTokensOf(http, this.access, this.refresh, url);
+  }
+
+  valid(): boolean {
+    return this.tokens.valid();
+  }
+
+  update(): Observable<AuthTokens> {
+    return this.tokens.update();
   }
 }

@@ -24,7 +24,12 @@ export class AuthService {
   login(credentials: Credentials): void {
     this.http.post<AuthTokens>(`${env.API}/token/`, credentials)
       .pipe(
-        map(tokens => new AuthTokensOf(tokens.access, tokens.refresh)),
+        map(tokens => new AuthTokensOf(
+            this.http,
+            tokens.access,
+            tokens.refresh
+          )
+        ),
         map(tokens => {
           if (!tokens.valid()) {
             throw new Error("Error: AuthTokens is invalid!");
