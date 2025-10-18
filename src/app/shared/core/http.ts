@@ -65,7 +65,6 @@ export class Authorization implements Headers {
 
 export interface Request<T> {
   send(headers: Headers): Response<T>;
-  http(): HttpClient;
 }
 
 export interface Response<T> {
@@ -103,10 +102,6 @@ export class Get<T> implements Request<T> {
     );
     return new ObservableResponse<T>(response);
   }
-
-  http(): HttpClient {
-    return this.client;
-  }
 }
 
 export class Post<X, Y> implements Request<Y> {
@@ -131,10 +126,6 @@ export class Post<X, Y> implements Request<Y> {
       { headers: headers.records() }
     );
     return new ObservableResponse<Y>(response);
-  }
-
-  http(): HttpClient {
-    return this.client;
   }
 }
 
@@ -172,9 +163,5 @@ export class Authenticated<T> implements Request<T> {
       })
     );
     return new ObservableResponse(authenticated);
-  }
-
-  http(): HttpClient {
-    return this.origin.http();
   }
 }
