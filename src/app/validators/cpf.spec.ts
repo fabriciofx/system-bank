@@ -1,8 +1,8 @@
 import { FormControl } from '@angular/forms';
 import { Cpf } from './cpf';
 
-const msg1 = "CPF inválido: verifique a quantidade de dígitos";
-const msg2 = "CPF inválido: verifique se os dígitos estão corretos";
+const msg1 = 'CPF inválido: verifique a quantidade de dígitos';
+const msg2 = 'CPF inválido: verifique se os dígitos estão corretos';
 
 describe('Cpf.validator', () => {
   it(`deve retornar '${msg1}' se o valor for vazio`, () => {
@@ -21,7 +21,7 @@ describe('Cpf.validator', () => {
     expect(control.errors).toEqual({ cpf: msg2 });
   });
 
-  it("deve retornar null se o CPF for válido", () => {
+  it('deve retornar null se o CPF for válido', () => {
     const control = new FormControl(
       '529.982.247-25',
       { nonNullable: true, validators: [Cpf.validator] }
@@ -29,7 +29,7 @@ describe('Cpf.validator', () => {
     expect(control.errors).toBeNull();
   });
 
-  it("deve ignorar os caracteres que não são dígitos", () => {
+  it('deve ignorar os caracteres que não são dígitos', () => {
     const control = new FormControl(
       '529-982-247.25',
       { nonNullable: true, validators: [Cpf.validator] }

@@ -31,7 +31,7 @@ export class LateBox<T> implements Box<T> {
   store(item: T): T {
     const old = this.content.pop();
     if (!old) {
-      throw new Error("Box is empty!");
+      throw new Error('Box is empty!');
     }
     this.content.push(item);
     return old;
@@ -40,7 +40,7 @@ export class LateBox<T> implements Box<T> {
   value(): T {
     const val = this.content[0];
     if (!val) {
-      throw new Error("Box is empty!");
+      throw new Error('Box is empty!');
     }
     return val;
   }

@@ -1,19 +1,19 @@
 import { Component } from '@angular/core';
-import { InfiniteSelect } from "../../../shared/components/infinite-select/infinite-select";
-import { MatInputModule } from "@angular/material/input";
+import { MatInputModule } from '@angular/material/input';
+import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
+import { HttpErrorResponse } from '@angular/common/http';
 import { ContaService } from '../../../shared/services/conta/conta-service';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Paginated } from '../../../shared/core/paginated';
 import { Saque } from '../../../shared/models/saque';
 import { ErrorMessage, SuccessMessage } from '../../../shared/components/message/message';
 import { ErrorReasons } from '../../../shared/core/error-reasons';
-import { Router } from '@angular/router';
-import { CommonModule } from '@angular/common';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { InfiniteSelect } from '../../../shared/components/infinite-select/infinite-select';
 import { ContaClienteService } from '../../../shared/services/conta-cliente/conta-cliente-service';
 import { ContaCliente } from '../../../shared/models/conta-cliente';
-import { MatButtonModule } from '@angular/material/button';
-import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-saque-conta',

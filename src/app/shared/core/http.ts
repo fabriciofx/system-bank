@@ -1,6 +1,6 @@
-import { HttpClient, HttpErrorResponse } from "@angular/common/http";
-import { catchError, Observable, switchMap, throwError } from "rxjs";
-import { AuthTokens } from "../models/auth";
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { catchError, Observable, switchMap, throwError } from 'rxjs';
+import { AuthTokens } from '../models/auth';
 
 export type Header = Record<string, string>;
 

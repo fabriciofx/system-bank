@@ -6,16 +6,16 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatRadioModule } from '@angular/material/radio';
 import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { HttpErrorResponse } from '@angular/common/http';
 import { ContaDe } from '../../../shared/models/conta';
-import { InfiniteSelect } from "../../../shared/components/infinite-select/infinite-select";
+import { InfiniteSelect } from '../../../shared/components/infinite-select/infinite-select';
 import { Box, BoxOf } from '../../../shared/core/box';
 import { ErrorMessage, SuccessMessage } from '../../../shared/components/message/message';
 import { ErrorReasons } from '../../../shared/core/error-reasons';
 import { Paginated } from '../../../shared/core/paginated';
 import { ClienteService } from '../../../shared/services/cliente/cliente-service';
 import { Cliente } from '../../../shared/models/cliente';
-import { MatButtonModule } from '@angular/material/button';
-import { HttpErrorResponse } from '@angular/common/http';
 
 type ContaFormGroup = FormGroup<{
   id: FormControl<number>;
@@ -84,7 +84,7 @@ export class CadastroConta implements OnInit {
   }
 
   ngOnInit(): void {
-    const param = this.route.snapshot.params["id"];
+    const param = this.route.snapshot.params['id'];
     if (param) {
       this.editar.store(true);
       this.contaService.pesquisePorId(param).subscribe(

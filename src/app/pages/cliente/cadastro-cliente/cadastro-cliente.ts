@@ -1,23 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import {
-  FormControl,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-  Validators
-} from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { HttpErrorResponse } from '@angular/common/http';
+import { NgxMaskDirective } from 'ngx-mask';
 import { ClienteService } from '../../../shared/services/cliente/cliente-service';
 import { ClienteDe } from '../../../shared/models/cliente';
 import { ErrorReasons } from '../../../shared/core/error-reasons';
 import { SuccessMessage, ErrorMessage } from '../../../shared/components/message/message';
 import { Box, BoxOf } from '../../../shared/core/box';
-import { MatButtonModule } from '@angular/material/button';
-import { HttpErrorResponse } from '@angular/common/http';
-import { NgxMaskDirective } from 'ngx-mask';
 import { Cpf } from '../../../validators/cpf';
 
 type ClienteFormGroup = FormGroup<{
@@ -93,7 +87,7 @@ export class CadastroCliente implements OnInit {
   }
 
   ngOnInit(): void {
-    const param = this.route.snapshot.params["id"];
+    const param = this.route.snapshot.params['id'];
     if (param) {
       this.editar.store(true);
       this.clienteService.pesquisePorId(param).subscribe(

@@ -2,11 +2,11 @@ import { provideZonelessChangeDetection } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { provideHttpClient } from '@angular/common/http';
+import { switchMap } from 'rxjs';
 import { Authenticated, Empty, Get, Post } from './http';
 import { AuthTokens, AuthTokensFrom, Credentials, CredentialsOf } from '../models/auth';
 import { Cliente } from '../models/cliente';
 import { FakeStorage } from './storage';
-import { switchMap } from 'rxjs';
 
 describe('http core', () => {
   const url = 'https://aula-angular.bcorp.tec.br/api';
@@ -23,7 +23,7 @@ describe('http core', () => {
   });
 
   it('should send a get request', (done) => {
-    const msg = "As credenciais de autenticação não foram fornecidas.";
+    const msg = 'As credenciais de autenticação não foram fornecidas.';
     const response = new Get<{detail: string}>(http, url).send(new Empty());
     response.value().subscribe({
       error: (error: HttpErrorResponse) => {

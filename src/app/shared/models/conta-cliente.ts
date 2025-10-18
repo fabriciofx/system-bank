@@ -1,5 +1,5 @@
 import { Text } from '../core/text';
-import { Cliente } from "./cliente";
+import { Cliente } from './cliente';
 
 export interface ContaCliente extends Text {
   id?: number;

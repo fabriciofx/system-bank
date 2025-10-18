@@ -1,4 +1,4 @@
-import { HttpErrorResponse } from "@angular/common/http";
+import { HttpErrorResponse } from '@angular/common/http';
 
 export class ErrorReasons {
   private readonly error: HttpErrorResponse;
@@ -10,8 +10,8 @@ export class ErrorReasons {
   reasons(): string[] {
     const others = this.error.error;
     const reasons: string[] = [];
-    if (others["detail"]) {
-      reasons.push(others["detail"]);
+    if (others['detail']) {
+      reasons.push(others['detail']);
     } else {
       for (const attr in others) {
         if (Reflect.has(others, attr)) {

@@ -5,17 +5,13 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorReasons } from '../../../shared/core/error-reasons';
 import { PageResult } from '../../../shared/core/page-result';
-import {
-  ConfirmMessage,
-  ErrorMessage,
-  SuccessMessage
-} from '../../../shared/components/message/message';
+import { ConfirmMessage, ErrorMessage, SuccessMessage } from '../../../shared/components/message/message';
 import { ContaClienteService } from '../../../shared/services/conta-cliente/conta-cliente-service';
 import { ContaCliente } from '../../../shared/models/conta-cliente';
-import { LoadingSpinner } from "../../../shared/components/loading-spinner/loading-spinner";
-import { HttpErrorResponse } from '@angular/common/http';
+import { LoadingSpinner } from '../../../shared/components/loading-spinner/loading-spinner';
 
 @Component({
   selector: 'app-listagem-conta',

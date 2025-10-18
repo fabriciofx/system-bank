@@ -32,7 +32,7 @@ export class AuthService {
         ),
         map(tokens => {
           if (!tokens.valid()) {
-            throw new Error("Error: AuthTokens is invalid!");
+            throw new Error('Error: AuthTokens is invalid!');
           }
           return tokens;
         }),
@@ -63,23 +63,23 @@ export class AuthService {
     if (token.valid()) {
       return this.http.post<AccessToken>(`${env.API}/token/refresh/`, token);
     } else {
-      throw new Error("Error: RefreshToken is invalid!");
+      throw new Error('Error: RefreshToken is invalid!');
     }
   }
 
   refreshToken(): RefreshToken {
-    return new RefreshTokenOf(this.storage.value('refresh_token')?.[0] ?? "");
+    return new RefreshTokenOf(this.storage.value('refresh_token')?.[0] ?? '');
   }
 
   accessToken(): AccessToken {
-    return new AccessTokenOf(this.storage.value('access_token')?.[0] ?? "");
+    return new AccessTokenOf(this.storage.value('access_token')?.[0] ?? '');
   }
 
   store(token: AccessToken): void {
     if (token.valid()) {
       this.storage.store('access_token', token.access);
     } else {
-      throw new Error("Error: AccessToken is invalid!");
+      throw new Error('Error: AccessToken is invalid!');
     }
   }
 }

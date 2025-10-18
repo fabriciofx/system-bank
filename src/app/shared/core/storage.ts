@@ -1,5 +1,5 @@
-import { Injectable } from "@angular/core";
-import { DefaultPlatform, Platform } from "./platform";
+import { Injectable } from '@angular/core';
+import { DefaultPlatform, Platform } from './platform';
 
 export interface Storage {
   store(key: string, value: string): void;

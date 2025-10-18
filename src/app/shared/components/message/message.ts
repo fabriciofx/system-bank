@@ -1,5 +1,5 @@
-import Swal, { SweetAlertResult } from "sweetalert2";
-import { ErrorReasons } from "../../core/error-reasons";
+import Swal, { SweetAlertResult } from 'sweetalert2';
+import { ErrorReasons } from '../../core/error-reasons';
 
 export interface Message<T> {
   show(): Promise<T>;

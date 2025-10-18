@@ -22,7 +22,7 @@ describe('http core', () => {
   });
 
   it('should send a get request', () => {
-    const msg = "As credenciais de autenticação não foram fornecidas.";
+    const msg = 'As credenciais de autenticação não foram fornecidas.';
     const response = new Get<{ detail: string }>(
       http,
       '/api/token'

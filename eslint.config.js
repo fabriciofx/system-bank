@@ -43,7 +43,8 @@ module.exports = tseslint.config(
           "ignorePattern": "^import\\s.+\\sfrom\\s.+;$"
         }
       ],
-      "curly": ["error", "all"]
+      "curly": ["error", "all"],
+      "quotes": ["error", "single", { "avoidEscape": true }]
     },
   },
   {
