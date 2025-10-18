@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { provideHttpClient } from '@angular/common/http';
 import { Authenticated, Empty, Get, Post } from './http';
-import { AuthTokens, Credentials, CredentialsOf } from '../models/auth';
+import { AuthTokens, AuthTokensFrom, Credentials, CredentialsOf } from '../models/auth';
 import { Cliente } from '../models/cliente';
 import { FakeStorage } from './storage';
 import { switchMap } from 'rxjs';
@@ -65,7 +65,7 @@ describe('http core', () => {
         storage.store('refresh_token', tokens.refresh);
         return new Authenticated(
           new Get<Cliente[]>(http, `${url}/clientes/`),
-          storage
+          new AuthTokensFrom(http, storage)
         ).send(new Empty())
         .value();
       })

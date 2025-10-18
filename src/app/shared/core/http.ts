@@ -1,7 +1,6 @@
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { catchError, Observable, switchMap, throwError } from "rxjs";
-import { AuthTokens, AuthTokensFrom } from "../models/auth";
-import { Storage } from "./storage";
+import { AuthTokens } from "../models/auth";
 
 export type Header = Record<string, string>;
 
@@ -141,22 +140,21 @@ export class Post<X, Y> implements Request<Y> {
 
 export class Authenticated<T> implements Request<T> {
   private readonly origin: Request<T>;
-  private readonly storage: Storage;
+  private readonly tokens: AuthTokens;
 
-  constructor(origin: Request<T>, storage: Storage) {
+  constructor(origin: Request<T>, tokens: AuthTokens) {
     this.origin = origin;
-    this.storage = storage;
+    this.tokens = tokens;
   }
 
   send(headers: Headers): Response<T> {
-    const tokens = new AuthTokensFrom(this.http(), this.storage);
-    if (!tokens.valid()) {
+    if (!this.tokens.valid()) {
       return new ObservableResponse(
         throwError(() => new Error('Tokens de autenticação inválidos!'))
       );
     }
     const authenticated = this.origin.send(
-      new Authorization(headers, tokens)
+      new Authorization(headers, this.tokens)
     )
     .value()
     .pipe(
@@ -164,7 +162,7 @@ export class Authenticated<T> implements Request<T> {
         if (error.status !== 401) {
           return throwError(() => error);
         }
-        return tokens.update().pipe(
+        return this.tokens.update().pipe(
           switchMap((refreshedTokens: AuthTokens) =>
             this.origin.send(
               new Authorization(headers, refreshedTokens)
