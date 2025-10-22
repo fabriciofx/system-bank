@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatInputModule } from '@angular/material/input';
@@ -10,7 +16,10 @@ import { NgxMaskDirective } from 'ngx-mask';
 import { ClienteService } from '../../../shared/services/cliente/cliente-service';
 import { ClienteDe } from '../../../shared/models/cliente';
 import { ErrorReasons } from '../../../shared/core/error-reasons';
-import { SuccessMessage, ErrorMessage } from '../../../shared/components/message/message';
+import {
+  SuccessMessage,
+  ErrorMessage,
+} from '../../../shared/components/message/message';
 import { Box, BoxOf } from '../../../shared/core/box';
 import { Cpf } from '../../../validators/cpf';
 
@@ -19,9 +28,9 @@ type ClienteFormGroup = FormGroup<{
   nome: FormControl<string>;
   cpf: FormControl<string>;
   email: FormControl<string>;
-  senha: FormControl<string>
+  senha: FormControl<string>;
   observacoes: FormControl<string>;
-  ativo: FormControl<boolean>
+  ativo: FormControl<boolean>;
 }>;
 
 @Component({
@@ -33,10 +42,10 @@ type ClienteFormGroup = FormGroup<{
     MatButtonModule,
     FormsModule,
     ReactiveFormsModule,
-    NgxMaskDirective
-],
+    NgxMaskDirective,
+  ],
   templateUrl: './cadastro-cliente.html',
-  styleUrl: './cadastro-cliente.scss'
+  styleUrl: './cadastro-cliente.scss',
 })
 export class CadastroCliente implements OnInit {
   private readonly router: Router;
@@ -54,34 +63,25 @@ export class CadastroCliente implements OnInit {
     this.route = route;
     this.clienteService = clienteService;
     this.formGroup = new FormGroup({
-      id: new FormControl(
-        0,
-        { nonNullable: true }
-      ),
-      nome: new FormControl(
-        '',
-        { nonNullable: true, validators: [Validators.required] }
-      ),
-      cpf: new FormControl(
-        '',
-        { nonNullable: true, validators: [Validators.required, Cpf.validator] }
-      ),
-      email: new FormControl(
-        '',
-        {
-          nonNullable: true,
-          validators: [Validators.required, Validators.email]
-        }
-      ),
-      senha: new FormControl(
-        '',
-        { nonNullable: true }
-      ),
-      observacoes: new FormControl(
-        '',
-        { nonNullable: true, validators: [Validators.required] }
-      ),
-      ativo: new FormControl(true, { nonNullable: true })
+      id: new FormControl(0, { nonNullable: true }),
+      nome: new FormControl('', {
+        nonNullable: true,
+        validators: [Validators.required],
+      }),
+      cpf: new FormControl('', {
+        nonNullable: true,
+        validators: [Validators.required, Cpf.validator],
+      }),
+      email: new FormControl('', {
+        nonNullable: true,
+        validators: [Validators.required, Validators.email],
+      }),
+      senha: new FormControl('', { nonNullable: true }),
+      observacoes: new FormControl('', {
+        nonNullable: true,
+        validators: [Validators.required],
+      }),
+      ativo: new FormControl(true, { nonNullable: true }),
     });
     this.editar = new BoxOf<boolean>(false);
   }
@@ -90,11 +90,9 @@ export class CadastroCliente implements OnInit {
     const param = this.route.snapshot.params['id'];
     if (param) {
       this.editar.store(true);
-      this.clienteService.pesquisePorId(param).subscribe(
-        cliente => {
-          this.formGroup.patchValue(cliente);
-        }
-      );
+      this.clienteService.pesquisePorId(param).subscribe((cliente) => {
+        this.formGroup.patchValue(cliente);
+      });
     }
   }
 
@@ -109,7 +107,7 @@ export class CadastroCliente implements OnInit {
         next: () => {
           new SuccessMessage(
             'Sucesso!',
-            'Cliente cadastrado com sucesso!'
+            'Cliente atualizado com sucesso!'
           ).show();
           this.router.navigate(['/cliente']);
         },
@@ -119,7 +117,7 @@ export class CadastroCliente implements OnInit {
             'Erro ao atualizar o cliente!',
             new ErrorReasons(error)
           ).show();
-        }
+        },
       });
     } else {
       this.clienteService.insere(cliente).subscribe({
@@ -136,7 +134,7 @@ export class CadastroCliente implements OnInit {
             'Erro ao cadastrar o cliente!',
             new ErrorReasons(error)
           ).show();
-        }
+        },
       });
     }
   }

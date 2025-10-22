@@ -1,11 +1,20 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ContaService } from '../../../shared/services/conta/conta-service';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { ContaClienteService } from '../../../shared/services/conta-cliente/conta-cliente-service';
 import { ContaCliente } from '../../../shared/models/conta-cliente';
 import { Paginated } from '../../../shared/core/paginated';
-import { ErrorMessage, SuccessMessage } from '../../../shared/components/message/message';
+import {
+  ErrorMessage,
+  SuccessMessage,
+} from '../../../shared/components/message/message';
 import { ErrorReasons } from '../../../shared/core/error-reasons';
 import { Transferencia } from '../../../shared/models/transferencia';
 import { CommonModule } from '@angular/common';
@@ -24,10 +33,10 @@ import { HttpErrorResponse } from '@angular/common/http';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    InfiniteSelect
+    InfiniteSelect,
   ],
   templateUrl: './transferencia-contas.html',
-  styleUrl: './transferencia-contas.scss'
+  styleUrl: './transferencia-contas.scss',
 })
 export class TransferenciaContas {
   private readonly router: Router;
@@ -69,20 +78,20 @@ export class TransferenciaContas {
   transfere() {
     const transferencia: Transferencia = this.formGroup.value;
     this.contaService.transferencia(transferencia).subscribe({
-        next: () => {
-          new SuccessMessage(
-            'Sucesso',
-            'Transferência realizada com sucesso!'
-          ).show();
-          this.router.navigate(['/conta']);
-        },
-        error: (error: HttpErrorResponse) => {
-          new ErrorMessage(
-            'Oops...',
-            'Erro ao transferir!',
-            new ErrorReasons(error)
-          ).show();
-        }
+      next: () => {
+        new SuccessMessage(
+          'Sucesso',
+          'Transferência realizada com sucesso!'
+        ).show();
+        this.router.navigate(['/conta']);
+      },
+      error: (error: HttpErrorResponse) => {
+        new ErrorMessage(
+          'Oops...',
+          'Erro ao tentar transferir entre as contas!',
+          new ErrorReasons(error)
+        ).show();
+      },
     });
   }
 }
