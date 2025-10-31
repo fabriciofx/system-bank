@@ -1,17 +1,28 @@
-import { AfterViewInit, Component, computed, signal, Signal, WritableSignal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ConfirmMessage, SuccessMessage, ErrorMessage } from '../../../shared/components/message/message';
-import { ClienteService } from '../../../shared/services/cliente/cliente-service';
-import { Cliente } from '../../../shared/models/cliente';
+import {
+  AfterViewInit,
+  Component,
+  computed,
+  Signal,
+  signal,
+  WritableSignal
+} from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { RouterLink } from '@angular/router';
+import { LoadingSpinner } from '../../../shared/components/loading-spinner/loading-spinner';
+import {
+  ConfirmMessage,
+  ErrorMessage,
+  SuccessMessage
+} from '../../../shared/components/message/message';
 import { ErrorReasons } from '../../../shared/core/error-reasons';
 import { PageResult } from '../../../shared/core/page-result';
-import { LoadingSpinner } from '../../../shared/components/loading-spinner/loading-spinner';
+import { Cliente } from '../../../shared/models/cliente';
+import { ClienteService } from '../../../shared/services/cliente/cliente-service';
 
 @Component({
   selector: 'app-listagem-cliente',
@@ -38,7 +49,10 @@ export class ListagemCliente implements AfterViewInit {
   constructor(clienteService: ClienteService) {
     this.clienteService = clienteService;
     this.result = signal<PageResult<Cliente>>({
-      items: [], page: 1, pageSize: 5, total: 0
+      items: [],
+      page: 1,
+      pageSize: 5,
+      total: 0
     });
     this.dataSource = new MatTableDataSource<Cliente>();
     this.busy = signal(true);
@@ -96,10 +110,7 @@ export class ListagemCliente implements AfterViewInit {
     if (answer.yes()) {
       this.clienteService.delete(id).subscribe({
         next: () => {
-          new SuccessMessage(
-            'Sucesso',
-            'Cliente deletado com sucesso!'
-          ).show();
+          new SuccessMessage('Sucesso', 'Cliente deletado com sucesso!').show();
           this.load(this.result().page, this.result().pageSize);
         },
         error: (error: HttpErrorResponse) => {
@@ -108,7 +119,7 @@ export class ListagemCliente implements AfterViewInit {
             'Erro ao deletar cliente!',
             new ErrorReasons(error)
           ).show();
-        },
+        }
       });
     }
   }

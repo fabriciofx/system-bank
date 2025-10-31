@@ -39,7 +39,7 @@ export class ContentType implements Headers {
   }
 
   records(): Record<string, string> {
-    this.add({ 'Content-Type':  this.type });
+    this.add({ 'Content-Type': this.type });
     return this.origin.records();
   }
 }
@@ -58,7 +58,7 @@ export class Authorization implements Headers {
   }
 
   records(): Record<string, string> {
-    this.add({ 'Authorization': `Bearer ${this.tokens.access}` });
+    this.add({ Authorization: `Bearer ${this.tokens.access}` });
     return this.origin.records();
   }
 }
@@ -87,19 +87,15 @@ export class Get<T> implements Request<T> {
   private readonly client: HttpClient;
   private readonly url: string;
 
-  constructor(
-    client: HttpClient,
-    url: string
-  ) {
+  constructor(client: HttpClient, url: string) {
     this.client = client;
     this.url = url;
   }
 
   send(headers: Headers): Response<T> {
-    const response = this.client.get<T>(
-      this.url,
-      { headers: headers.records() }
-    );
+    const response = this.client.get<T>(this.url, {
+      headers: headers.records()
+    });
     return new ObservableResponse<T>(response);
   }
 }
@@ -109,22 +105,16 @@ export class Post<X, Y> implements Request<Y> {
   private readonly url: string;
   private readonly body: X;
 
-  constructor(
-    client: HttpClient,
-    url: string,
-    body: X
-  ) {
+  constructor(client: HttpClient, url: string, body: X) {
     this.client = client;
     this.url = url;
     this.body = body;
   }
 
   send(headers: Headers): Response<Y> {
-    const response = this.client.post<Y>(
-      this.url,
-      this.body,
-      { headers: headers.records() }
-    );
+    const response = this.client.post<Y>(this.url, this.body, {
+      headers: headers.records()
+    });
     return new ObservableResponse<Y>(response);
   }
 }
@@ -144,24 +134,25 @@ export class Authenticated<T> implements Request<T> {
         throwError(() => new Error('Tokens de autenticação inválidos!'))
       );
     }
-    const authenticated = this.origin.send(
-      new Authorization(headers, this.tokens)
-    )
-    .value()
-    .pipe(
-      catchError((error: HttpErrorResponse) => {
-        if (error.status !== 401) {
-          return throwError(() => error);
-        }
-        return this.tokens.update().pipe(
-          switchMap((refreshedTokens: AuthTokens) =>
-            this.origin.send(
-              new Authorization(headers, refreshedTokens)
-            ).value()
-          )
-        );
-      })
-    );
+    const authenticated = this.origin
+      .send(new Authorization(headers, this.tokens))
+      .value()
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          if (error.status !== 401) {
+            return throwError(() => error);
+          }
+          return this.tokens
+            .update()
+            .pipe(
+              switchMap((refreshedTokens: AuthTokens) =>
+                this.origin
+                  .send(new Authorization(headers, refreshedTokens))
+                  .value()
+              )
+            );
+        })
+      );
     return new ObservableResponse(authenticated);
   }
 }

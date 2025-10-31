@@ -11,9 +11,10 @@ export class RandomString implements Random<string> {
 
   value(): string {
     // eslint-disable-next-line max-len
-    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const chars =
+      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     const array = new Uint8Array(this.length);
     crypto.getRandomValues(array);
-    return Array.from(array, byte => chars[byte % chars.length]).join('');
+    return Array.from(array, (byte) => chars[byte % chars.length]).join('');
   }
 }

@@ -1,12 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { combineLatest, map, Observable } from 'rxjs';
 import { env } from '../../../../environments/env.dev';
-import { map, combineLatest, Observable } from 'rxjs';
-import { Conta, ContaDe } from '../../models/conta';
 import { PageResult } from '../../core/page-result';
 import { Paginated } from '../../core/paginated';
-import { Saque } from '../../models/saque';
+import { Conta, ContaDe } from '../../models/conta';
 import { Deposito } from '../../models/deposito';
+import { Saque } from '../../models/saque';
 import { Transferencia } from '../../models/transferencia';
 
 @Injectable({
@@ -33,7 +33,7 @@ export class ContaService implements Paginated<Conta> {
     const all = this.liste();
     const result = combineLatest([contas, all]).pipe(
       map(([contas, all]) => ({
-        items: contas.map(conta => new ContaDe(conta)),
+        items: contas.map((conta) => new ContaDe(conta)),
         page: num,
         pageSize: size,
         total: all.length

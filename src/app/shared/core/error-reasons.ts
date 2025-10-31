@@ -10,8 +10,8 @@ export class ErrorReasons {
   reasons(): string[] {
     const others = this.error.error;
     const reasons: string[] = [];
-    if (others['detail']) {
-      reasons.push(others['detail']);
+    if (others.detail) {
+      reasons.push(others.detail);
     } else {
       for (const attr in others) {
         if (Reflect.has(others, attr)) {
@@ -33,7 +33,9 @@ export class ErrorReasons {
 
   asHtml(): string {
     return `<ul style="text-align: left;">
-      ${this.reasons().map(msg => `<li>${msg}</li>`).join('')}
+      ${this.reasons()
+        .map((msg) => `<li>${msg}</li>`)
+        .join('')}
       </ul>`;
   }
 }

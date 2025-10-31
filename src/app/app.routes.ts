@@ -1,11 +1,11 @@
 import { Routes } from '@angular/router';
+import { LoginTemplate } from './pages/auth/login-template/login-template';
 import { CadastroCliente } from './pages/cliente/cadastro-cliente/cadastro-cliente';
 import { ListagemCliente } from './pages/cliente/listagem-cliente/listagem-cliente';
-import { LoginTemplate } from './pages/auth/login-template/login-template';
 import { CadastroConta } from './pages/conta/cadastro-conta/cadastro-conta';
+import { DepositoConta } from './pages/conta/deposito-conta/deposito-conta';
 import { ListagemConta } from './pages/conta/listagem-conta/listagem-conta';
 import { SaqueConta } from './pages/conta/saque-conta/saque-conta';
-import { DepositoConta } from './pages/conta/deposito-conta/deposito-conta';
 import { TransferenciaContas } from './pages/conta/transferencia-contas/transferencia-contas';
 
 export const routes: Routes = [
@@ -32,7 +32,7 @@ export const routes: Routes = [
       {
         path: '',
         component: ListagemCliente
-      },
+      }
     ]
   },
   {

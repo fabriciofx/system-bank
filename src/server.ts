@@ -1,11 +1,11 @@
+import { join } from 'node:path';
 import {
   AngularNodeAppEngine,
   createNodeRequestHandler,
   isMainModule,
-  writeResponseToNodeResponse,
+  writeResponseToNodeResponse
 } from '@angular/ssr/node';
 import express from 'express';
-import { join } from 'node:path';
 
 const browserDistFolder = join(import.meta.dirname, '../browser');
 
@@ -31,8 +31,8 @@ app.use(
   express.static(browserDistFolder, {
     maxAge: '1y',
     index: false,
-    redirect: false,
-  }),
+    redirect: false
+  })
 );
 
 /**
@@ -42,7 +42,7 @@ app.use((req, res, next) => {
   angularApp
     .handle(req)
     .then((response) =>
-      response ? writeResponseToNodeResponse(response, res) : next(),
+      response ? writeResponseToNodeResponse(response, res) : next()
     )
     .catch(next);
 });
@@ -53,6 +53,7 @@ app.use((req, res, next) => {
  * or defaults to 4000.
  */
 if (isMainModule(import.meta.url)) {
+  // biome-ignore lint/complexity/useLiteralKeys: Se trocar, erro.
   const port = process.env['PORT'] || 4000;
   app.listen(port, (error) => {
     if (error) {

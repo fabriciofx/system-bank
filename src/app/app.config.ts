@@ -1,18 +1,18 @@
 import {
+  provideHttpClient,
+  withFetch,
+  withInterceptors
+} from '@angular/common/http';
+import {
   ApplicationConfig,
   provideBrowserGlobalErrorListeners,
   provideZonelessChangeDetection
 } from '@angular/core';
-import { provideRouter } from '@angular/router';
 import {
   provideClientHydration,
   withEventReplay
 } from '@angular/platform-browser';
-import {
-  provideHttpClient,
-  withInterceptors,
-  withFetch
-} from '@angular/common/http';
+import { provideRouter } from '@angular/router';
 import { provideNgxMask } from 'ngx-mask';
 import { routes } from './app.routes';
 import { authInterceptor } from './shared/interceptors/auth-interceptor';

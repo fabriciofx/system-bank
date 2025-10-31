@@ -1,5 +1,5 @@
-import { inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
+import { Injectable, inject, PLATFORM_ID } from '@angular/core';
 
 export interface Platform {
   browser(): boolean;

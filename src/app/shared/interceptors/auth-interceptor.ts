@@ -5,9 +5,9 @@ import {
   HttpRequest
 } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { AuthService } from '../services/auth/auth-service';
 import { catchError, switchMap, throwError } from 'rxjs';
 import { AccessToken } from '../models/auth';
+import { AuthService } from '../services/auth/auth-service';
 
 const RETRY_FLAG = new HttpContextToken<boolean>(() => false);
 
@@ -17,9 +17,9 @@ function withAuth<T>(
   token: AccessToken
 ): HttpRequest<T> {
   if (token.valid()) {
-    return request.clone(
-      { setHeaders: { Authorization: `Bearer ${token.access}` } }
-    );
+    return request.clone({
+      setHeaders: { Authorization: `Bearer ${token.access}` }
+    });
   } else {
     return request;
   }

@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -7,8 +7,8 @@ import {
   ReactiveFormsModule,
   Validators
 } from '@angular/forms';
-import { AuthService } from '../../../shared/services/auth/auth-service';
 import { CredentialsFrom } from '../../../shared/models/auth';
+import { AuthService } from '../../../shared/services/auth/auth-service';
 
 type AuthFormGroup = FormGroup<{
   username: FormControl<string>;
@@ -28,14 +28,14 @@ export class LoginForm {
   constructor(authService: AuthService) {
     this.authService = authService;
     this.formGroup = new FormGroup({
-      username: new FormControl(
-        '',
-        { nonNullable: true, validators: [Validators.required] }
-      ),
-      password: new FormControl(
-        '',
-        { nonNullable: true, validators: [Validators.required] }
-      )
+      username: new FormControl('', {
+        nonNullable: true,
+        validators: [Validators.required]
+      }),
+      password: new FormControl('', {
+        nonNullable: true,
+        validators: [Validators.required]
+      })
     });
   }
 

@@ -1,13 +1,13 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Paginated } from '../../core/paginated';
-import { ContaCliente, ContaClienteDe } from '../../models/conta-cliente';
+import { Injectable } from '@angular/core';
 import { combineLatest, map, Observable } from 'rxjs';
-import { PageResult } from '../../core/page-result';
 import { env } from '../../../../environments/env.dev';
+import { PageResult } from '../../core/page-result';
+import { Paginated } from '../../core/paginated';
 import { ClienteDe } from '../../models/cliente';
-import { ContaService } from '../conta/conta-service';
+import { ContaCliente, ContaClienteDe } from '../../models/conta-cliente';
 import { ClienteService } from '../cliente/cliente-service';
+import { ContaService } from '../conta/conta-service';
 
 @Injectable({
   providedIn: 'root'
@@ -34,13 +34,14 @@ export class ContaClienteService implements Paginated<ContaCliente> {
     const merge = combineLatest([contas, clientes]).pipe(
       map(([contas, clientes]) => {
         const mapa = new Map(
-          clientes.map(cliente => [cliente.id, new ClienteDe(cliente)])
+          clientes.map((cliente) => [cliente.id, new ClienteDe(cliente)])
         );
-        const contasClientes = contas.items.map(conta => ({
+        const contasClientes = contas.items
+          .map((conta) => ({
             ...conta,
             cliente: mapa.get(conta.cliente)
-          })
-        ).map(contaCliente => new ContaClienteDe(contaCliente));
+          }))
+          .map((contaCliente) => new ContaClienteDe(contaCliente));
         return {
           items: contasClientes,
           page: num,

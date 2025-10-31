@@ -7,6 +7,4 @@ import { LoginForm } from '../login-form/login-form';
   templateUrl: './login-template.html',
   styleUrl: './login-template.scss'
 })
-export class LoginTemplate {
-
-}
+export class LoginTemplate {}

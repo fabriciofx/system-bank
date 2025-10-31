@@ -1,21 +1,30 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ContaService } from '../../../shared/services/conta/conta-service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatRadioModule } from '@angular/material/radio';
 import { CommonModule } from '@angular/common';
-import { MatButtonModule } from '@angular/material/button';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ContaDe } from '../../../shared/models/conta';
+import { Component, OnInit } from '@angular/core';
+import {
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators
+} from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatRadioModule } from '@angular/material/radio';
+import { ActivatedRoute, Router } from '@angular/router';
 import { InfiniteSelect } from '../../../shared/components/infinite-select/infinite-select';
+import {
+  ErrorMessage,
+  SuccessMessage
+} from '../../../shared/components/message/message';
 import { Box, BoxOf } from '../../../shared/core/box';
-import { ErrorMessage, SuccessMessage } from '../../../shared/components/message/message';
 import { ErrorReasons } from '../../../shared/core/error-reasons';
 import { Paginated } from '../../../shared/core/paginated';
-import { ClienteService } from '../../../shared/services/cliente/cliente-service';
 import { Cliente } from '../../../shared/models/cliente';
+import { ContaDe } from '../../../shared/models/conta';
+import { ClienteService } from '../../../shared/services/cliente/cliente-service';
+import { ContaService } from '../../../shared/services/conta/conta-service';
 
 type ContaFormGroup = FormGroup<{
   id: FormControl<number>;
@@ -36,7 +45,7 @@ type ContaFormGroup = FormGroup<{
     FormsModule,
     ReactiveFormsModule,
     InfiniteSelect
-],
+  ],
   templateUrl: './cadastro-conta.html',
   styleUrl: './cadastro-conta.scss'
 })
@@ -59,39 +68,35 @@ export class CadastroConta implements OnInit {
     this.contaService = contaService;
     this.clienteService = clienteService;
     this.formGroup = new FormGroup({
-      id: new FormControl(
-        0,
-        { nonNullable: true }
-      ),
-      cliente: new FormControl(
-        0,
-        { nonNullable: true, validators: [Validators.required] }
-      ),
-      numero: new FormControl(
-        '',
-        { nonNullable: true, validators: [Validators.required] }
-      ),
-      agencia: new FormControl(
-        '',
-        { nonNullable: true, validators: [Validators.required] }
-      ),
-      saldo: new FormControl(
-        '',
-        { nonNullable: true, validators: [Validators.required] }
-      )
+      id: new FormControl(0, { nonNullable: true }),
+      cliente: new FormControl(0, {
+        nonNullable: true,
+        validators: [Validators.required]
+      }),
+      numero: new FormControl('', {
+        nonNullable: true,
+        validators: [Validators.required]
+      }),
+      agencia: new FormControl('', {
+        nonNullable: true,
+        validators: [Validators.required]
+      }),
+      saldo: new FormControl('', {
+        nonNullable: true,
+        validators: [Validators.required]
+      })
     });
     this.editar = new BoxOf<boolean>(false);
   }
 
   ngOnInit(): void {
+    // biome-ignore lint/complexity/useLiteralKeys: Se trocar, erro
     const param = this.route.snapshot.params['id'];
     if (param) {
       this.editar.store(true);
-      this.contaService.pesquisePorId(param).subscribe(
-        conta => {
-          this.formGroup.patchValue(conta);
-        }
-      );
+      this.contaService.pesquisePorId(param).subscribe((conta) => {
+        this.formGroup.patchValue(conta);
+      });
     }
   }
 
@@ -112,10 +117,7 @@ export class CadastroConta implements OnInit {
     if (this.editar.value()) {
       this.contaService.atualize(conta).subscribe({
         next: () => {
-          new SuccessMessage(
-            'Sucesso',
-            'Conta atualizada com sucesso!'
-          ).show();
+          new SuccessMessage('Sucesso', 'Conta atualizada com sucesso!').show();
           this.router.navigate(['/conta']);
         },
         error: (error: HttpErrorResponse) => {
@@ -129,10 +131,7 @@ export class CadastroConta implements OnInit {
     } else {
       this.contaService.insere(conta).subscribe({
         next: () => {
-          new SuccessMessage(
-            'Sucesso',
-            'Conta cadastrada com sucesso!'
-          ).show();
+          new SuccessMessage('Sucesso', 'Conta cadastrada com sucesso!').show();
           this.router.navigate(['/conta']);
         },
         error: (error: HttpErrorResponse) => {

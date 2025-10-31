@@ -1,13 +1,13 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideHttpClient } from '@angular/common/http';
 import { provideZonelessChangeDetection } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { PageEvent } from '@angular/material/paginator';
 import { provideRouter } from '@angular/router';
 import { of } from 'rxjs';
-import { ListagemConta } from './listagem-conta';
-import { ContaClienteService } from '../../../shared/services/conta-cliente/conta-cliente-service';
 import { PageResult } from '../../../shared/core/page-result';
 import { ContaCliente } from '../../../shared/models/conta-cliente';
-import { PageEvent } from '@angular/material/paginator';
+import { ContaClienteService } from '../../../shared/services/conta-cliente/conta-cliente-service';
+import { ListagemConta } from './listagem-conta';
 
 describe('ListagemConta', () => {
   let fixture: ComponentFixture<ListagemConta>;
@@ -15,10 +15,10 @@ describe('ListagemConta', () => {
   let contaClienteServiceSpy: jasmine.SpyObj<ContaClienteService>;
 
   beforeEach(async () => {
-    contaClienteServiceSpy = jasmine.createSpyObj(
-      'ContaClienteService',
-      ['pages', 'delete']
-    );
+    contaClienteServiceSpy = jasmine.createSpyObj('ContaClienteService', [
+      'pages',
+      'delete'
+    ]);
     await TestBed.configureTestingModule({
       imports: [ListagemConta],
       providers: [

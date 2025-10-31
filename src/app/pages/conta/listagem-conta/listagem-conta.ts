@@ -1,17 +1,28 @@
-import { AfterViewInit, Component, computed, Signal, signal, WritableSignal } from '@angular/core';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
 import { HttpErrorResponse } from '@angular/common/http';
+import {
+  AfterViewInit,
+  Component,
+  computed,
+  Signal,
+  signal,
+  WritableSignal
+} from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { RouterLink } from '@angular/router';
+import { LoadingSpinner } from '../../../shared/components/loading-spinner/loading-spinner';
+import {
+  ConfirmMessage,
+  ErrorMessage,
+  SuccessMessage
+} from '../../../shared/components/message/message';
 import { ErrorReasons } from '../../../shared/core/error-reasons';
 import { PageResult } from '../../../shared/core/page-result';
-import { ConfirmMessage, ErrorMessage, SuccessMessage } from '../../../shared/components/message/message';
-import { ContaClienteService } from '../../../shared/services/conta-cliente/conta-cliente-service';
 import { ContaCliente } from '../../../shared/models/conta-cliente';
-import { LoadingSpinner } from '../../../shared/components/loading-spinner/loading-spinner';
+import { ContaClienteService } from '../../../shared/services/conta-cliente/conta-cliente-service';
 
 @Component({
   selector: 'app-listagem-conta',
@@ -23,7 +34,7 @@ import { LoadingSpinner } from '../../../shared/components/loading-spinner/loadi
     MatIconModule,
     MatButtonModule,
     LoadingSpinner
-],
+  ],
   templateUrl: './listagem-conta.html',
   styleUrl: './listagem-conta.scss'
 })
@@ -37,12 +48,15 @@ export class ListagemConta implements AfterViewInit {
   constructor(contaClienteService: ContaClienteService) {
     this.contaClienteService = contaClienteService;
     this.result = signal<PageResult<ContaCliente>>({
-      items: [], page: 1, pageSize: 5, total: 0
+      items: [],
+      page: 1,
+      pageSize: 5,
+      total: 0
     });
     this.dataSource = new MatTableDataSource<ContaCliente>();
     this.busy = signal(true);
     this.full = computed(() => this.result().total ?? 0);
-}
+  }
 
   ngAfterViewInit(): void {
     this.load(1, 5);
@@ -95,10 +109,7 @@ export class ListagemConta implements AfterViewInit {
     if (answer.yes()) {
       this.contaClienteService.delete(id).subscribe({
         next: () => {
-          new SuccessMessage(
-            'Sucesso',
-            'Conta deletada com sucesso!'
-          ).show();
+          new SuccessMessage('Sucesso', 'Conta deletada com sucesso!').show();
           this.load(this.result().page, this.result().pageSize);
         },
         error: (error: HttpErrorResponse) => {
@@ -107,7 +118,7 @@ export class ListagemConta implements AfterViewInit {
             'Erro ao deletar a conta!',
             new ErrorReasons(error)
           ).show();
-        },
+        }
       });
     }
   }

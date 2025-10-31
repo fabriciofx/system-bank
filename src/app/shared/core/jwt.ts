@@ -1,9 +1,9 @@
-import HmacSHA256 from 'crypto-js/hmac-sha256.js';
 import Base64 from 'crypto-js/enc-base64.js';
 import Utf8 from 'crypto-js/enc-utf8.js';
+import HmacSHA256 from 'crypto-js/hmac-sha256.js';
 import { Timestamp, TimestampFromDate } from '../core/timestamp';
-import { Uuidv4 } from './uuidv4';
 import { RandomString } from './random';
+import { Uuidv4 } from './uuidv4';
 
 export class Jwt {
   private readonly message: string;

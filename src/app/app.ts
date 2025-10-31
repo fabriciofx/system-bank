@@ -1,14 +1,17 @@
-import { Component, computed, Signal, signal, WritableSignal } from '@angular/core';
+import {
+  Component,
+  computed,
+  Signal,
+  signal,
+  WritableSignal
+} from '@angular/core';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { filter } from 'rxjs';
 import { Navbar } from './shared/components/navbar/navbar';
 
 @Component({
   selector: 'app-root',
-  imports: [
-    Navbar,
-    RouterModule
-],
+  imports: [Navbar, RouterModule],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
@@ -21,7 +24,7 @@ export class App {
     this.router = router;
     this.url = signal<string>('');
     this.router.events
-      .pipe(filter(event => event instanceof NavigationEnd))
+      .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((event: NavigationEnd) => {
         this.url.set(event.urlAfterRedirects);
       });

@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { combineLatest, map, Observable } from 'rxjs';
 import { env } from '../../../../environments/env.dev';
-import { Cliente, ClienteDe } from '../../models/cliente';
 import { PageResult } from '../../core/page-result';
 import { Paginated } from '../../core/paginated';
+import { Cliente, ClienteDe } from '../../models/cliente';
 
 @Injectable({
   providedIn: 'root'
@@ -30,7 +30,7 @@ export class ClienteService implements Paginated<Cliente> {
     const all = this.liste();
     const result = combineLatest([clientes, all]).pipe(
       map(([clientes, all]) => ({
-        items: clientes.map(cliente => new ClienteDe(cliente)),
+        items: clientes.map((cliente) => new ClienteDe(cliente)),
         page: num,
         pageSize: size,
         total: all.length

@@ -1,26 +1,26 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import {
   FormControl,
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
-  Validators,
+  Validators
 } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatRadioModule } from '@angular/material/radio';
-import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { HttpErrorResponse } from '@angular/common/http';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatRadioModule } from '@angular/material/radio';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgxMaskDirective } from 'ngx-mask';
-import { ClienteService } from '../../../shared/services/cliente/cliente-service';
-import { ClienteDe } from '../../../shared/models/cliente';
-import { ErrorReasons } from '../../../shared/core/error-reasons';
 import {
-  SuccessMessage,
   ErrorMessage,
+  SuccessMessage
 } from '../../../shared/components/message/message';
 import { Box, BoxOf } from '../../../shared/core/box';
+import { ErrorReasons } from '../../../shared/core/error-reasons';
+import { ClienteDe } from '../../../shared/models/cliente';
+import { ClienteService } from '../../../shared/services/cliente/cliente-service';
 import { Cpf } from '../../../validators/cpf';
 
 type ClienteFormGroup = FormGroup<{
@@ -42,10 +42,10 @@ type ClienteFormGroup = FormGroup<{
     MatButtonModule,
     FormsModule,
     ReactiveFormsModule,
-    NgxMaskDirective,
+    NgxMaskDirective
   ],
   templateUrl: './cadastro-cliente.html',
-  styleUrl: './cadastro-cliente.scss',
+  styleUrl: './cadastro-cliente.scss'
 })
 export class CadastroCliente implements OnInit {
   private readonly router: Router;
@@ -66,27 +66,28 @@ export class CadastroCliente implements OnInit {
       id: new FormControl(0, { nonNullable: true }),
       nome: new FormControl('', {
         nonNullable: true,
-        validators: [Validators.required],
+        validators: [Validators.required]
       }),
       cpf: new FormControl('', {
         nonNullable: true,
-        validators: [Validators.required, Cpf.validator],
+        validators: [Validators.required, Cpf.validator]
       }),
       email: new FormControl('', {
         nonNullable: true,
-        validators: [Validators.required, Validators.email],
+        validators: [Validators.required, Validators.email]
       }),
       senha: new FormControl('', { nonNullable: true }),
       observacoes: new FormControl('', {
         nonNullable: true,
-        validators: [Validators.required],
+        validators: [Validators.required]
       }),
-      ativo: new FormControl(true, { nonNullable: true }),
+      ativo: new FormControl(true, { nonNullable: true })
     });
     this.editar = new BoxOf<boolean>(false);
   }
 
   ngOnInit(): void {
+    // biome-ignore lint/complexity/useLiteralKeys: Se trocar, erro
     const param = this.route.snapshot.params['id'];
     if (param) {
       this.editar.store(true);
@@ -117,7 +118,7 @@ export class CadastroCliente implements OnInit {
             'Erro ao atualizar o cliente!',
             new ErrorReasons(error)
           ).show();
-        },
+        }
       });
     } else {
       this.clienteService.insere(cliente).subscribe({
@@ -134,7 +135,7 @@ export class CadastroCliente implements OnInit {
             'Erro ao cadastrar o cliente!',
             new ErrorReasons(error)
           ).show();
-        },
+        }
       });
     }
   }

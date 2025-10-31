@@ -1,16 +1,29 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, NgZone, Output, ViewChild } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  NgZone,
+  Output,
+  ViewChild
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { MatSelect, MatSelectChange, MatSelectModule } from '@angular/material/select';
+import { MatOptionModule } from '@angular/material/core';
+import { MatFormFieldModule, MatLabel } from '@angular/material/form-field';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { PageResult } from '../../core/page-result';
-import { ErrorMessage } from '../message/message';
+import {
+  MatSelect,
+  MatSelectChange,
+  MatSelectModule
+} from '@angular/material/select';
 import { ErrorReasons } from '../../core/error-reasons';
+import { PageResult } from '../../core/page-result';
 import { Paginated } from '../../core/paginated';
 import { Text } from '../../core/text';
-import { HttpErrorResponse } from '@angular/common/http';
-import { MatFormFieldModule, MatLabel } from '@angular/material/form-field';
-import { MatOptionModule } from '@angular/material/core';
+import { ErrorMessage } from '../message/message';
 
 @Component({
   selector: 'app-infinite-select',
@@ -92,12 +105,7 @@ export class InfiniteSelect<T extends Text> implements AfterViewInit {
   load(page: number, pageSize: number): void {
     this.paginated.pages(page, pageSize).subscribe({
       next: (result: PageResult<T>) => {
-        this.items = Array.from(
-          new Set([
-            ...this.items,
-            ...result.items
-          ])
-        );
+        this.items = Array.from(new Set([...this.items, ...result.items]));
         this.result = result;
       },
       error: (error: HttpErrorResponse) => {

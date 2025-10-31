@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Storage } from '../core/storage';
-import { Empty, Post } from '../core/http';
 import { catchError, map, Observable, throwError } from 'rxjs';
+import { Empty, Post } from '../core/http';
+import { Storage } from '../core/storage';
 
 export interface Credentials {
   username: string;
@@ -104,21 +104,23 @@ export class AuthTokensOf implements AuthTokens {
       this.url,
       new RefreshTokenOf(this.refresh)
     )
-    .send(new Empty())
-    .value()
-    .pipe(
-      map((token: AccessToken) => {
-        return new AuthTokensOf(
-          this.http,
-          token.access,
-          this.refresh,
-          this.url
-        );
-      }),
-      catchError((error: HttpErrorResponse) =>
-        throwError(() => new Error(`to refresh access token: ${error.message}`))
-      )
-    );
+      .send(new Empty())
+      .value()
+      .pipe(
+        map((token: AccessToken) => {
+          return new AuthTokensOf(
+            this.http,
+            token.access,
+            this.refresh,
+            this.url
+          );
+        }),
+        catchError((error: HttpErrorResponse) =>
+          throwError(
+            () => new Error(`to refresh access token: ${error.message}`)
+          )
+        )
+      );
   }
 }
 

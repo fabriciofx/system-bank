@@ -63,7 +63,7 @@ export class ErrorMessage implements Message<void> {
       await Swal.fire({
         icon: 'error',
         title: this.title,
-        text: this.message,
+        text: this.message
       });
     }
   }
@@ -89,7 +89,7 @@ export class ConfirmMessage implements Message<Answer> {
       showConfirmButton: true,
       cancelButtonColor: 'grey',
       confirmButtonColor: 'red',
-      confirmButtonText: this.buttonText,
+      confirmButtonText: this.buttonText
     });
     return new Answer(result);
   }
@@ -114,7 +114,7 @@ export class YesNoMessage implements Message<Answer> {
       cancelButtonText: 'Não',
       showConfirmButton: true,
       confirmButtonColor: 'green',
-      confirmButtonText: 'Sim',
+      confirmButtonText: 'Sim'
     });
     return new Answer(result);
   }

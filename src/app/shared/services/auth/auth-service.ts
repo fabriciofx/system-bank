@@ -1,11 +1,19 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
 import { catchError, map, Observable, throwError } from 'rxjs';
-import { AccessToken, AccessTokenOf, Credentials, AuthTokens, AuthTokensOf, RefreshToken, RefreshTokenOf } from '../../models/auth';
 import { env } from '../../../../environments/env.dev';
 import { ErrorMessage } from '../../components/message/message';
-import { Storage, BrowserStorage } from '../../core/storage';
+import { BrowserStorage, Storage } from '../../core/storage';
+import {
+  AccessToken,
+  AccessTokenOf,
+  AuthTokens,
+  AuthTokensOf,
+  Credentials,
+  RefreshToken,
+  RefreshTokenOf
+} from '../../models/auth';
 
 @Injectable({
   providedIn: 'root'
@@ -22,21 +30,19 @@ export class AuthService {
   }
 
   login(credentials: Credentials): void {
-    this.http.post<AuthTokens>(`${env.API}/token/`, credentials)
+    this.http
+      .post<AuthTokens>(`${env.API}/token/`, credentials)
       .pipe(
-        map(tokens => new AuthTokensOf(
-            this.http,
-            tokens.access,
-            tokens.refresh
-          )
+        map(
+          (tokens) => new AuthTokensOf(this.http, tokens.access, tokens.refresh)
         ),
-        map(tokens => {
+        map((tokens) => {
           if (!tokens.valid()) {
             throw new Error('Error: AuthTokens is invalid!');
           }
           return tokens;
         }),
-        catchError(error => throwError(() => error))
+        catchError((error) => throwError(() => error))
       )
       .subscribe({
         next: (tokens: AuthTokens) => {
@@ -45,10 +51,7 @@ export class AuthService {
           this.router.navigate(['/cliente']);
         },
         error: () => {
-          new ErrorMessage(
-            'Oops...',
-            'Usuário e/ou senha inválidos!'
-          ).show();
+          new ErrorMessage('Oops...', 'Usuário e/ou senha inválidos!').show();
         }
       });
   }

@@ -1,12 +1,11 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { InfiniteSelect } from './infinite-select';
-import { Cliente } from '../../models/cliente';
-import { provideZonelessChangeDetection } from '@angular/core';
 import { provideHttpClient } from '@angular/common/http';
+import { provideZonelessChangeDetection } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
-import { Paginated } from '../../core/paginated';
 import { of } from 'rxjs';
+import { Paginated } from '../../core/paginated';
+import { Cliente } from '../../models/cliente';
+import { InfiniteSelect } from './infinite-select';
 
 class FakePaginated implements Paginated<Cliente> {
   pages(num: number, size: number) {
@@ -31,8 +30,7 @@ describe('InfiniteSelect', () => {
         provideHttpClient(),
         provideRouter([])
       ]
-    })
-    .compileComponents();
+    }).compileComponents();
 
     fixture = TestBed.createComponent(InfiniteSelect<Cliente>);
     component = fixture.componentInstance;

@@ -1,19 +1,28 @@
 import { CommonModule } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { FormsModule, ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators
+} from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { Router } from '@angular/router';
 import { InfiniteSelect } from '../../../shared/components/infinite-select/infinite-select';
+import {
+  ErrorMessage,
+  SuccessMessage
+} from '../../../shared/components/message/message';
 import { ErrorReasons } from '../../../shared/core/error-reasons';
-import { SuccessMessage, ErrorMessage } from '../../../shared/components/message/message';
 import { Paginated } from '../../../shared/core/paginated';
 import { ContaCliente } from '../../../shared/models/conta-cliente';
-import { ContaClienteService } from '../../../shared/services/conta-cliente/conta-cliente-service';
-import { ContaService } from '../../../shared/services/conta/conta-service';
-import { Router } from '@angular/router';
 import { Deposito } from '../../../shared/models/deposito';
-import { MatButtonModule } from '@angular/material/button';
-import { HttpErrorResponse } from '@angular/common/http';
+import { ContaService } from '../../../shared/services/conta/conta-service';
+import { ContaClienteService } from '../../../shared/services/conta-cliente/conta-cliente-service';
 
 @Component({
   selector: 'app-deposito-conta',
@@ -45,7 +54,7 @@ export class DepositoConta {
     this.contaClienteService = contaClienteService;
     this.formGroup = new FormGroup({
       conta: new FormControl('', Validators.required),
-      valor: new FormControl('', Validators.required),
+      valor: new FormControl('', Validators.required)
     });
   }
 
@@ -64,20 +73,17 @@ export class DepositoConta {
   deposite() {
     const deposito: Deposito = this.formGroup.value;
     this.contaService.deposito(deposito).subscribe({
-        next: () => {
-          new SuccessMessage(
-            'Sucesso',
-            'Depósito realizado com sucesso!'
-          ).show();
-          this.router.navigate(['/conta']);
-        },
-        error: (error: HttpErrorResponse) => {
-          new ErrorMessage(
-            'Oops...',
-            'Erro ao depositar na conta!',
-            new ErrorReasons(error)
-          ).show();
-        }
+      next: () => {
+        new SuccessMessage('Sucesso', 'Depósito realizado com sucesso!').show();
+        this.router.navigate(['/conta']);
+      },
+      error: (error: HttpErrorResponse) => {
+        new ErrorMessage(
+          'Oops...',
+          'Erro ao depositar na conta!',
+          new ErrorReasons(error)
+        ).show();
+      }
     });
   }
 }
