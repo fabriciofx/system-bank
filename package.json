@@ -9,14 +9,12 @@
     "test": "ng test",
     "test:file": "node scripts/run-ng-test.js",
     "serve:ssr:system-bank": "node dist/system-bank/server/server.mjs",
-    "lint": "ng lint",
-    "lint:file": "eslint",
     "test:jest": "jest",
     "prepare": "husky"
   },
   "lint-staged": {
     "*.{ts,js,html,scss}": [
-      "npm run lint:file"
+      "npm run lint"
     ],
     "*.spec.ts": [
       "npm run test:file"
@@ -53,8 +51,6 @@
     "@types/jasmine": "~5.1.0",
     "@types/jest": "^30.0.0",
     "@types/node": "^20.17.19",
-    "angular-eslint": "20.4.0",
-    "eslint": "^9.35.0",
     "husky": "^9.1.7",
     "jasmine-core": "~5.9.0",
     "jest": "^30.2.0",
@@ -65,7 +61,6 @@
     "karma-jasmine-html-reporter": "~2.1.0",
     "lint-staged": "^16.2.4",
     "ts-jest": "^29.4.5",
-    "typescript": "~5.9.2",
-    "typescript-eslint": "8.40.0"
+    "typescript": "~5.9.2"
   }
 }
