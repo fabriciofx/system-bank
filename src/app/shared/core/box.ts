@@ -7,11 +7,14 @@ export class BoxOf<T> implements Box<T> {
   private readonly content: T[];
 
   constructor(item: T) {
-    this.content = [ item ];
+    this.content = [item];
   }
 
   store(item: T): T {
-    const old = this.content.pop()!;
+    const old = this.content.pop();
+    if (old === undefined) {
+      throw new Error('Box: trying storing an empty box');
+    }
     this.content.push(item);
     return old;
   }
