@@ -5,52 +5,49 @@ const refreshApi = `${api}/token/refresh/`;
 type AuthTokens = {
   access: string;
   refresh: string;
-}
+};
 
 async function authenticate(url: string): Promise<AuthTokens> {
   try {
-    const response = await fetch(
-      url,
-      {
-        method: "POST",
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          username: 'admin',
-          password: '12345678'
-        })
-      }
-    );
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        username: 'admin',
+        password: '12345678'
+      })
+    });
     if (response.ok) {
       return response.json();
     } else {
       throw new Error(response.statusText);
     }
-  } catch(error) {
-    throw new Error("Error: " + error);
+  } catch (error) {
+    throw new Error(`Error: ${error}`);
   }
 }
 
-async function refresh(url: string, token: string): Promise<any> {
+async function refresh(
+  url: string,
+  token: string
+): Promise<{ refresh: string }> {
   try {
-    const response = await fetch(
-      url,
-      {
-        method: "POST",
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({refresh: token})
-      }
-    );
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ refresh: token })
+    });
     if (response.ok) {
       return response.json();
     } else {
       throw new Error(response.statusText);
     }
-  } catch(error) {
-    throw new Error("Error: " + error);
+  } catch (error) {
+    throw new Error(`Error: ${error}`);
   }
 }
 
