@@ -17,24 +17,18 @@ export class TimestampOf {
     }
     const value = parseInt(match[1], 10);
     const unit = match[2];
-    let result;
     switch (unit) {
       case 's':
-        result = new TimestampOf(this.time + value);
-        break;
+        return new TimestampOf(this.time + value);
       case 'm':
-        result = new TimestampOf(this.time + value * 60);
-        break;
+        return new TimestampOf(this.time + value * 60);
       case 'h':
-        result = new TimestampOf(this.time + value * 3600);
-        break;
+        return new TimestampOf(this.time + value * 3600);
       case 'd':
-        result = new TimestampOf(this.time + value * 86400);
-        break;
+        return new TimestampOf(this.time + value * 86400);
       default:
         throw new Error('Invalid unit.');
     }
-    return result;
   }
 
   value(): number {
